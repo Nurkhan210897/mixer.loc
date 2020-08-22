@@ -20,3 +20,8 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::apiResource('/categories', 'Admin\CategoryController');
 Route::apiResource('/subCategories', 'Admin\SubCategoryController');
+
+Route::apiResource('/filter/colors', 'Admin\Filter\ColorController');
+Route::apiResource('/filter/controls', 'Admin\Filter\ControlController');
+Route::apiResource('/filter/mixerShapes', 'Admin\Filter\MixerShapeController');
+Route::apiResource('/filter/styles', 'Admin\Filter\StyleController');

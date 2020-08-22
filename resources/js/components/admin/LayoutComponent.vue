@@ -13,8 +13,17 @@
             <template v-slot:activator>
               <v-list-item-title>Фильтр</v-list-item-title>
             </template>
-            <v-list-item to="/admin/test">
-              <v-list-item-content>test</v-list-item-content>
+            <v-list-item to="/admin/filter/styles">
+              <v-list-item-content>Стили</v-list-item-content>
+            </v-list-item>
+            <v-list-item to="/admin/filter/colors">
+              <v-list-item-content>Цвета</v-list-item-content>
+            </v-list-item>
+            <v-list-item to="/admin/filter/mixer-shapes">
+              <v-list-item-content>Формы сместителя</v-list-item-content>
+            </v-list-item>
+            <v-list-item to="/admin/filter/controls">
+              <v-list-item-content>Управления</v-list-item-content>
             </v-list-item>
           </v-list-group>
         </v-list>
