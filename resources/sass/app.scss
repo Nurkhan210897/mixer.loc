@@ -1,0 +1,48 @@
+// Fonts
+@import url("https://fonts.googleapis.com/css?family=Nunito");
+
+// Variables
+@import "variables";
+
+// Bootstrap
+@import "~bootstrap/scss/bootstrap";
+
+#adminPanel {
+  button {
+    &:focus {
+      outline: none !important;
+    }
+  }
+
+  .vue2-editor {
+    .ql-editor {
+      min-height: 65vh !important;
+    }
+  }
+
+  .fullScreenModalContainer {
+    padding-left: 35px !important;
+    padding-right: 35px !important;
+  }
+
+  .v-navigation-drawer__content {
+    a {
+      &:hover {
+        text-decoration: none;
+      }
+    }
+  }
+
+  .searchInput {
+    margin-top: 10px;
+  }
+
+  .deleteDialogHead {
+    font-size: 18.5px !important;
+  }
+
+  .v-label--active {
+    color: #1976d2 !important;
+    caret-color: #1976d2 !important;
+  }
+}
