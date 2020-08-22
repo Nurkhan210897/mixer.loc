@@ -10958,3 +10958,7 @@ a.text-dark:focus {
   caret-color: #1976d2 !important;
 }
 
+#adminPanel .v-menu__content {
+  top: 322px !important;
+}
+
