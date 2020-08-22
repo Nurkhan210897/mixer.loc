@@ -9,6 +9,14 @@
           <v-list-item to="/admin/subCategories">
             <v-list-item-content>Подкатегории</v-list-item-content>
           </v-list-item>
+          <v-list-group>
+            <template v-slot:activator>
+              <v-list-item-title>Фильтр</v-list-item-title>
+            </template>
+            <v-list-item to="/admin/test">
+              <v-list-item-content>test</v-list-item-content>
+            </v-list-item>
+          </v-list-group>
         </v-list>
       </v-navigation-drawer>
 

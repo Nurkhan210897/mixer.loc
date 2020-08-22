@@ -2217,6 +2217,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {
     console.log("Component mounted.");
@@ -39096,6 +39104,31 @@ var render = function() {
                     "v-list-item",
                     { attrs: { to: "/admin/subCategories" } },
                     [_c("v-list-item-content", [_vm._v("Подкатегории")])],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "v-list-group",
+                    {
+                      scopedSlots: _vm._u([
+                        {
+                          key: "activator",
+                          fn: function() {
+                            return [_c("v-list-item-title", [_vm._v("Фильтр")])]
+                          },
+                          proxy: true
+                        }
+                      ])
+                    },
+                    [
+                      _vm._v(" "),
+                      _c(
+                        "v-list-item",
+                        { attrs: { to: "/admin/test" } },
+                        [_c("v-list-item-content", [_vm._v("test")])],
+                        1
+                      )
+                    ],
                     1
                   )
                 ],

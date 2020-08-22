@@ -49,4 +49,15 @@
   .v-menu__content {
     top: 322px !important;
   }
+
+  .v-list-item__title,
+  .v-list-item__content {
+    font-size: 15px !important;
+  }
+
+  .v-list-group__items {
+    .v-list-item {
+      padding-left: 27px !important;
+    }
+  }
 }
