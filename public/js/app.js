@@ -2376,6 +2376,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   watch: {
     table: function table() {
+      this.skeleton = true;
       this.editedItem.table = this.table;
       this.index();
     }

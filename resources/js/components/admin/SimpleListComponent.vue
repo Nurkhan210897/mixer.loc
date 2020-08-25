@@ -107,6 +107,7 @@ export default {
   }),
   watch: {
     table() {
+      this.skeleton = true;
       this.editedItem.table = this.table;
       this.index();
     },
