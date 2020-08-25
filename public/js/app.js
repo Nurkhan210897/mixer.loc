@@ -2234,6 +2234,51 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {
     console.log("Component mounted.");
@@ -39342,8 +39387,155 @@ var render = function() {
                       _vm._v(" "),
                       _c(
                         "v-list-item",
+                        {
+                          attrs: { to: "/admin/list/installations/Установки" }
+                        },
+                        [_c("v-list-item-content", [_vm._v("Установки")])],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "v-list-item",
+                        { attrs: { to: "/admin/list/shapes/Формы" } },
+                        [_c("v-list-item-content", [_vm._v("Формы")])],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "v-list-item",
+                        { attrs: { to: "/admin/list/surfaces/Поверхности" } },
+                        [_c("v-list-item-content", [_vm._v("Поверхности")])],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "v-list-item",
+                        {
+                          attrs: {
+                            to: "/admin/list/bowl_locations/Рассположения чаш"
+                          }
+                        },
+                        [
+                          _c("v-list-item-content", [
+                            _vm._v("Рассположения чаш")
+                          ])
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "v-list-item",
+                        {
+                          attrs: {
+                            to: "/admin/list/destinations/Предназначения"
+                          }
+                        },
+                        [_c("v-list-item-content", [_vm._v("Предназначения")])],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "v-list-item",
+                        {
+                          attrs: {
+                            to: "/admin/list/mounting_types/Типы монтажа"
+                          }
+                        },
+                        [_c("v-list-item-content", [_vm._v("Типы монтажа")])],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "v-list-item",
+                        {
+                          attrs: {
+                            to: "/admin/list/handle_types/Одноручный-Двуручный"
+                          }
+                        },
+                        [
+                          _c("v-list-item-content", [
+                            _vm._v("Одноручный/Двуручный")
+                          ])
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "v-list-item",
                         { attrs: { to: "/admin/list/styles/Стили" } },
                         [_c("v-list-item-content", [_vm._v("Стили")])],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "v-list-item",
+                        { attrs: { to: "/admin/list/pouring_outs/Изливы" } },
+                        [_c("v-list-item-content", [_vm._v("Изливы")])],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "v-list-item",
+                        {
+                          attrs: { to: "/admin/list/distances/Типы расстояния" }
+                        },
+                        [
+                          _c("v-list-item-content", [_vm._v("Типы расстояния")])
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "v-list-item",
+                        {
+                          attrs: {
+                            to: "/admin/list/fastener_types/Типы крепежа"
+                          }
+                        },
+                        [_c("v-list-item-content", [_vm._v("Типы крепежа")])],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "v-list-item",
+                        {
+                          attrs: {
+                            to: "/admin/list/release_types/Типы выпуска"
+                          }
+                        },
+                        [_c("v-list-item-content", [_vm._v("Типы выпуска")])],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "v-list-item",
+                        {
+                          attrs: {
+                            to: "/admin/list/water_supplies/Подводы воды"
+                          }
+                        },
+                        [_c("v-list-item-content", [_vm._v("Подводы воды")])],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "v-list-item",
+                        { attrs: { to: "/admin/list/seats/Сиденья" } },
+                        [_c("v-list-item-content", [_vm._v("Сиденья")])],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "v-list-item",
+                        { attrs: { to: "/admin/list/materials/Материалы" } },
+                        [_c("v-list-item-content", [_vm._v("Материалы")])],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "v-list-item",
+                        { attrs: { to: "/admin/list/flushes/Смывы" } },
+                        [_c("v-list-item-content", [_vm._v("Смывы")])],
                         1
                       ),
                       _vm._v(" "),
