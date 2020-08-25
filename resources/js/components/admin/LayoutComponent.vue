@@ -11,18 +11,18 @@
           </v-list-item>
           <v-list-group>
             <template v-slot:activator>
-              <v-list-item-title>Фильтр</v-list-item-title>
+              <v-list-item-title>Списки</v-list-item-title>
             </template>
-            <v-list-item to="/admin/filter/styles">
+            <v-list-item to="/admin/list/styles/Стили">
               <v-list-item-content>Стили</v-list-item-content>
             </v-list-item>
-            <v-list-item to="/admin/filter/colors">
+            <v-list-item to="/admin/list/colors/Цвета">
               <v-list-item-content>Цвета</v-list-item-content>
             </v-list-item>
-            <v-list-item to="/admin/filter/mixer-shapes">
+            <v-list-item to="/admin/list/mixer_shapes/Формы сместителя">
               <v-list-item-content>Формы сместителя</v-list-item-content>
             </v-list-item>
-            <v-list-item to="/admin/filter/controls">
+            <v-list-item to="/admin/list/controls/Управления">
               <v-list-item-content>Управления</v-list-item-content>
             </v-list-item>
           </v-list-group>

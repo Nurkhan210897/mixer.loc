@@ -15,7 +15,7 @@
     >
       <template v-slot:top>
         <v-toolbar flat color="white">
-          <v-toolbar-title>Управления</v-toolbar-title>
+          <v-toolbar-title>{{tableRussName}}</v-toolbar-title>
           <v-divider class="mx-4" inset vertical></v-divider>
           <v-dialog v-model="dialog" max-width="350px">
             <template v-slot:activator="{ on }">
@@ -89,9 +89,10 @@
 </template>
 
 <script>
-import main from "../../../mixins/main.js";
+import main from "../../mixins/main.js";
 export default {
   mixins: [main],
+  props: ["table", "tableRussName"],
   data: () => ({
     headers: [
       { text: "Название", value: "name", sortable: false },
@@ -104,13 +105,20 @@ export default {
       name: "",
     },
   }),
+  watch: {
+    table() {
+      this.editedItem.table = this.table;
+      this.index();
+    },
+  },
   created() {
+    this.editedItem.table = this.table;
     this.index();
   },
   methods: {
     index() {
       axios
-        .get("/api/filter/controls")
+        .get("/api/simpleList?table=" + this.table)
         .then((response) => {
           var res = response.data;
           if (res.success) {
@@ -124,11 +132,12 @@ export default {
     },
     store() {
       axios
-        .post("/api/filter/controls", this.editedItem)
+        .post("/api/simpleList", this.editedItem)
         .then((response) => {
           var res = response.data;
           if (res.success) {
-            this.data.unshift(res.data);
+            this.editedItem.id = res.id;
+            this.data.unshift(this.editedItem);
             this.close();
           } else {
             alert(res.msg);
@@ -140,7 +149,7 @@ export default {
     },
     update() {
       axios
-        .put("/api/filter/controls/" + this.editedItem.id, this.editedItem)
+        .put("/api/simpleList/" + this.editedItem.id, this.editedItem)
         .then((response) => {
           var res = response.data;
           if (res.success) {
@@ -156,7 +165,9 @@ export default {
     },
     deleteItem() {
       axios
-        .delete("/api/filter/controls/" + this.editedItem.id)
+        .delete(
+          "/api/simpleList/" + this.editedItem.id + "?table=" + this.table
+        )
         .then((response) => {
           var res = response.data;
           if (res.success) {

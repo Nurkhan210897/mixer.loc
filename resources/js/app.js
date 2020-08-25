@@ -21,24 +21,9 @@ const router = new VueRouter({
       component: require("./components/admin/SubCategoryComponent.vue").default,
     },
     {
-      path: "/admin/filter/styles",
-      component: require("./components/admin/filter/StyleComponent.vue")
-        .default,
-    },
-    {
-      path: "/admin/filter/colors",
-      component: require("./components/admin/filter/ColorComponent.vue")
-        .default,
-    },
-    {
-      path: "/admin/filter/mixer-shapes",
-      component: require("./components/admin/filter/MixerShapeComponent.vue")
-        .default,
-    },
-    {
-      path: "/admin/filter/controls",
-      component: require("./components/admin/filter/ControlComponent.vue")
-        .default,
+      path: "/admin/list/:table/:tableRussName",
+      component: require("./components/admin/SimpleListComponent.vue").default,
+      props: true,
     },
   ],
 });
