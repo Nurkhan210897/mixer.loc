@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateMountingTypesTable extends Migration
+class CreateSpecificationsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,10 @@ class CreateMountingTypesTable extends Migration
      */
     public function up()
     {
-        Schema::create('mounting_types', function (Blueprint $table) {
-            $table->smallIncrements('id');
-            $table->string('name', 255);
+        Schema::create('specifications', function (Blueprint $table) {
+            $table->increments('id');
+            $table->unsignedInteger('product_id');
+            $table->unsignedInteger('list_id');
         });
     }
 
@@ -26,6 +27,6 @@ class CreateMountingTypesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('mounting_types');
+        Schema::dropIfExists('specifications');
     }
 }

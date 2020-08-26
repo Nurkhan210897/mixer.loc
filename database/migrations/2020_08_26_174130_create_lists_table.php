@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateBowlLocationsTable extends Migration
+class CreateListsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,10 @@ class CreateBowlLocationsTable extends Migration
      */
     public function up()
     {
-        Schema::create('bowl_locations', function (Blueprint $table) {
+        Schema::create('lists', function (Blueprint $table) {
             $table->smallIncrements('id');
             $table->string('name', 255);
+            $table->unsignedSmallInteger('list_type_id');
         });
     }
 
@@ -26,6 +27,6 @@ class CreateBowlLocationsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('bowl_locations');
+        Schema::dropIfExists('lists');
     }
 }

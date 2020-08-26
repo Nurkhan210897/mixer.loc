@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateWaterSuppliesTable extends Migration
+class CreateProductsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,9 @@ class CreateWaterSuppliesTable extends Migration
      */
     public function up()
     {
-        Schema::create('water_supplies', function (Blueprint $table) {
-            $table->smallIncrements('id');
-            $table->string('name', 255);
+        Schema::create('products', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('name');
         });
     }
 
@@ -26,6 +26,6 @@ class CreateWaterSuppliesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('water_supplies');
+        Schema::dropIfExists('products');
     }
 }
