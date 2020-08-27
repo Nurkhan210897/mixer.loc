@@ -48,9 +48,10 @@
                 </v-toolbar-items>
               </v-toolbar>
               <v-card-text>
-                <v-container fluid>
+                <v-container>
                   <v-row>
-                    <v-col cols="4">
+                    <v-col cols="5">
+                      <h5 class="productH5">Основные данные</h5>
                       <v-row>
                         <v-text-field v-model="editedItem.name" label="Название"></v-text-field>
                       </v-row>
@@ -70,14 +71,37 @@
                           item-text="name"
                           v-model="editedItem.sub_category_id"
                           label="Подкатегория"
+                          @change="setDirectories"
                         ></v-select>
                       </v-row>
+                      <v-row>
+                        <v-file-input
+                          accept="image/png, image/jpeg, image/bmp"
+                          prepend-icon="mdi-camera"
+                          label="Обложка"
+                        ></v-file-input>
+                      </v-row>
+                      <v-row>
+                        <v-file-input
+                          accept="image/png, image/jpeg, image/bmp"
+                          prepend-icon="mdi-camera"
+                          multiple
+                          label="Картинки"
+                        ></v-file-input>
+                      </v-row>
                     </v-col>
-                    <v-col cols="4">
-                      <v-text-field v-model="editedItem.name" label="Название"></v-text-field>
-                    </v-col>
-                    <v-col cols="4">
-                      <v-text-field v-model="editedItem.name" label="Название"></v-text-field>
+                    <v-col cols="2"></v-col>
+                    <v-col cols="5">
+                      <h5 class="productH5">Технические характеристики</h5>
+                      <v-row v-for="(item,i) in directories" :key="i">
+                        <v-select
+                          :items="item.directories"
+                          item-value="id"
+                          item-text="name"
+                          v-model="editedItem.directories[i]"
+                          :label="item.name"
+                        ></v-select>
+                      </v-row>
                     </v-col>
                   </v-row>
                 </v-container>
@@ -126,15 +150,18 @@ export default {
     ],
     categories: [],
     subCategories: [],
+    directories: [],
     editedItem: {
       name: "",
       category_id: "",
       sub_category_id: "",
+      directories: [],
     },
     defaultItem: {
       name: "",
       category_id: "",
       sub_category_id: "",
+      directories: [],
     },
   }),
   created() {
@@ -201,6 +228,30 @@ export default {
           } else {
             alert(res.msg);
           }
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    },
+    setDirectories() {
+      this.editedItem.directories = [];
+      var id = this.editedItem.sub_category_id;
+      var directories;
+      for (var key in this.subCategories) {
+        if (Number(this.subCategories[key].id) === Number(id)) {
+          directories = this.subCategories[key].directories;
+          break;
+        }
+      }
+      axios
+        .get("/api/products/directories", {
+          params: {
+            directories: directories,
+          },
+        })
+        .then((response) => {
+          var res = response.data;
+          this.directories = res.data;
         })
         .catch(function (error) {
           console.log(error);

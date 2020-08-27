@@ -23,4 +23,6 @@ Route::apiResource('/subCategories', 'Admin\SubCategoryController');
 
 Route::apiResource('/simple', 'Admin\SimpleController');
 Route::apiResource('/directory', 'Admin\DirectoryController');
+
+Route::get('/products/directories', 'Admin\ProductController@getDirectories');
 Route::apiResource('/products', 'Admin\ProductController');

@@ -2586,6 +2586,30 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   mixins: [_mixins_main_js__WEBPACK_IMPORTED_MODULE_0__["default"]],
@@ -2602,15 +2626,18 @@ __webpack_require__.r(__webpack_exports__);
       }],
       categories: [],
       subCategories: [],
+      directories: [],
       editedItem: {
         name: "",
         category_id: "",
-        sub_category_id: ""
+        sub_category_id: "",
+        directories: []
       },
       defaultItem: {
         name: "",
         category_id: "",
-        sub_category_id: ""
+        sub_category_id: "",
+        directories: []
       }
     };
   },
@@ -2683,6 +2710,31 @@ __webpack_require__.r(__webpack_exports__);
         } else {
           alert(res.msg);
         }
+      })["catch"](function (error) {
+        console.log(error);
+      });
+    },
+    setDirectories: function setDirectories() {
+      var _this5 = this;
+
+      this.editedItem.directories = [];
+      var id = this.editedItem.sub_category_id;
+      var directories;
+
+      for (var key in this.subCategories) {
+        if (Number(this.subCategories[key].id) === Number(id)) {
+          directories = this.subCategories[key].directories;
+          break;
+        }
+      }
+
+      axios.get("/api/products/directories", {
+        params: {
+          directories: directories
+        }
+      }).then(function (response) {
+        var res = response.data;
+        _this5.directories = res.data;
       })["catch"](function (error) {
         console.log(error);
       });
@@ -40492,15 +40544,20 @@ var render = function() {
                               [
                                 _c(
                                   "v-container",
-                                  { attrs: { fluid: "" } },
                                   [
                                     _c(
                                       "v-row",
                                       [
                                         _c(
                                           "v-col",
-                                          { attrs: { cols: "4" } },
+                                          { attrs: { cols: "5" } },
                                           [
+                                            _c(
+                                              "h5",
+                                              { staticClass: "productH5" },
+                                              [_vm._v("Основные данные")]
+                                            ),
+                                            _vm._v(" "),
                                             _c(
                                               "v-row",
                                               [
@@ -40562,6 +40619,9 @@ var render = function() {
                                                     "item-text": "name",
                                                     label: "Подкатегория"
                                                   },
+                                                  on: {
+                                                    change: _vm.setDirectories
+                                                  },
                                                   model: {
                                                     value:
                                                       _vm.editedItem
@@ -40579,53 +40639,97 @@ var render = function() {
                                                 })
                                               ],
                                               1
+                                            ),
+                                            _vm._v(" "),
+                                            _c(
+                                              "v-row",
+                                              [
+                                                _c("v-file-input", {
+                                                  attrs: {
+                                                    accept:
+                                                      "image/png, image/jpeg, image/bmp",
+                                                    "prepend-icon":
+                                                      "mdi-camera",
+                                                    label: "Обложка"
+                                                  }
+                                                })
+                                              ],
+                                              1
+                                            ),
+                                            _vm._v(" "),
+                                            _c(
+                                              "v-row",
+                                              [
+                                                _c("v-file-input", {
+                                                  attrs: {
+                                                    accept:
+                                                      "image/png, image/jpeg, image/bmp",
+                                                    "prepend-icon":
+                                                      "mdi-camera",
+                                                    multiple: "",
+                                                    label: "Картинки"
+                                                  }
+                                                })
+                                              ],
+                                              1
                                             )
                                           ],
                                           1
                                         ),
                                         _vm._v(" "),
-                                        _c(
-                                          "v-col",
-                                          { attrs: { cols: "4" } },
-                                          [
-                                            _c("v-text-field", {
-                                              attrs: { label: "Название" },
-                                              model: {
-                                                value: _vm.editedItem.name,
-                                                callback: function($$v) {
-                                                  _vm.$set(
-                                                    _vm.editedItem,
-                                                    "name",
-                                                    $$v
-                                                  )
-                                                },
-                                                expression: "editedItem.name"
-                                              }
-                                            })
-                                          ],
-                                          1
-                                        ),
+                                        _c("v-col", { attrs: { cols: "2" } }),
                                         _vm._v(" "),
                                         _c(
                                           "v-col",
-                                          { attrs: { cols: "4" } },
+                                          { attrs: { cols: "5" } },
                                           [
-                                            _c("v-text-field", {
-                                              attrs: { label: "Название" },
-                                              model: {
-                                                value: _vm.editedItem.name,
-                                                callback: function($$v) {
-                                                  _vm.$set(
-                                                    _vm.editedItem,
-                                                    "name",
-                                                    $$v
-                                                  )
-                                                },
-                                                expression: "editedItem.name"
-                                              }
+                                            _c(
+                                              "h5",
+                                              { staticClass: "productH5" },
+                                              [
+                                                _vm._v(
+                                                  "Технические характеристики"
+                                                )
+                                              ]
+                                            ),
+                                            _vm._v(" "),
+                                            _vm._l(_vm.directories, function(
+                                              item,
+                                              i
+                                            ) {
+                                              return _c(
+                                                "v-row",
+                                                { key: i },
+                                                [
+                                                  _c("v-select", {
+                                                    attrs: {
+                                                      items: item.directories,
+                                                      "item-value": "id",
+                                                      "item-text": "name",
+                                                      label: item.name
+                                                    },
+                                                    model: {
+                                                      value:
+                                                        _vm.editedItem
+                                                          .directories[i],
+                                                      callback: function($$v) {
+                                                        _vm.$set(
+                                                          _vm.editedItem
+                                                            .directories,
+                                                          i,
+                                                          $$v
+                                                        )
+                                                      },
+                                                      expression:
+                                                        "editedItem.directories[i]"
+                                                    }
+                                                  })
+                                                ],
+                                                1
+                                              )
                                             })
                                           ],
-                                          1
+                                          2
                                         )
                                       ],
                                       1

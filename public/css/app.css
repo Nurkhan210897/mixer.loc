@@ -10967,6 +10967,10 @@ a.text-dark:focus {
   padding-left: 27px !important;
 }
 
+#adminPanel .productH5 {
+  color: #1976d2 !important;
+}
+
 /* width */
 
 ::-webkit-scrollbar {
