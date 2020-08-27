@@ -21,8 +21,17 @@ const router = new VueRouter({
       component: require("./components/admin/SubCategoryComponent.vue").default,
     },
     {
-      path: "/admin/list/:table/:tableRussName",
-      component: require("./components/admin/SimpleListComponent.vue").default,
+      path: "/admin/products",
+      component: require("./components/admin/ProductComponent.vue").default,
+    },
+    {
+      path: "/admin/directory/:tableRussName/:directoryTypeId",
+      component: require("./components/admin/DirectoryComponent.vue").default,
+      props: true,
+    },
+    {
+      path: "/admin/:table/:tableRussName",
+      component: require("./components/admin/SimpleComponent.vue").default,
       props: true,
     },
   ],

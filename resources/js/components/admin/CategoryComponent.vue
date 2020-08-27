@@ -8,6 +8,7 @@
     <v-data-table
       :headers="headers"
       :items="data"
+      :items-per-page="data.length"
       class="elevation-1"
       :search="search"
       hide-default-footer

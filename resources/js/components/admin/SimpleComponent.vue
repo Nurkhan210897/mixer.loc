@@ -14,14 +14,11 @@
       hide-default-footer
       v-show="!skeleton"
     >
-      <template v-slot:item.directories="{ item }">
-        <span>{{implodeDirectoryNames(item.directories)}}</span>
-      </template>
       <template v-slot:top>
         <v-toolbar flat color="white">
-          <v-toolbar-title>Подкатегории</v-toolbar-title>
+          <v-toolbar-title>{{tableRussName}}</v-toolbar-title>
           <v-divider class="mx-4" inset vertical></v-divider>
-          <v-dialog v-model="dialog" max-width="450px">
+          <v-dialog v-model="dialog" max-width="350px">
             <template v-slot:activator="{ on }">
               <v-row>
                 <v-col cols="8">
@@ -48,31 +45,7 @@
                 <v-container>
                   <v-row>
                     <v-col cols="12">
-                      <v-select
-                        :items="categories"
-                        item-value="id"
-                        item-text="name"
-                        v-model="editedItem.category_id"
-                        label="Категория"
-                      ></v-select>
-                    </v-col>
-                  </v-row>
-                  <v-row>
-                    <v-col cols="12">
                       <v-text-field v-model="editedItem.name" label="Название"></v-text-field>
-                    </v-col>
-                  </v-row>
-                  <v-row>
-                    <v-col cols="12">
-                      <v-combobox
-                        v-model="editedItem.directories"
-                        :items="directoryTypes"
-                        item-value="id"
-                        item-text="name"
-                        label="Тех характеристики"
-                        multiple
-                        chips
-                      ></v-combobox>
                     </v-col>
                   </v-row>
                 </v-container>
@@ -120,46 +93,37 @@
 import main from "../../mixins/main.js";
 export default {
   mixins: [main],
+  props: ["table", "tableRussName"],
   data: () => ({
-    directoryTypes: [],
-    categories: [],
     headers: [
-      { text: "Категория", value: "category.name", sortable: false },
       { text: "Название", value: "name", sortable: false },
-      { text: "Справочники", value: "directories", sortable: false },
-      {
-        text: "category_id",
-        value: "category_id",
-        sortable: false,
-        align: " d-none",
-      },
       { text: "Действия", value: "actions", sortable: false },
     ],
     editedItem: {
       name: "",
-      category_id: "",
-      directories: [],
     },
     defaultItem: {
       name: "",
-      category_id: "",
-      directories: [],
     },
   }),
+  watch: {
+    table() {
+      this.skeleton = true;
+      this.index();
+    },
+  },
   created() {
     this.index();
   },
   methods: {
     index() {
       axios
-        .get("/api/subCategories")
+        .get("/api/simple?table=" + this.table)
         .then((response) => {
           var res = response.data;
           if (res.success) {
-            this.data = res.data.subCategories;
+            this.data = res.data;
             this.skeleton = false;
-            this.categories = res.data.categories;
-            this.directoryTypes = res.data.directoryTypes;
           } else {
             alert(res.msg);
           }
@@ -167,13 +131,14 @@ export default {
         .catch(function (error) {});
     },
     store() {
+      this.editedItem.table = this.table;
       axios
-        .post("/api/subCategories", this.editedItem)
+        .post("/api/simple", this.editedItem)
         .then((response) => {
           var res = response.data;
           if (res.success) {
-            this.showSnack("success", "Данные успешно добавлены !");
-            this.index();
+            this.editedItem.id = res.id;
+            this.data.unshift(this.editedItem);
             this.close();
           } else {
             alert(res.msg);
@@ -184,16 +149,12 @@ export default {
         });
     },
     update() {
+      this.editedItem.table = this.table;
       axios
-        .put("/api/subCategories/" + this.editedItem.id, this.editedItem)
+        .put("/api/simple/" + this.editedItem.id, this.editedItem)
         .then((response) => {
           var res = response.data;
           if (res.success) {
-            this.showSnack("success", "Данные успешно изменены !");
-            this.editedItem["category.name"] = this.getName(
-              this.editedItem.category_id,
-              this.categories
-            );
             Object.assign(this.data[this.editedIndex], this.editedItem);
             this.close();
           } else {
@@ -206,12 +167,12 @@ export default {
     },
     deleteItem() {
       axios
-        .delete("/api/subCategories/" + this.editedItem.id)
+        .delete("/api/simple/" + this.editedItem.id + "?table=" + this.table)
         .then((response) => {
           var res = response.data;
           if (res.success) {
-            this.showSnack("success", "Данные успешно удалены !");
             this.data.splice(this.editedIndex, 1);
+            this.showSnack("success", "Данные успешно удалены !");
             this.close();
           } else {
             alert(res.msg);
@@ -220,15 +181,6 @@ export default {
         .catch(function (error) {
           console.log(error);
         });
-    },
-    implodeDirectoryNames(directory) {
-      var namesArr = [];
-      var namesStr = "";
-      for (var key in directory) {
-        namesArr.push(directory[key].name);
-      }
-      namesStr = namesArr.join(", ");
-      return namesStr;
     },
   },
 };

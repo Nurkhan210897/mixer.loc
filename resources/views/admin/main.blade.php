@@ -8,7 +8,7 @@
 
 <body>
     <div id='adminPanel'>
-        <layout-component></layout-component>
+        <layout-component :directory-types="{{$directoryTypes}}"></layout-component>
     </div>
 </body>
 

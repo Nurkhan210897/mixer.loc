@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateListTypesTable extends Migration
+class CreateProductDirectoryTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,10 @@ class CreateListTypesTable extends Migration
      */
     public function up()
     {
-        Schema::create('list_types', function (Blueprint $table) {
-            $table->smallIncrements('id');
-            $table->string('name', 255);
+        Schema::create('product_directory', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger('product_id');
+            $table->unsignedSmallInteger('directory_id');
         });
     }
 
@@ -26,6 +27,6 @@ class CreateListTypesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('list_types');
+        Schema::dropIfExists('product_directory');
     }
 }

@@ -5,7 +5,7 @@ namespace App\Models\Admin;
 use Illuminate\Database\Eloquent\Model;
 use DB;
 
-class SimpleList
+class Simple
 {
     private $table;
 

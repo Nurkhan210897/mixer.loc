@@ -4,16 +4,16 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Admin\SimpleList;
+use App\Models\Admin\Simple;
 
-class SimpleListController extends Controller
+class SimpleController extends Controller
 {
 
     private $model;
 
     public function __construct(Request $request)
     {
-        $this->model = new SimpleList($request->table);
+        $this->model = new simple($request->table);
     }
 
     public function index()

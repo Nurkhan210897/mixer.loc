@@ -8,6 +8,7 @@
     <v-data-table
       :headers="headers"
       :items="data"
+      :items-per-page="data.length"
       class="elevation-1"
       :search="search"
       hide-default-footer
@@ -15,9 +16,9 @@
     >
       <template v-slot:top>
         <v-toolbar flat color="white">
-          <v-toolbar-title>{{tableRussName}}</v-toolbar-title>
+          <v-toolbar-title>Товары</v-toolbar-title>
           <v-divider class="mx-4" inset vertical></v-divider>
-          <v-dialog v-model="dialog" max-width="350px">
+          <v-dialog v-model="dialog" fullscreen hide-overlay transition="dialog-bottom-transition">
             <template v-slot:activator="{ on }">
               <v-row>
                 <v-col cols="8">
@@ -36,25 +37,51 @@
               </v-row>
             </template>
             <v-card>
-              <v-card-title>
-                <span class="headline">{{ formTitle }}</span>
-              </v-card-title>
-
+              <v-toolbar dark color="primary">
+                <v-btn icon dark @click="dialog = false">
+                  <v-icon>mdi-close</v-icon>
+                </v-btn>
+                <v-toolbar-title>{{formTitle}}</v-toolbar-title>
+                <v-spacer></v-spacer>
+                <v-toolbar-items>
+                  <v-btn dark text @click="dialog = false">Сохранить</v-btn>
+                </v-toolbar-items>
+              </v-toolbar>
               <v-card-text>
-                <v-container>
+                <v-container fluid>
                   <v-row>
-                    <v-col cols="12">
+                    <v-col cols="4">
+                      <v-row>
+                        <v-text-field v-model="editedItem.name" label="Название"></v-text-field>
+                      </v-row>
+                      <v-row>
+                        <v-select
+                          :items="categories"
+                          item-value="id"
+                          item-text="name"
+                          v-model="editedItem.category_id"
+                          label="Категория"
+                        ></v-select>
+                      </v-row>
+                      <v-row>
+                        <v-select
+                          :items="subCategories"
+                          item-value="id"
+                          item-text="name"
+                          v-model="editedItem.sub_category_id"
+                          label="Подкатегория"
+                        ></v-select>
+                      </v-row>
+                    </v-col>
+                    <v-col cols="4">
+                      <v-text-field v-model="editedItem.name" label="Название"></v-text-field>
+                    </v-col>
+                    <v-col cols="4">
                       <v-text-field v-model="editedItem.name" label="Название"></v-text-field>
                     </v-col>
                   </v-row>
                 </v-container>
               </v-card-text>
-
-              <v-card-actions>
-                <v-spacer></v-spacer>
-                <v-btn color="error darken-1" text @click="close">Отмена</v-btn>
-                <v-btn color="success darken-1" text @click="save">Сохранить</v-btn>
-              </v-card-actions>
             </v-card>
           </v-dialog>
         </v-toolbar>
@@ -92,38 +119,37 @@
 import main from "../../mixins/main.js";
 export default {
   mixins: [main],
-  props: ["table", "tableRussName"],
   data: () => ({
     headers: [
       { text: "Название", value: "name", sortable: false },
       { text: "Действия", value: "actions", sortable: false },
     ],
+    categories: [],
+    subCategories: [],
     editedItem: {
       name: "",
+      category_id: "",
+      sub_category_id: "",
     },
     defaultItem: {
       name: "",
+      category_id: "",
+      sub_category_id: "",
     },
   }),
-  watch: {
-    table() {
-      this.skeleton = true;
-      this.editedItem.table = this.table;
-      this.index();
-    },
-  },
   created() {
-    this.editedItem.table = this.table;
     this.index();
   },
   methods: {
     index() {
       axios
-        .get("/api/simpleList?table=" + this.table)
+        .get("/api/products")
         .then((response) => {
           var res = response.data;
           if (res.success) {
-            this.data = res.data;
+            this.data = res.data.products;
+            this.categories = res.data.categories;
+            this.subCategories = res.data.subCategories;
             this.skeleton = false;
           } else {
             alert(res.msg);
@@ -133,12 +159,11 @@ export default {
     },
     store() {
       axios
-        .post("/api/simpleList", this.editedItem)
+        .post("/api/products", this.editedItem)
         .then((response) => {
           var res = response.data;
           if (res.success) {
-            this.editedItem.id = res.id;
-            this.data.unshift(this.editedItem);
+            this.data.unshift(res.data);
             this.close();
           } else {
             alert(res.msg);
@@ -150,7 +175,7 @@ export default {
     },
     update() {
       axios
-        .put("/api/simpleList/" + this.editedItem.id, this.editedItem)
+        .put("/api/products/" + this.editedItem.id, this.editedItem)
         .then((response) => {
           var res = response.data;
           if (res.success) {
@@ -166,9 +191,7 @@ export default {
     },
     deleteItem() {
       axios
-        .delete(
-          "/api/simpleList/" + this.editedItem.id + "?table=" + this.table
-        )
+        .delete("/api/products/" + this.editedItem.id)
         .then((response) => {
           var res = response.data;
           if (res.success) {

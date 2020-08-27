@@ -9,66 +9,22 @@
           <v-list-item to="/admin/subCategories">
             <v-list-item-content>Подкатегории</v-list-item-content>
           </v-list-item>
+          <v-list-item to="/admin/directory_types/Типы справочников">
+            <v-list-item-content>Типы справочников</v-list-item-content>
+          </v-list-item>
+          <v-list-item to="/admin/products">
+            <v-list-item-content>Продукты</v-list-item-content>
+          </v-list-item>
           <v-list-group>
             <template v-slot:activator>
-              <v-list-item-title>Списки</v-list-item-title>
+              <v-list-item-title>Справочники</v-list-item-title>
             </template>
-            <v-list-item to="/admin/list/installations/Установки">
-              <v-list-item-content>Установки</v-list-item-content>
-            </v-list-item>
-            <v-list-item to="/admin/list/shapes/Формы">
-              <v-list-item-content>Формы</v-list-item-content>
-            </v-list-item>
-            <v-list-item to="/admin/list/surfaces/Поверхности">
-              <v-list-item-content>Поверхности</v-list-item-content>
-            </v-list-item>
-            <v-list-item to="/admin/list/bowl_locations/Рассположения чаш">
-              <v-list-item-content>Рассположения чаш</v-list-item-content>
-            </v-list-item>
-            <v-list-item to="/admin/list/destinations/Предназначения">
-              <v-list-item-content>Предназначения</v-list-item-content>
-            </v-list-item>
-            <v-list-item to="/admin/list/mounting_types/Типы монтажа">
-              <v-list-item-content>Типы монтажа</v-list-item-content>
-            </v-list-item>
-            <v-list-item to="/admin/list/handle_types/Одноручный-Двуручный">
-              <v-list-item-content>Одноручный/Двуручный</v-list-item-content>
-            </v-list-item>
-            <v-list-item to="/admin/list/styles/Стили">
-              <v-list-item-content>Стили</v-list-item-content>
-            </v-list-item>
-            <v-list-item to="/admin/list/pouring_outs/Изливы">
-              <v-list-item-content>Изливы</v-list-item-content>
-            </v-list-item>
-            <v-list-item to="/admin/list/distances/Типы расстояния">
-              <v-list-item-content>Типы расстояния</v-list-item-content>
-            </v-list-item>
-            <v-list-item to="/admin/list/fastener_types/Типы крепежа">
-              <v-list-item-content>Типы крепежа</v-list-item-content>
-            </v-list-item>
-            <v-list-item to="/admin/list/release_types/Типы выпуска">
-              <v-list-item-content>Типы выпуска</v-list-item-content>
-            </v-list-item>
-            <v-list-item to="/admin/list/water_supplies/Подводы воды">
-              <v-list-item-content>Подводы воды</v-list-item-content>
-            </v-list-item>
-            <v-list-item to="/admin/list/seats/Сиденья">
-              <v-list-item-content>Сиденья</v-list-item-content>
-            </v-list-item>
-            <v-list-item to="/admin/list/materials/Материалы">
-              <v-list-item-content>Материалы</v-list-item-content>
-            </v-list-item>
-            <v-list-item to="/admin/list/flushes/Смывы">
-              <v-list-item-content>Смывы</v-list-item-content>
-            </v-list-item>
-            <v-list-item to="/admin/list/colors/Цвета">
-              <v-list-item-content>Цвета</v-list-item-content>
-            </v-list-item>
-            <v-list-item to="/admin/list/mixer_shapes/Формы сместителя">
-              <v-list-item-content>Формы сместителя</v-list-item-content>
-            </v-list-item>
-            <v-list-item to="/admin/list/controls/Управления">
-              <v-list-item-content>Управления</v-list-item-content>
+            <v-list-item
+              :to="'/admin/directory/'+item.name+'/'+item.id"
+              v-for="(item,i) in directoryTypes"
+              :key="i"
+            >
+              <v-list-item-content>{{item.name}}</v-list-item-content>
             </v-list-item>
           </v-list-group>
         </v-list>
@@ -88,13 +44,8 @@
 
 <script>
 export default {
-  mounted() {
-    console.log("Component mounted.");
-  },
-  props: {
-    source: String,
-  },
-
+  props: ["directoryTypes"],
+  mounted() {},
   data: () => ({
     drawer: null,
   }),

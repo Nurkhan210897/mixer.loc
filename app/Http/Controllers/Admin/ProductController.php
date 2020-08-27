@@ -5,8 +5,10 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Admin\Category;
+use App\Models\Admin\SubCategory;
+use App\Models\Admin\Product;
 
-class CategoryController extends Controller
+class ProductController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,7 +17,9 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $data = Category::orderBy('id', 'DESC')->get();
+        $data['categories'] = Category::all();
+        $data['subCategories'] = SubCategory::all();
+        $data['products'] = Product::all();
         return response()->json(['success' => true, 'data' => $data]);
     }
 
@@ -27,8 +31,18 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        $data = Category::create($request->all());
-        return response()->json(['success' => true, 'data' => $data]);
+        //
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
+        //
     }
 
     /**
@@ -40,8 +54,7 @@ class CategoryController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $data = Category::where('id', $id)->update($request->all());
-        return response()->json(['success' => true]);
+        //
     }
 
     /**
@@ -52,7 +65,6 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
-        Category::where('id', $id)->delete();
-        return response()->json(['success' => true]);
+        //
     }
 }

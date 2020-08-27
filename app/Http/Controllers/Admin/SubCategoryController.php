@@ -6,18 +6,24 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Admin\Category;
 use App\Models\Admin\SubCategory;
+use App\Models\Admin\DirectoryType;
+use App\Models\Admin\SubCategoryDirectory;
 
 class SubCategoryController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
+    private $directory;
+
+    public function __construct()
+    {
+        $this->subCategoryDirectory = new SubCategoryDirectory();
+    }
+
     public function index()
     {
         $data['categories'] = Category::orderBy('id', 'DESC')->get();
-        $data['subCategories'] = SubCategory::orderBy('id', 'DESC')->with(['category'])->get();
+        $data['subCategories'] = SubCategory::orderBy('id', 'DESC')->with(['category', 'directories'])->get();
+        $data['directoryTypes'] = DirectoryType::all();
         return response()->json(['success' => true, 'data' => $data]);
     }
 
@@ -29,8 +35,12 @@ class SubCategoryController extends Controller
      */
     public function store(Request $request)
     {
-        $data = SubCategory::create($request->all());
-        return response()->json(['success' => true, 'data' => $data]);
+        $subCategory = SubCategory::create([
+            'name' => $request->name,
+            'category_id' => $request->category_id
+        ]);
+        $this->subCategoryDirectory->store($subCategory->id, $request->directories);
+        return response()->json(['success' => true]);
     }
 
     /**
@@ -42,11 +52,12 @@ class SubCategoryController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $data = SubCategory::where('id', $id)->update([
+        $subCategory = SubCategory::where('id', $id)->update([
             'name' => $request->name,
             'category_id' => $request->category_id
         ]);
-        return response()->json(['success' => true, 'data' => $data]);
+        $this->subCategoryDirectory->updateDirectories($id, $request->directories);
+        return response()->json(['success' => true]);
     }
 
     /**
