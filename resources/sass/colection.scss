@@ -1,0 +1,113 @@
+.title-page {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 2rem;
+    align-items: center;
+    a {
+        color: #fff;
+        i {
+            margin-left: 10px;
+            color: $blue;
+        }
+    }
+    h2,
+    p {
+        color: #fff;
+        font-family: roboto-light;
+    }
+    .selects {
+        display: flex;
+        justify-content: space-between;
+        .select {
+            cursor: pointer;
+            margin-left: 20px;
+            position: relative;
+            height: 38px;
+            background-color: #121212;
+            p {
+                padding: 8px 40px;
+                margin-bottom: 0;
+                line-height: 18px;
+            }
+            &:hover {
+                background-color: $blue;
+                .select-content {
+                    display: block !important;
+                }
+            }
+        }
+        .select-content {
+            display: none;
+            padding: 0 0 0 10px;
+            max-height: 300px;
+            background-color: #121212;
+            overflow: auto;
+            overflow-x: hidden;
+            position: absolute;
+            z-index: 99;
+            top: 34px;
+            width: 100%;
+            ul {
+                padding: 0;
+                li {
+                    a {
+                        display: block;
+                        color: #808080;
+                        padding: 5px 40px 5px 20px;
+                        text-decoration: none;
+                        margin: 0 -20px;
+                        border-top: 1px solid #333;
+                        border-bottom: 1px solid #333;
+                        &:hover {
+                            background-color: $blue;
+                            color: #fff;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+.colection-content {
+    margin-bottom: 2rem;
+    position: relative;
+    .stock {
+        background-color: $blue;
+        position: absolute;
+        z-index: 88;
+        color: #fff;
+        font-size: 13px;
+        padding: 2px 5px;
+        display: flex;
+        align-items: center;
+    }
+    img {
+        max-height: 168px;
+        opacity: .5;
+    }
+    .product-bottom-text {
+        padding-left: 0;
+        font-size: 13px;
+        display: flex;
+        flex-direction: unset;
+        align-items: center;
+        padding-left: 20px;
+        justify-content: end;
+        span {
+            margin-right: 10px;
+        }
+    }
+    text-decoration: none;
+    &:hover {
+        img {
+            opacity: 1;
+        }
+        .white-text {
+            color: $blue;
+        }
+        .silver-text {
+            color: #fff !important;
+        }
+    }
+}
