@@ -44,7 +44,7 @@
                 <v-toolbar-title>{{formTitle}}</v-toolbar-title>
                 <v-spacer></v-spacer>
                 <v-toolbar-items>
-                  <v-btn dark text @click="dialog = false">Сохранить</v-btn>
+                  <v-btn dark text @click="save">Сохранить</v-btn>
                 </v-toolbar-items>
               </v-toolbar>
               <v-card-text>
@@ -54,6 +54,12 @@
                       <h5 class="productH5">Основные данные</h5>
                       <v-row>
                         <v-text-field v-model="editedItem.name" label="Название"></v-text-field>
+                      </v-row>
+                      <v-row>
+                        <v-text-field v-model="editedItem.price" label="Цена"></v-text-field>
+                      </v-row>
+                      <v-row>
+                        <v-text-field v-model="editedItem.count" label="Кол-во"></v-text-field>
                       </v-row>
                       <v-row>
                         <v-select
@@ -66,7 +72,7 @@
                       </v-row>
                       <v-row>
                         <v-select
-                          :items="subCategories"
+                          :items="filteredSubCategories"
                           item-value="id"
                           item-text="name"
                           v-model="editedItem.sub_category_id"
@@ -79,6 +85,8 @@
                           accept="image/png, image/jpeg, image/bmp"
                           prepend-icon="mdi-camera"
                           label="Обложка"
+                          v-model="editedItem.avatar"
+                          ref="avatar"
                         ></v-file-input>
                       </v-row>
                       <v-row>
@@ -87,7 +95,28 @@
                           prepend-icon="mdi-camera"
                           multiple
                           label="Картинки"
+                          v-model="editedItem.images"
+                          ref="images"
                         ></v-file-input>
+                      </v-row>
+                      <v-row>
+                        <v-col cols="5">
+                          <v-row>
+                            <v-text-field v-model="editedItem.weight" label="Вес"></v-text-field>
+                          </v-row>
+                          <v-row>
+                            <v-text-field v-model="editedItem.length" label="Длина"></v-text-field>
+                          </v-row>
+                        </v-col>
+                        <v-col cols="1"></v-col>
+                        <v-col cols="5">
+                          <v-row>
+                            <v-text-field v-model="editedItem.width" label="Ширина"></v-text-field>
+                          </v-row>
+                          <v-row>
+                            <v-text-field v-model="editedItem.height" label="Высота"></v-text-field>
+                          </v-row>
+                        </v-col>
                       </v-row>
                     </v-col>
                     <v-col cols="2"></v-col>
@@ -146,24 +175,51 @@ export default {
   data: () => ({
     headers: [
       { text: "Название", value: "name", sortable: false },
+      { text: "Цена", value: "price", sortable: false },
+      { text: "Кол-во", value: "count", sortable: false },
+      { text: "Категория", value: "category.name", sortable: false },
+      { text: "Подкатегория", value: "sub_category.name", sortable: false },
       { text: "Действия", value: "actions", sortable: false },
     ],
+    test: "",
     categories: [],
     subCategories: [],
+    filteredSubCategories: [],
     directories: [],
     editedItem: {
       name: "",
+      price: "",
+      count: "",
+      weight: "",
+      height: "",
+      length: "",
       category_id: "",
       sub_category_id: "",
       directories: [],
+      avatar: [],
+      images: [],
     },
     defaultItem: {
       name: "",
+      price: "",
+      count: "",
+      weight: "",
+      height: "",
+      length: "",
       category_id: "",
       sub_category_id: "",
       directories: [],
+      avatar: [],
+      images: [],
     },
   }),
+  watch: {
+    "editedItem.category_id"(id) {
+      this.filteredSubCategories = this.subCategories.filter(function (item) {
+        return item.category_id == id;
+      });
+    },
+  },
   created() {
     this.index();
   },
@@ -177,6 +233,7 @@ export default {
             this.data = res.data.products;
             this.categories = res.data.categories;
             this.subCategories = res.data.subCategories;
+            this.filteredSubCategories = this.subCategories;
             this.skeleton = false;
           } else {
             alert(res.msg);
@@ -185,12 +242,18 @@ export default {
         .catch(function (error) {});
     },
     store() {
+      var formData = this.getFormData();
       axios
-        .post("/api/products", this.editedItem)
+        .post("/api/products", formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        })
         .then((response) => {
           var res = response.data;
           if (res.success) {
-            this.data.unshift(res.data);
+            this.showSnack("success", "Данные успешно добавлены!");
+            this.data.unshift(res.data[0]);
             this.close();
           } else {
             alert(res.msg);
@@ -200,16 +263,40 @@ export default {
           console.log(error);
         });
     },
+    editItem(item) {
+      this.editedIndex = this.data.indexOf(item);
+      this.editedItem = Object.assign(this.editedItem, item);
+      this.setDirectories(false);
+      var selDirectories = [];
+      if (this.editedItem.directories[0] instanceof Object) {
+        for (var key in this.editedItem.directories) {
+          selDirectories.push(this.editedItem.directories[key].id);
+        }
+        this.editedItem.directories = selDirectories;
+      }
+      this.dialog = true;
+    },
     update() {
+      console.log(this.editedItem);
+      var formData = this.getFormData();
       axios
-        .put("/api/products/" + this.editedItem.id, this.editedItem)
+        .post(
+          "/api/products/" + this.editedItem.id + "?_method=PUT",
+          formData,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          }
+        )
         .then((response) => {
           var res = response.data;
           if (res.success) {
+            this.showSnack("success", "Данные успешно изменены!");
             Object.assign(this.data[this.editedIndex], this.editedItem);
             this.close();
           } else {
-            alert(res.msg);
+            // alert(res.msg);
           }
         })
         .catch(function (error) {
@@ -223,7 +310,7 @@ export default {
           var res = response.data;
           if (res.success) {
             this.data.splice(this.editedIndex, 1);
-            this.showSnack("success", "Данные успешно удалены !");
+            this.showSnack("success", "Данные успешно удалены!");
             this.close();
           } else {
             alert(res.msg);
@@ -233,8 +320,10 @@ export default {
           console.log(error);
         });
     },
-    setDirectories() {
-      this.editedItem.directories = [];
+    setDirectories(newDirectories = true) {
+      if (newDirectories === true) {
+        this.editedItem.directories = [];
+      }
       var id = this.editedItem.sub_category_id;
       var directories;
       for (var key in this.subCategories) {
@@ -256,6 +345,26 @@ export default {
         .catch(function (error) {
           console.log(error);
         });
+    },
+    getFormData() {
+      var formData = new FormData();
+      formData.append("name", this.editedItem.name);
+      formData.append("price", this.editedItem.price);
+      formData.append("count", this.editedItem.count);
+
+      formData.append("weight", this.editedItem.weight);
+      formData.append("height", this.editedItem.height);
+      formData.append("width", this.editedItem.width);
+      formData.append("length", this.editedItem.length);
+
+      formData.append("category_id", this.editedItem.category_id);
+      formData.append("sub_category_id", this.editedItem.sub_category_id);
+      formData.append("directories", this.editedItem.directories);
+      for (var key in this.editedItem.images) {
+        formData.append("images[]", this.editedItem.images[key]);
+      }
+      formData.append("avatar", this.editedItem.avatar);
+      return formData;
     },
   },
 };
