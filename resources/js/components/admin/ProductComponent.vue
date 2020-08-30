@@ -38,7 +38,7 @@
             </template>
             <v-card>
               <v-toolbar dark color="primary">
-                <v-btn icon dark @click="dialog = false">
+                <v-btn icon dark @click="modalCloseBtn">
                   <v-icon>mdi-close</v-icon>
                 </v-btn>
                 <v-toolbar-title>{{formTitle}}</v-toolbar-title>
@@ -81,25 +81,6 @@
                         ></v-select>
                       </v-row>
                       <v-row>
-                        <v-file-input
-                          accept="image/png, image/jpeg, image/bmp"
-                          prepend-icon="mdi-camera"
-                          label="Обложка"
-                          v-model="editedItem.avatar"
-                          ref="avatar"
-                        ></v-file-input>
-                      </v-row>
-                      <v-row>
-                        <v-file-input
-                          accept="image/png, image/jpeg, image/bmp"
-                          prepend-icon="mdi-camera"
-                          multiple
-                          label="Картинки"
-                          v-model="editedItem.images"
-                          ref="images"
-                        ></v-file-input>
-                      </v-row>
-                      <v-row>
                         <v-col cols="5">
                           <v-row>
                             <v-text-field v-model="editedItem.weight" label="Вес"></v-text-field>
@@ -118,6 +99,72 @@
                           </v-row>
                         </v-col>
                       </v-row>
+                      <!-- При изменении -->
+                      <div v-if="editedIndex > -1">
+                        <v-row>
+                          <v-file-input
+                            accept="image/png, image/jpeg, image/bmp"
+                            prepend-icon="mdi-camera"
+                            label="Обложка"
+                            v-model="editedItem.updAvatar"
+                            ref="avatar"
+                          ></v-file-input>
+                        </v-row>
+                        <v-row v-if="editedItem.avatar.id!==undefined">
+                          <v-col cols="4">
+                            <v-img :src="'/storage/'+editedItem.avatar.path"></v-img>
+                            <v-btn
+                              x-small
+                              color="error"
+                              style="margin-top:5px"
+                              @click="delImage(0,true)"
+                            >Удалить</v-btn>
+                          </v-col>
+                        </v-row>
+                        <v-row>
+                          <v-file-input
+                            accept="image/png, image/jpeg, image/bmp"
+                            prepend-icon="mdi-camera"
+                            multiple
+                            label="Картинки"
+                            v-model="editedItem.updImages"
+                            ref="images"
+                          ></v-file-input>
+                        </v-row>
+                        <v-row v-if="editedItem.images.length!=0">
+                          <v-col cols="4" v-for="(item,i) in editedItem.images" :key="i">
+                            <v-img :src="'/storage/'+item.path"></v-img>
+                            <v-btn
+                              x-small
+                              color="error"
+                              style="margin-top:5px"
+                              @click="delImage(i)"
+                            >Удалить</v-btn>
+                          </v-col>
+                        </v-row>
+                      </div>
+                      <!-- При добавлении -->
+                      <div v-else>
+                        <v-row>
+                          <v-file-input
+                            accept="image/png, image/jpeg, image/bmp"
+                            prepend-icon="mdi-camera"
+                            label="Обложка"
+                            v-model="editedItem.avatar"
+                            ref="avatar"
+                          ></v-file-input>
+                        </v-row>
+                        <v-row>
+                          <v-file-input
+                            accept="image/png, image/jpeg, image/bmp"
+                            prepend-icon="mdi-camera"
+                            multiple
+                            label="Картинки"
+                            v-model="editedItem.images"
+                            ref="images"
+                          ></v-file-input>
+                        </v-row>
+                      </div>
                     </v-col>
                     <v-col cols="2"></v-col>
                     <v-col cols="5">
@@ -196,8 +243,12 @@ export default {
       category_id: "",
       sub_category_id: "",
       directories: [],
-      avatar: [],
+      avatar: {},
+      updAvatar: [],
+      delAvatar: [],
       images: [],
+      updImages: [],
+      delImages: [],
     },
     defaultItem: {
       name: "",
@@ -209,8 +260,12 @@ export default {
       category_id: "",
       sub_category_id: "",
       directories: [],
-      avatar: [],
+      avatar: {},
+      updAvatar: [],
+      delAvatar: [],
       images: [],
+      updImages: [],
+      delImages: [],
     },
   }),
   watch: {
@@ -268,16 +323,22 @@ export default {
       this.editedItem = Object.assign(this.editedItem, item);
       this.setDirectories(false);
       var selDirectories = [];
-      if (this.editedItem.directories[0] instanceof Objectf) {
+      if (this.editedItem.directories[0] instanceof Object) {
         for (var key in this.editedItem.directories) {
           selDirectories.push(this.editedItem.directories[key].id);
         }
         this.editedItem.directories = selDirectories;
       }
+      for (var key in this.editedItem.images) {
+        var image = this.editedItem.images[key];
+        if (image.avatar === 1) {
+          this.editedItem.avatar = image;
+          this.editedItem.images.splice(key, 1);
+        }
+      }
       this.dialog = true;
     },
     update() {
-      console.log(this.editedItem);
       var formData = this.getFormData();
       axios
         .post(
@@ -293,10 +354,10 @@ export default {
           var res = response.data;
           if (res.success) {
             this.showSnack("success", "Данные успешно изменены!");
-            Object.assign(this.data[this.editedIndex], this.editedItem);
+            this.$set(this.data, this.editedIndex, res.data[0]);
             this.close();
           } else {
-            // alert(res.msg);
+            alert(res.msg);
           }
         })
         .catch(function (error) {
@@ -360,11 +421,95 @@ export default {
       formData.append("category_id", this.editedItem.category_id);
       formData.append("sub_category_id", this.editedItem.sub_category_id);
       formData.append("directories", this.editedItem.directories);
-      for (var key in this.editedItem.images) {
-        formData.append("images[]", this.editedItem.images[key]);
-      }
-      formData.append("avatar", this.editedItem.avatar);
+
+      formData = this.getWithAppendedImages(formData);
+
       return formData;
+    },
+    getWithAppendedImages(formData) {
+      //При изменении
+      if (this.editedIndex > -1) {
+        //Если есть новые картинки
+        if (this.editedItem.updImages[0] !== undefined) {
+          for (var key in this.editedItem.updImages) {
+            formData.append("updImages[]", this.editedItem.updImages[key]);
+          }
+        }
+        //Если есть удаленные картинки
+        if (this.editedItem.delImages[0] !== undefined) {
+          var delImages = [];
+          for (var key in this.editedItem.delImages) {
+            delImages.push({
+              id: this.editedItem.delImages[key].id,
+              path: this.editedItem.delImages[key].path,
+            });
+          }
+          formData.append("delImages", JSON.stringify(delImages));
+        }
+        //Если добавлена новая обложка
+        if (this.editedItem.updAvatar.lastModified !== undefined) {
+          formData.append("updAvatar", this.editedItem.updAvatar);
+        }
+        if (this.editedItem.delAvatar.id !== undefined) {
+          formData.append(
+            "delAvatar",
+            JSON.stringify({
+              id: this.editedItem.delAvatar.id,
+              path: this.editedItem.delAvatar.path,
+            })
+          );
+        }
+        formData.append("avatar", JSON.stringify(this.editedItem.avatar));
+      }
+      //При добавлении
+      else {
+        for (var key in this.editedItem.images) {
+          formData.append("images[]", this.editedItem.images[key]);
+        }
+        formData.append("avatar", this.editedItem.avatar);
+      }
+      return formData;
+    },
+    delImage(i, avatar = false) {
+      if (avatar === true) {
+        this.editedItem.delAvatar = this.editedItem.avatar;
+        this.editedItem.avatar = {};
+      } else {
+        this.editedItem.delImages.push(this.editedItem.images[i]);
+        this.editedItem.images.splice(i, 1);
+      }
+    },
+    modalCloseBtn() {
+      this.dialog = false;
+      this.deleteDialog = false;
+      this.$nextTick(() => {
+        this.editedItem.updImages = [];
+        this.editedItem.updAvatar = [];
+        if (this.editedItem.delImages[0] !== undefined) {
+          for (var key in this.editedItem.delImages) {
+            this.editedItem.images.unshift(this.editedItem.delImages[key]);
+            this.editedItem.delImages.splice(key, 1);
+          }
+        }
+        if (this.editedItem.delAvatar.id !== undefined) {
+          this.editedItem.images.unshift(this.editedItem.delAvatar);
+          this.editedItem.delAvatar = {};
+        } else {
+          this.editedItem.images.unshift(this.editedItem.avatar);
+        }
+        this.editedItem = this.defaultItem;
+        this.editedIndex = -1;
+      });
+    },
+    close() {
+      this.dialog = false;
+      this.deleteDialog = false;
+      this.$nextTick(() => {
+        this.editedItem.updImages = [];
+        this.editedItem.updAvatar = [];
+        this.editedItem = this.defaultItem;
+        this.editedIndex = -1;
+      });
     },
   },
 };

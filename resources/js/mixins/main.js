@@ -26,12 +26,12 @@ export default {
   methods: {
     editItem(item) {
       this.editedIndex = this.data.indexOf(item);
-      this.editedItem = Object.assign({}, item);
+      this.editedItem = Object.assign(this.editedItem, item);
       this.dialog = true;
     },
     showDeleteDialog(item) {
       this.editedIndex = this.data.indexOf(item);
-      this.editedItem = Object.assign({}, item);
+      this.editedItem = Object.assign(this.editedItem, item);
       this.deleteDialog = true;
     },
     showSnack(color, msg, time = 2000) {
@@ -44,7 +44,7 @@ export default {
       this.dialog = false;
       this.deleteDialog = false;
       this.$nextTick(() => {
-        this.editedItem = Object.assign({}, this.defaultItem);
+        this.editedItem = Object.assign(this.editedItem, this.defaultItem);
         this.editedIndex = -1;
       });
     },

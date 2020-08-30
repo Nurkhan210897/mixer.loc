@@ -59,22 +59,22 @@ class Product extends Model
         return $data;
     }
 
-    public function updateImages($avatar, $images)
+    public function updateImages($images)
     {
         Image::where('id', $this->id)->delete();
-        $this->storeImages($avatar, $images);
+        $this->storeImages($images);
     }
 
-    public function storeImages($avatar, $images)
+    public function storeImages($data)
     {
-        if (!empty($avatar) and !empty($images)) {
-            $imagesInfo = [];
-            $imagesInfo[] = $this->saveAndGetImageInfoForStore($avatar, true);
-            foreach ($images as $value) {
+        if (is_array($data)) {
+            foreach ($data as $value) {
                 $imagesInfo[] = $this->saveAndGetImageInfoForStore($value);
             }
-            Image::insert($imagesInfo);
+        } else {
+            $imagesInfo[] = $this->saveAndGetImageInfoForStore($data, true);
         }
+        Image::insert($imagesInfo);
     }
 
     private function saveAndGetImageInfoForStore($image, $avatar = false)
@@ -87,10 +87,27 @@ class Product extends Model
         ];
     }
 
+    public function delImages($images)
+    {
+        if (is_array($images)) {
+            $ids = [];
+            foreach ($images as $value) {
+                Storage::delete($value->path);
+                Image::where('id', $value->id)->delete();
+            }
+        } else {
+            Storage::delete($images->path);
+            Image::where('id', $images->id)->delete();
+        }
+    }
+
     public function deleteAllData()
     {
         ProductDirectory::where('product_id', $this->id)->delete();
-        Image::where('product_id', $this->id)->delete();
+        $images = Image::where('product_id', $this->id)->get();
+        foreach ($images as $value) {
+            $this->delImages($value);
+        }
         Product::where('id', $this->id)->delete();
     }
 

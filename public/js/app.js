@@ -2639,6 +2639,53 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   mixins: [_mixins_main_js__WEBPACK_IMPORTED_MODULE_0__["default"]],
@@ -2684,8 +2731,12 @@ __webpack_require__.r(__webpack_exports__);
         category_id: "",
         sub_category_id: "",
         directories: [],
-        avatar: [],
-        images: []
+        avatar: {},
+        updAvatar: [],
+        delAvatar: [],
+        images: [],
+        updImages: [],
+        delImages: []
       },
       defaultItem: {
         name: "",
@@ -2697,8 +2748,12 @@ __webpack_require__.r(__webpack_exports__);
         category_id: "",
         sub_category_id: "",
         directories: [],
-        avatar: [],
-        images: []
+        avatar: {},
+        updAvatar: [],
+        delAvatar: [],
+        images: [],
+        updImages: [],
+        delImages: []
       }
     };
   },
@@ -2760,7 +2815,7 @@ __webpack_require__.r(__webpack_exports__);
       this.setDirectories(false);
       var selDirectories = [];
 
-      if (this.editedItem.directories[0] instanceof Objectf) {
+      if (this.editedItem.directories[0] instanceof Object) {
         for (var key in this.editedItem.directories) {
           selDirectories.push(this.editedItem.directories[key].id);
         }
@@ -2768,12 +2823,20 @@ __webpack_require__.r(__webpack_exports__);
         this.editedItem.directories = selDirectories;
       }
 
+      for (var key in this.editedItem.images) {
+        var image = this.editedItem.images[key];
+
+        if (image.avatar === 1) {
+          this.editedItem.avatar = image;
+          this.editedItem.images.splice(key, 1);
+        }
+      }
+
       this.dialog = true;
     },
     update: function update() {
       var _this3 = this;
 
-      console.log(this.editedItem);
       var formData = this.getFormData();
       axios.post("/api/products/" + this.editedItem.id + "?_method=PUT", formData, {
         headers: {
@@ -2785,10 +2848,11 @@ __webpack_require__.r(__webpack_exports__);
         if (res.success) {
           _this3.showSnack("success", "Данные успешно изменены!");
 
-          Object.assign(_this3.data[_this3.editedIndex], _this3.editedItem);
+          _this3.$set(_this3.data, _this3.editedIndex, res.data[0]);
 
           _this3.close();
-        } else {// alert(res.msg);
+        } else {
+          alert(res.msg);
         }
       })["catch"](function (error) {
         console.log(error);
@@ -2855,13 +2919,108 @@ __webpack_require__.r(__webpack_exports__);
       formData.append("category_id", this.editedItem.category_id);
       formData.append("sub_category_id", this.editedItem.sub_category_id);
       formData.append("directories", this.editedItem.directories);
-
-      for (var key in this.editedItem.images) {
-        formData.append("images[]", this.editedItem.images[key]);
-      }
-
-      formData.append("avatar", this.editedItem.avatar);
+      formData = this.getWithAppendedImages(formData);
       return formData;
+    },
+    getWithAppendedImages: function getWithAppendedImages(formData) {
+      //При изменении
+      if (this.editedIndex > -1) {
+        //Если есть новые картинки
+        if (this.editedItem.updImages[0] !== undefined) {
+          for (var key in this.editedItem.updImages) {
+            formData.append("updImages[]", this.editedItem.updImages[key]);
+          }
+        } //Если есть удаленные картинки
+
+
+        if (this.editedItem.delImages[0] !== undefined) {
+          var delImages = [];
+
+          for (var key in this.editedItem.delImages) {
+            delImages.push({
+              id: this.editedItem.delImages[key].id,
+              path: this.editedItem.delImages[key].path
+            });
+          }
+
+          formData.append("delImages", JSON.stringify(delImages));
+        } //Если добавлена новая обложка
+
+
+        if (this.editedItem.updAvatar.lastModified !== undefined) {
+          formData.append("updAvatar", this.editedItem.updAvatar);
+        }
+
+        if (this.editedItem.delAvatar.id !== undefined) {
+          formData.append("delAvatar", JSON.stringify({
+            id: this.editedItem.delAvatar.id,
+            path: this.editedItem.delAvatar.path
+          }));
+        }
+
+        formData.append("avatar", JSON.stringify(this.editedItem.avatar));
+      } //При добавлении
+      else {
+          for (var key in this.editedItem.images) {
+            formData.append("images[]", this.editedItem.images[key]);
+          }
+
+          formData.append("avatar", this.editedItem.avatar);
+        }
+
+      return formData;
+    },
+    delImage: function delImage(i) {
+      var avatar = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+
+      if (avatar === true) {
+        this.editedItem.delAvatar = this.editedItem.avatar;
+        this.editedItem.avatar = {};
+      } else {
+        this.editedItem.delImages.push(this.editedItem.images[i]);
+        this.editedItem.images.splice(i, 1);
+      }
+    },
+    modalCloseBtn: function modalCloseBtn() {
+      var _this6 = this;
+
+      this.dialog = false;
+      this.deleteDialog = false;
+      this.$nextTick(function () {
+        _this6.editedItem.updImages = [];
+        _this6.editedItem.updAvatar = [];
+
+        if (_this6.editedItem.delImages[0] !== undefined) {
+          for (var key in _this6.editedItem.delImages) {
+            _this6.editedItem.images.unshift(_this6.editedItem.delImages[key]);
+
+            _this6.editedItem.delImages.splice(key, 1);
+          }
+        }
+
+        if (_this6.editedItem.delAvatar.id !== undefined) {
+          _this6.editedItem.images.unshift(_this6.editedItem.delAvatar);
+
+          _this6.editedItem.delAvatar = {};
+        } else {
+          _this6.editedItem.images.unshift(_this6.editedItem.avatar);
+        }
+
+        _this6.editedItem = _this6.defaultItem;
+        _this6.editedIndex = -1;
+      });
+    },
+    close: function close() {
+      var _this7 = this;
+
+      this.dialog = false;
+      this.deleteDialog = false;
+      this.$nextTick(function () {
+        _this7.editedItem.updImages = [];
+        _this7.editedItem.updAvatar = [];
+        _this7.editedItem = _this7.defaultItem;
+        _this7.editedIndex = -1;
+      });
     }
   }
 });
@@ -40625,11 +40784,7 @@ var render = function() {
                                   "v-btn",
                                   {
                                     attrs: { icon: "", dark: "" },
-                                    on: {
-                                      click: function($event) {
-                                        _vm.dialog = false
-                                      }
-                                    }
+                                    on: { click: _vm.modalCloseBtn }
                                   },
                                   [_c("v-icon", [_vm._v("mdi-close")])],
                                   1
@@ -40809,67 +40964,6 @@ var render = function() {
                                             _c(
                                               "v-row",
                                               [
-                                                _c("v-file-input", {
-                                                  ref: "avatar",
-                                                  attrs: {
-                                                    accept:
-                                                      "image/png, image/jpeg, image/bmp",
-                                                    "prepend-icon":
-                                                      "mdi-camera",
-                                                    label: "Обложка"
-                                                  },
-                                                  model: {
-                                                    value:
-                                                      _vm.editedItem.avatar,
-                                                    callback: function($$v) {
-                                                      _vm.$set(
-                                                        _vm.editedItem,
-                                                        "avatar",
-                                                        $$v
-                                                      )
-                                                    },
-                                                    expression:
-                                                      "editedItem.avatar"
-                                                  }
-                                                })
-                                              ],
-                                              1
-                                            ),
-                                            _vm._v(" "),
-                                            _c(
-                                              "v-row",
-                                              [
-                                                _c("v-file-input", {
-                                                  ref: "images",
-                                                  attrs: {
-                                                    accept:
-                                                      "image/png, image/jpeg, image/bmp",
-                                                    "prepend-icon":
-                                                      "mdi-camera",
-                                                    multiple: "",
-                                                    label: "Картинки"
-                                                  },
-                                                  model: {
-                                                    value:
-                                                      _vm.editedItem.images,
-                                                    callback: function($$v) {
-                                                      _vm.$set(
-                                                        _vm.editedItem,
-                                                        "images",
-                                                        $$v
-                                                      )
-                                                    },
-                                                    expression:
-                                                      "editedItem.images"
-                                                  }
-                                                })
-                                              ],
-                                              1
-                                            ),
-                                            _vm._v(" "),
-                                            _c(
-                                              "v-row",
-                                              [
                                                 _c(
                                                   "v-col",
                                                   { attrs: { cols: "5" } },
@@ -41001,7 +41095,278 @@ var render = function() {
                                                 )
                                               ],
                                               1
-                                            )
+                                            ),
+                                            _vm._v(" "),
+                                            _vm.editedIndex > -1
+                                              ? _c(
+                                                  "div",
+                                                  [
+                                                    _c(
+                                                      "v-row",
+                                                      [
+                                                        _c("v-file-input", {
+                                                          ref: "avatar",
+                                                          attrs: {
+                                                            accept:
+                                                              "image/png, image/jpeg, image/bmp",
+                                                            "prepend-icon":
+                                                              "mdi-camera",
+                                                            label: "Обложка"
+                                                          },
+                                                          model: {
+                                                            value:
+                                                              _vm.editedItem
+                                                                .updAvatar,
+                                                            callback: function(
+                                                              $$v
+                                                            ) {
+                                                              _vm.$set(
+                                                                _vm.editedItem,
+                                                                "updAvatar",
+                                                                $$v
+                                                              )
+                                                            },
+                                                            expression:
+                                                              "editedItem.updAvatar"
+                                                          }
+                                                        })
+                                                      ],
+                                                      1
+                                                    ),
+                                                    _vm._v(" "),
+                                                    _vm.editedItem.avatar.id !==
+                                                    undefined
+                                                      ? _c(
+                                                          "v-row",
+                                                          [
+                                                            _c(
+                                                              "v-col",
+                                                              {
+                                                                attrs: {
+                                                                  cols: "4"
+                                                                }
+                                                              },
+                                                              [
+                                                                _c("v-img", {
+                                                                  attrs: {
+                                                                    src:
+                                                                      "/storage/" +
+                                                                      _vm
+                                                                        .editedItem
+                                                                        .avatar
+                                                                        .path
+                                                                  }
+                                                                }),
+                                                                _vm._v(" "),
+                                                                _c(
+                                                                  "v-btn",
+                                                                  {
+                                                                    staticStyle: {
+                                                                      "margin-top":
+                                                                        "5px"
+                                                                    },
+                                                                    attrs: {
+                                                                      "x-small":
+                                                                        "",
+                                                                      color:
+                                                                        "error"
+                                                                    },
+                                                                    on: {
+                                                                      click: function(
+                                                                        $event
+                                                                      ) {
+                                                                        return _vm.delImage(
+                                                                          0,
+                                                                          true
+                                                                        )
+                                                                      }
+                                                                    }
+                                                                  },
+                                                                  [
+                                                                    _vm._v(
+                                                                      "Удалить"
+                                                                    )
+                                                                  ]
+                                                                )
+                                                              ],
+                                                              1
+                                                            )
+                                                          ],
+                                                          1
+                                                        )
+                                                      : _vm._e(),
+                                                    _vm._v(" "),
+                                                    _c(
+                                                      "v-row",
+                                                      [
+                                                        _c("v-file-input", {
+                                                          ref: "images",
+                                                          attrs: {
+                                                            accept:
+                                                              "image/png, image/jpeg, image/bmp",
+                                                            "prepend-icon":
+                                                              "mdi-camera",
+                                                            multiple: "",
+                                                            label: "Картинки"
+                                                          },
+                                                          model: {
+                                                            value:
+                                                              _vm.editedItem
+                                                                .updImages,
+                                                            callback: function(
+                                                              $$v
+                                                            ) {
+                                                              _vm.$set(
+                                                                _vm.editedItem,
+                                                                "updImages",
+                                                                $$v
+                                                              )
+                                                            },
+                                                            expression:
+                                                              "editedItem.updImages"
+                                                          }
+                                                        })
+                                                      ],
+                                                      1
+                                                    ),
+                                                    _vm._v(" "),
+                                                    _vm.editedItem.images
+                                                      .length != 0
+                                                      ? _c(
+                                                          "v-row",
+                                                          _vm._l(
+                                                            _vm.editedItem
+                                                              .images,
+                                                            function(item, i) {
+                                                              return _c(
+                                                                "v-col",
+                                                                {
+                                                                  key: i,
+                                                                  attrs: {
+                                                                    cols: "4"
+                                                                  }
+                                                                },
+                                                                [
+                                                                  _c("v-img", {
+                                                                    attrs: {
+                                                                      src:
+                                                                        "/storage/" +
+                                                                        item.path
+                                                                    }
+                                                                  }),
+                                                                  _vm._v(" "),
+                                                                  _c(
+                                                                    "v-btn",
+                                                                    {
+                                                                      staticStyle: {
+                                                                        "margin-top":
+                                                                          "5px"
+                                                                      },
+                                                                      attrs: {
+                                                                        "x-small":
+                                                                          "",
+                                                                        color:
+                                                                          "error"
+                                                                      },
+                                                                      on: {
+                                                                        click: function(
+                                                                          $event
+                                                                        ) {
+                                                                          return _vm.delImage(
+                                                                            i
+                                                                          )
+                                                                        }
+                                                                      }
+                                                                    },
+                                                                    [
+                                                                      _vm._v(
+                                                                        "Удалить"
+                                                                      )
+                                                                    ]
+                                                                  )
+                                                                ],
+                                                                1
+                                                              )
+                                                            }
+                                                          ),
+                                                          1
+                                                        )
+                                                      : _vm._e()
+                                                  ],
+                                                  1
+                                                )
+                                              : _c(
+                                                  "div",
+                                                  [
+                                                    _c(
+                                                      "v-row",
+                                                      [
+                                                        _c("v-file-input", {
+                                                          ref: "avatar",
+                                                          attrs: {
+                                                            accept:
+                                                              "image/png, image/jpeg, image/bmp",
+                                                            "prepend-icon":
+                                                              "mdi-camera",
+                                                            label: "Обложка"
+                                                          },
+                                                          model: {
+                                                            value:
+                                                              _vm.editedItem
+                                                                .avatar,
+                                                            callback: function(
+                                                              $$v
+                                                            ) {
+                                                              _vm.$set(
+                                                                _vm.editedItem,
+                                                                "avatar",
+                                                                $$v
+                                                              )
+                                                            },
+                                                            expression:
+                                                              "editedItem.avatar"
+                                                          }
+                                                        })
+                                                      ],
+                                                      1
+                                                    ),
+                                                    _vm._v(" "),
+                                                    _c(
+                                                      "v-row",
+                                                      [
+                                                        _c("v-file-input", {
+                                                          ref: "images",
+                                                          attrs: {
+                                                            accept:
+                                                              "image/png, image/jpeg, image/bmp",
+                                                            "prepend-icon":
+                                                              "mdi-camera",
+                                                            multiple: "",
+                                                            label: "Картинки"
+                                                          },
+                                                          model: {
+                                                            value:
+                                                              _vm.editedItem
+                                                                .images,
+                                                            callback: function(
+                                                              $$v
+                                                            ) {
+                                                              _vm.$set(
+                                                                _vm.editedItem,
+                                                                "images",
+                                                                $$v
+                                                              )
+                                                            },
+                                                            expression:
+                                                              "editedItem.images"
+                                                          }
+                                                        })
+                                                      ],
+                                                      1
+                                                    )
+                                                  ],
+                                                  1
+                                                )
                                           ],
                                           1
                                         ),
@@ -101595,12 +101960,12 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     editItem: function editItem(item) {
       this.editedIndex = this.data.indexOf(item);
-      this.editedItem = Object.assign({}, item);
+      this.editedItem = Object.assign(this.editedItem, item);
       this.dialog = true;
     },
     showDeleteDialog: function showDeleteDialog(item) {
       this.editedIndex = this.data.indexOf(item);
-      this.editedItem = Object.assign({}, item);
+      this.editedItem = Object.assign(this.editedItem, item);
       this.deleteDialog = true;
     },
     showSnack: function showSnack(color, msg) {
@@ -101616,7 +101981,7 @@ __webpack_require__.r(__webpack_exports__);
       this.dialog = false;
       this.deleteDialog = false;
       this.$nextTick(function () {
-        _this.editedItem = Object.assign({}, _this.defaultItem);
+        _this.editedItem = Object.assign(_this.editedItem, _this.defaultItem);
         _this.editedIndex = -1;
       });
     },
