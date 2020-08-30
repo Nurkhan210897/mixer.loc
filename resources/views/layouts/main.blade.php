@@ -97,11 +97,11 @@
                                         <i class="fas fa-chevron-down"></i>
                                     </a>
                                     <ul>
-                                        <li v-for="item in colection" :key="item.link" v-show="category">
-                                            <a href="#">{{ item.link }}</a>
+                                        <li>
+                                            <a href="#">link</a>
                                             <ul v-if="item.linkCategory" v-show="linkCategoryShow">
-                                                <li v-for="(item, index) in item.linkCategory" :key="index">
-                                                    <a href="#">{{item }}</a>
+                                                <li>
+                                                    <a href="#">item</a>
                                                 </li>
                                             </ul>
                                         </li>
@@ -123,7 +123,9 @@
         </div>
     </div>
     @show
+
     @yield('main')
+
     @section('footer')
     <div>
         <footer>
