@@ -268,7 +268,7 @@ export default {
       this.editedItem = Object.assign(this.editedItem, item);
       this.setDirectories(false);
       var selDirectories = [];
-      if (this.editedItem.directories[0] instanceof Object) {
+      if (this.editedItem.directories[0] instanceof Objectf) {
         for (var key in this.editedItem.directories) {
           selDirectories.push(this.editedItem.directories[key].id);
         }

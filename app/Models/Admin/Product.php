@@ -80,7 +80,7 @@ class Product extends Model
     private function saveAndGetImageInfoForStore($image, $avatar = false)
     {
         return [
-            'path' => Storage::putFile('images', $image),
+            'path' => Storage::putFile('images/products', $image),
             'name' => $image->getClientOriginalName(),
             'avatar' => $avatar,
             'product_id' => $this->id
