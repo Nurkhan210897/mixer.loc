@@ -21,7 +21,7 @@
         <v-toolbar flat color="white">
           <v-toolbar-title>Подкатегории</v-toolbar-title>
           <v-divider class="mx-4" inset vertical></v-divider>
-          <v-dialog v-model="dialog" max-width="450px">
+          <v-dialog v-model="dialog" max-width="750px">
             <template v-slot:activator="{ on }">
               <v-row>
                 <v-col cols="8">
@@ -47,32 +47,63 @@
               <v-card-text>
                 <v-container>
                   <v-row>
-                    <v-col cols="12">
-                      <v-select
-                        :items="categories"
-                        item-value="id"
-                        item-text="name"
-                        v-model="editedItem.category_id"
-                        label="Категория"
-                      ></v-select>
+                    <v-col cols="6">
+                      <v-col cols="12">
+                        <v-text-field v-model="editedItem.name" label="Название"></v-text-field>
+                      </v-col>
+                      <v-col cols="12">
+                        <v-text-field v-model="editedItem.serial_number" label="Порядковый номер"></v-text-field>
+                      </v-col>
+                      <v-col cols="12" v-if="editedIndex>-1">
+                        <v-file-input
+                          accept="image/png, image/jpeg, image/bmp"
+                          prepend-icon="mdi-camera"
+                          label="Обложка"
+                          v-model="editedItem.updAvatar"
+                        ></v-file-input>
+                      </v-col>
+                      <v-col cols="12" v-else>
+                        <v-file-input
+                          accept="image/png, image/jpeg, image/bmp"
+                          prepend-icon="mdi-camera"
+                          label="Обложка"
+                          v-model="editedItem.avatar"
+                        ></v-file-input>
+                      </v-col>
+                      <v-col cols="4" v-if="editedIndex>-1 && editedItem.avatar!=null">
+                        <v-img :src="'/storage/'+editedItem.avatar"></v-img>
+                        <v-btn
+                          x-small
+                          color="error"
+                          style="margin-top:5px"
+                          @click="delAvatar"
+                        >Удалить</v-btn>
+                      </v-col>
+                      <v-col cols="12">
+                        <v-switch v-model="editedItem.in_index" label="На главной"></v-switch>
+                      </v-col>
                     </v-col>
-                  </v-row>
-                  <v-row>
-                    <v-col cols="12">
-                      <v-text-field v-model="editedItem.name" label="Название"></v-text-field>
-                    </v-col>
-                  </v-row>
-                  <v-row>
-                    <v-col cols="12">
-                      <v-combobox
-                        v-model="editedItem.directories"
-                        :items="directoryTypes"
-                        item-value="id"
-                        item-text="name"
-                        label="Тех характеристики"
-                        multiple
-                        chips
-                      ></v-combobox>
+                    <v-col cols="6">
+                      <v-col cols="12">
+                        <v-select
+                          :items="categories"
+                          item-value="id"
+                          item-text="name"
+                          v-model="editedItem.category_id"
+                          label="Категория"
+                        ></v-select>
+                      </v-col>
+                      <v-col cols="12">
+                        <v-combobox
+                          v-model="editedItem.directories"
+                          :items="directoryTypes"
+                          item-value="id"
+                          item-text="name"
+                          label="Тех характеристики"
+                          multiple
+                          chips
+                        ></v-combobox>
+                      </v-col>
                     </v-col>
                   </v-row>
                 </v-container>
@@ -126,7 +157,9 @@ export default {
     headers: [
       { text: "Категория", value: "category.name", sortable: false },
       { text: "Название", value: "name", sortable: false },
+      { text: "Порядковый номер", value: "serial_number", sortable: false },
       { text: "Справочники", value: "directories", sortable: false },
+      { text: "На главной", value: "in_index", sortable: false },
       {
         text: "category_id",
         value: "category_id",
@@ -138,11 +171,21 @@ export default {
     editedItem: {
       name: "",
       category_id: "",
+      serial_number: "",
+      in_index: false,
+      avatar: null,
+      updAvatar: null,
+      delAvatar: null,
       directories: [],
     },
     defaultItem: {
       name: "",
       category_id: "",
+      serial_number: "",
+      in_index: false,
+      avatar: null,
+      updAvatar: null,
+      delAvatar: null,
       directories: [],
     },
   }),
@@ -167,13 +210,18 @@ export default {
         .catch(function (error) {});
     },
     store() {
+      var formData = this.getFormData();
       axios
-        .post("/api/subCategories", this.editedItem)
+        .post("/api/subCategories", formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        })
         .then((response) => {
           var res = response.data;
           if (res.success) {
             this.showSnack("success", "Данные успешно добавлены !");
-            this.index();
+            this.data.unshift(res.data[0]);
             this.close();
           } else {
             alert(res.msg);
@@ -184,17 +232,22 @@ export default {
         });
     },
     update() {
+      var formData = this.getFormData();
       axios
-        .put("/api/subCategories/" + this.editedItem.id, this.editedItem)
+        .post(
+          "/api/subCategories/" + this.editedItem.id + "?_method=PUT",
+          formData,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          }
+        )
         .then((response) => {
           var res = response.data;
           if (res.success) {
             this.showSnack("success", "Данные успешно изменены !");
-            this.editedItem["category.name"] = this.getName(
-              this.editedItem.category_id,
-              this.categories
-            );
-            Object.assign(this.data[this.editedIndex], this.editedItem);
+            this.$set(this.data, this.editedIndex, res.data);
             this.close();
           } else {
             alert(res.msg);
@@ -204,9 +257,42 @@ export default {
           console.log(error);
         });
     },
+    getFormData() {
+      var formData = new FormData();
+      formData.append("name", this.editedItem.name);
+      formData.append("serial_number", this.editedItem.serial_number);
+      formData.append("in_index", Number(this.editedItem.in_index));
+      formData.append("avatar", this.editedItem.avatar);
+      formData.append("category_id", this.editedItem.category_id);
+      formData.append(
+        "directories",
+        JSON.stringify(this.editedItem.directories)
+      );
+      if (this.editedIndex > -1) {
+        if (this.editedItem.updAvatar !== null) {
+          formData.append("updAvatar", this.editedItem.updAvatar);
+        }
+        if (this.editedItem.delAvatar !== null) {
+          formData.append(
+            "delAvatar",
+            JSON.stringify(this.editedItem.delAvatar)
+          );
+        }
+      }
+      return formData;
+    },
     deleteItem() {
+      var formData = this.getFormData();
       axios
-        .delete("/api/subCategories/" + this.editedItem.id)
+        .post(
+          "/api/subCategories/" + this.editedItem.id + "?_method=DELETE",
+          formData,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          }
+        )
         .then((response) => {
           var res = response.data;
           if (res.success) {
@@ -229,6 +315,9 @@ export default {
       }
       namesStr = namesArr.join(", ");
       return namesStr;
+    },
+    delAvatar() {
+      this.editedItem.delAvatar = this.editedItem.avatar;
     },
   },
 };

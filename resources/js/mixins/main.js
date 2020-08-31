@@ -44,7 +44,7 @@ export default {
       this.dialog = false;
       this.deleteDialog = false;
       this.$nextTick(() => {
-        this.editedItem = Object.assign(this.editedItem, this.defaultItem);
+        this.editedItem = Object.assign({}, this.defaultItem);
         this.editedIndex = -1;
       });
     },

@@ -21,7 +21,7 @@ class SubCategoryDirectory extends Model
         $data = [];
         foreach ($directories as $key => $value) {
             $data[$key]['sub_category_id'] = $subCategoryId;
-            $data[$key]['directory_type_id'] = $value['id'];
+            $data[$key]['directory_type_id'] = $value->id;
         }
         return $data;
     }

@@ -8,6 +8,7 @@ use App\Models\Admin\Category;
 use App\Models\Admin\SubCategory;
 use App\Models\Admin\DirectoryType;
 use App\Models\Admin\SubCategoryDirectory;
+use Illuminate\Support\Facades\Storage;
 
 class SubCategoryController extends Controller
 {
@@ -37,10 +38,14 @@ class SubCategoryController extends Controller
     {
         $subCategory = SubCategory::create([
             'name' => $request->name,
-            'category_id' => $request->category_id
+            'category_id' => $request->category_id,
+            'serial_number' => $request->serial_number,
+            'in_index' => (int)$request->in_index,
+            'avatar' => $request->file('avatar')->store('images/subCategories'),
         ]);
-        $this->subCategoryDirectory->store($subCategory->id, $request->directories);
-        return response()->json(['success' => true]);
+        $this->subCategoryDirectory->store($subCategory->id, json_decode($request->directories));
+        $data = SubCategory::where('id', $subCategory->id)->orderBy('id', 'DESC')->with(['category', 'directories'])->get();
+        return response()->json(['success' => true, 'data' => $data]);
     }
 
     /**
@@ -52,12 +57,10 @@ class SubCategoryController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $subCategory = SubCategory::where('id', $id)->update([
-            'name' => $request->name,
-            'category_id' => $request->category_id
-        ]);
-        $this->subCategoryDirectory->updateDirectories($id, $request->directories);
-        return response()->json(['success' => true]);
+        SubCategory::updData($request, $id);
+        $this->subCategoryDirectory->updateDirectories($id, json_decode($request->directories));
+        $data = SubCategory::where('id', $id)->orderBy('id', 'DESC')->with(['category', 'directories'])->get();
+        return response()->json(['success' => true, 'data' => $data]);
     }
 
     /**
@@ -66,9 +69,12 @@ class SubCategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        SubCategory::where('id', $id)->delete();
+        if (!empty($request->avatar)) {
+            Storage::delete($request->avatar);
+        }
+        SubCategory::where('id', $request->id)->delete();
         return response()->json(['success' => true]);
     }
 }

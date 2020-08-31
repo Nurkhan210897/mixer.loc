@@ -3209,6 +3209,7 @@ __webpack_require__.r(__webpack_exports__);
 
         if (res.success) {
           _this2.editedItem.id = res.id;
+          console.log(_this2.editedItem);
 
           _this2.data.unshift(_this2.editedItem);
 
@@ -3390,6 +3391,37 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   mixins: [_mixins_main_js__WEBPACK_IMPORTED_MODULE_0__["default"]],
@@ -3406,8 +3438,16 @@ __webpack_require__.r(__webpack_exports__);
         value: "name",
         sortable: false
       }, {
+        text: "Порядковый номер",
+        value: "serial_number",
+        sortable: false
+      }, {
         text: "Справочники",
         value: "directories",
+        sortable: false
+      }, {
+        text: "На главной",
+        value: "in_index",
         sortable: false
       }, {
         text: "category_id",
@@ -3422,11 +3462,21 @@ __webpack_require__.r(__webpack_exports__);
       editedItem: {
         name: "",
         category_id: "",
+        serial_number: "",
+        in_index: false,
+        avatar: null,
+        updAvatar: null,
+        delAvatar: null,
         directories: []
       },
       defaultItem: {
         name: "",
         category_id: "",
+        serial_number: "",
+        in_index: false,
+        avatar: null,
+        updAvatar: null,
+        delAvatar: null,
         directories: []
       }
     };
@@ -3454,13 +3504,18 @@ __webpack_require__.r(__webpack_exports__);
     store: function store() {
       var _this2 = this;
 
-      axios.post("/api/subCategories", this.editedItem).then(function (response) {
+      var formData = this.getFormData();
+      axios.post("/api/subCategories", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data"
+        }
+      }).then(function (response) {
         var res = response.data;
 
         if (res.success) {
           _this2.showSnack("success", "Данные успешно добавлены !");
 
-          _this2.index();
+          _this2.data.unshift(res.data[0]);
 
           _this2.close();
         } else {
@@ -3473,14 +3528,18 @@ __webpack_require__.r(__webpack_exports__);
     update: function update() {
       var _this3 = this;
 
-      axios.put("/api/subCategories/" + this.editedItem.id, this.editedItem).then(function (response) {
+      var formData = this.getFormData();
+      axios.post("/api/subCategories/" + this.editedItem.id + "?_method=PUT", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data"
+        }
+      }).then(function (response) {
         var res = response.data;
 
         if (res.success) {
           _this3.showSnack("success", "Данные успешно изменены !");
 
-          _this3.editedItem["category.name"] = _this3.getName(_this3.editedItem.category_id, _this3.categories);
-          Object.assign(_this3.data[_this3.editedIndex], _this3.editedItem);
+          _this3.$set(_this3.data, _this3.editedIndex, res.data);
 
           _this3.close();
         } else {
@@ -3490,10 +3549,36 @@ __webpack_require__.r(__webpack_exports__);
         console.log(error);
       });
     },
+    getFormData: function getFormData() {
+      var formData = new FormData();
+      formData.append("name", this.editedItem.name);
+      formData.append("serial_number", this.editedItem.serial_number);
+      formData.append("in_index", Number(this.editedItem.in_index));
+      formData.append("avatar", this.editedItem.avatar);
+      formData.append("category_id", this.editedItem.category_id);
+      formData.append("directories", JSON.stringify(this.editedItem.directories));
+
+      if (this.editedIndex > -1) {
+        if (this.editedItem.updAvatar !== null) {
+          formData.append("updAvatar", this.editedItem.updAvatar);
+        }
+
+        if (this.editedItem.delAvatar !== null) {
+          formData.append("delAvatar", JSON.stringify(this.editedItem.delAvatar));
+        }
+      }
+
+      return formData;
+    },
     deleteItem: function deleteItem() {
       var _this4 = this;
 
-      axios["delete"]("/api/subCategories/" + this.editedItem.id).then(function (response) {
+      var formData = this.getFormData();
+      axios.post("/api/subCategories/" + this.editedItem.id + "?_method=DELETE", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data"
+        }
+      }).then(function (response) {
         var res = response.data;
 
         if (res.success) {
@@ -3519,6 +3604,9 @@ __webpack_require__.r(__webpack_exports__);
 
       namesStr = namesArr.join(", ");
       return namesStr;
+    },
+    delAvatar: function delAvatar() {
+      this.editedItem.delAvatar = this.editedItem.avatar;
     }
   }
 });
@@ -42171,7 +42259,7 @@ var render = function() {
                     _c(
                       "v-dialog",
                       {
-                        attrs: { "max-width": "450px" },
+                        attrs: { "max-width": "750px" },
                         scopedSlots: _vm._u([
                           {
                             key: "activator",
@@ -42263,94 +42351,252 @@ var render = function() {
                                       [
                                         _c(
                                           "v-col",
-                                          { attrs: { cols: "12" } },
+                                          { attrs: { cols: "6" } },
                                           [
-                                            _c("v-select", {
-                                              attrs: {
-                                                items: _vm.categories,
-                                                "item-value": "id",
-                                                "item-text": "name",
-                                                label: "Категория"
-                                              },
-                                              model: {
-                                                value:
-                                                  _vm.editedItem.category_id,
-                                                callback: function($$v) {
-                                                  _vm.$set(
-                                                    _vm.editedItem,
-                                                    "category_id",
-                                                    $$v
-                                                  )
-                                                },
-                                                expression:
-                                                  "editedItem.category_id"
-                                              }
-                                            })
+                                            _c(
+                                              "v-col",
+                                              { attrs: { cols: "12" } },
+                                              [
+                                                _c("v-text-field", {
+                                                  attrs: { label: "Название" },
+                                                  model: {
+                                                    value: _vm.editedItem.name,
+                                                    callback: function($$v) {
+                                                      _vm.$set(
+                                                        _vm.editedItem,
+                                                        "name",
+                                                        $$v
+                                                      )
+                                                    },
+                                                    expression:
+                                                      "editedItem.name"
+                                                  }
+                                                })
+                                              ],
+                                              1
+                                            ),
+                                            _vm._v(" "),
+                                            _c(
+                                              "v-col",
+                                              { attrs: { cols: "12" } },
+                                              [
+                                                _c("v-text-field", {
+                                                  attrs: {
+                                                    label: "Порядковый номер"
+                                                  },
+                                                  model: {
+                                                    value:
+                                                      _vm.editedItem
+                                                        .serial_number,
+                                                    callback: function($$v) {
+                                                      _vm.$set(
+                                                        _vm.editedItem,
+                                                        "serial_number",
+                                                        $$v
+                                                      )
+                                                    },
+                                                    expression:
+                                                      "editedItem.serial_number"
+                                                  }
+                                                })
+                                              ],
+                                              1
+                                            ),
+                                            _vm._v(" "),
+                                            _vm.editedIndex > -1
+                                              ? _c(
+                                                  "v-col",
+                                                  { attrs: { cols: "12" } },
+                                                  [
+                                                    _c("v-file-input", {
+                                                      attrs: {
+                                                        accept:
+                                                          "image/png, image/jpeg, image/bmp",
+                                                        "prepend-icon":
+                                                          "mdi-camera",
+                                                        label: "Обложка"
+                                                      },
+                                                      model: {
+                                                        value:
+                                                          _vm.editedItem
+                                                            .updAvatar,
+                                                        callback: function(
+                                                          $$v
+                                                        ) {
+                                                          _vm.$set(
+                                                            _vm.editedItem,
+                                                            "updAvatar",
+                                                            $$v
+                                                          )
+                                                        },
+                                                        expression:
+                                                          "editedItem.updAvatar"
+                                                      }
+                                                    })
+                                                  ],
+                                                  1
+                                                )
+                                              : _c(
+                                                  "v-col",
+                                                  { attrs: { cols: "12" } },
+                                                  [
+                                                    _c("v-file-input", {
+                                                      attrs: {
+                                                        accept:
+                                                          "image/png, image/jpeg, image/bmp",
+                                                        "prepend-icon":
+                                                          "mdi-camera",
+                                                        label: "Обложка"
+                                                      },
+                                                      model: {
+                                                        value:
+                                                          _vm.editedItem.avatar,
+                                                        callback: function(
+                                                          $$v
+                                                        ) {
+                                                          _vm.$set(
+                                                            _vm.editedItem,
+                                                            "avatar",
+                                                            $$v
+                                                          )
+                                                        },
+                                                        expression:
+                                                          "editedItem.avatar"
+                                                      }
+                                                    })
+                                                  ],
+                                                  1
+                                                ),
+                                            _vm._v(" "),
+                                            _vm.editedIndex > -1 &&
+                                            _vm.editedItem.avatar != null
+                                              ? _c(
+                                                  "v-col",
+                                                  { attrs: { cols: "4" } },
+                                                  [
+                                                    _c("v-img", {
+                                                      attrs: {
+                                                        src:
+                                                          "/storage/" +
+                                                          _vm.editedItem.avatar
+                                                      }
+                                                    }),
+                                                    _vm._v(" "),
+                                                    _c(
+                                                      "v-btn",
+                                                      {
+                                                        staticStyle: {
+                                                          "margin-top": "5px"
+                                                        },
+                                                        attrs: {
+                                                          "x-small": "",
+                                                          color: "error"
+                                                        },
+                                                        on: {
+                                                          click: _vm.delAvatar
+                                                        }
+                                                      },
+                                                      [_vm._v("Удалить")]
+                                                    )
+                                                  ],
+                                                  1
+                                                )
+                                              : _vm._e(),
+                                            _vm._v(" "),
+                                            _c(
+                                              "v-col",
+                                              { attrs: { cols: "12" } },
+                                              [
+                                                _c("v-switch", {
+                                                  attrs: {
+                                                    label: "На главной"
+                                                  },
+                                                  model: {
+                                                    value:
+                                                      _vm.editedItem.in_index,
+                                                    callback: function($$v) {
+                                                      _vm.$set(
+                                                        _vm.editedItem,
+                                                        "in_index",
+                                                        $$v
+                                                      )
+                                                    },
+                                                    expression:
+                                                      "editedItem.in_index"
+                                                  }
+                                                })
+                                              ],
+                                              1
+                                            )
                                           ],
                                           1
-                                        )
-                                      ],
-                                      1
-                                    ),
-                                    _vm._v(" "),
-                                    _c(
-                                      "v-row",
-                                      [
+                                        ),
+                                        _vm._v(" "),
                                         _c(
                                           "v-col",
-                                          { attrs: { cols: "12" } },
+                                          { attrs: { cols: "6" } },
                                           [
-                                            _c("v-text-field", {
-                                              attrs: { label: "Название" },
-                                              model: {
-                                                value: _vm.editedItem.name,
-                                                callback: function($$v) {
-                                                  _vm.$set(
-                                                    _vm.editedItem,
-                                                    "name",
-                                                    $$v
-                                                  )
-                                                },
-                                                expression: "editedItem.name"
-                                              }
-                                            })
-                                          ],
-                                          1
-                                        )
-                                      ],
-                                      1
-                                    ),
-                                    _vm._v(" "),
-                                    _c(
-                                      "v-row",
-                                      [
-                                        _c(
-                                          "v-col",
-                                          { attrs: { cols: "12" } },
-                                          [
-                                            _c("v-combobox", {
-                                              attrs: {
-                                                items: _vm.directoryTypes,
-                                                "item-value": "id",
-                                                "item-text": "name",
-                                                label: "Тех характеристики",
-                                                multiple: "",
-                                                chips: ""
-                                              },
-                                              model: {
-                                                value:
-                                                  _vm.editedItem.directories,
-                                                callback: function($$v) {
-                                                  _vm.$set(
-                                                    _vm.editedItem,
-                                                    "directories",
-                                                    $$v
-                                                  )
-                                                },
-                                                expression:
-                                                  "editedItem.directories"
-                                              }
-                                            })
+                                            _c(
+                                              "v-col",
+                                              { attrs: { cols: "12" } },
+                                              [
+                                                _c("v-select", {
+                                                  attrs: {
+                                                    items: _vm.categories,
+                                                    "item-value": "id",
+                                                    "item-text": "name",
+                                                    label: "Категория"
+                                                  },
+                                                  model: {
+                                                    value:
+                                                      _vm.editedItem
+                                                        .category_id,
+                                                    callback: function($$v) {
+                                                      _vm.$set(
+                                                        _vm.editedItem,
+                                                        "category_id",
+                                                        $$v
+                                                      )
+                                                    },
+                                                    expression:
+                                                      "editedItem.category_id"
+                                                  }
+                                                })
+                                              ],
+                                              1
+                                            ),
+                                            _vm._v(" "),
+                                            _c(
+                                              "v-col",
+                                              { attrs: { cols: "12" } },
+                                              [
+                                                _c("v-combobox", {
+                                                  attrs: {
+                                                    items: _vm.directoryTypes,
+                                                    "item-value": "id",
+                                                    "item-text": "name",
+                                                    label: "Тех характеристики",
+                                                    multiple: "",
+                                                    chips: ""
+                                                  },
+                                                  model: {
+                                                    value:
+                                                      _vm.editedItem
+                                                        .directories,
+                                                    callback: function($$v) {
+                                                      _vm.$set(
+                                                        _vm.editedItem,
+                                                        "directories",
+                                                        $$v
+                                                      )
+                                                    },
+                                                    expression:
+                                                      "editedItem.directories"
+                                                  }
+                                                })
+                                              ],
+                                              1
+                                            )
                                           ],
                                           1
                                         )
@@ -102067,7 +102313,7 @@ __webpack_require__.r(__webpack_exports__);
       this.dialog = false;
       this.deleteDialog = false;
       this.$nextTick(function () {
-        _this.editedItem = Object.assign(_this.editedItem, _this.defaultItem);
+        _this.editedItem = Object.assign({}, _this.defaultItem);
         _this.editedIndex = -1;
       });
     },
