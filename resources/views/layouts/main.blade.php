@@ -23,7 +23,7 @@
         <div class="header">
             <div class="nav-top">
                 <div class="container">
-                    <nav>
+                    <nav class="navbar-expand-lg navbar-light">
                         <button class="navbar-toggler bg-dark" type="button" data-toggle="collapse" data-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
                             <span class="navbar-toggler-icon"></span>
                         </button>
