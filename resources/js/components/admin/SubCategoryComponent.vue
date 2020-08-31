@@ -247,7 +247,7 @@ export default {
           var res = response.data;
           if (res.success) {
             this.showSnack("success", "Данные успешно изменены !");
-            this.$set(this.data, this.editedIndex, res.data);
+            this.$set(this.data, this.editedIndex, res.data[0]);
             this.close();
           } else {
             alert(res.msg);

@@ -28,7 +28,7 @@ class SubCategoryDirectory extends Model
 
     public function updateDirectories($subCategoryId, $directories)
     {
-        $this->delete($subCategoryId);
+        $this->deleteDirectories($subCategoryId);
         $this->store($subCategoryId, $directories);
     }
 

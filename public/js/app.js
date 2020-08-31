@@ -3539,7 +3539,7 @@ __webpack_require__.r(__webpack_exports__);
         if (res.success) {
           _this3.showSnack("success", "Данные успешно изменены !");
 
-          _this3.$set(_this3.data, _this3.editedIndex, res.data);
+          _this3.$set(_this3.data, _this3.editedIndex, res.data[0]);
 
           _this3.close();
         } else {

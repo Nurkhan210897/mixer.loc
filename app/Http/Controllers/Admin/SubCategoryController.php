@@ -69,12 +69,12 @@ class SubCategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $request)
+    public function destroy($id, Request $request)
     {
         if (!empty($request->avatar)) {
             Storage::delete($request->avatar);
         }
-        SubCategory::where('id', $request->id)->delete();
+        SubCategory::where('id', $id)->delete();
         return response()->json(['success' => true]);
     }
 }
