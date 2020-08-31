@@ -135,9 +135,6 @@
             }
         }
     }
-    .product-bottom-content {
-        max-width: 16%;
-    }
     .product-last {
         width: 11%;
         background-color: #0D0D0D;
@@ -257,4 +254,8 @@
             }
         }
     }
+}
+
+.product-bottom .product-bottom-content {
+    width: 16%;
 }
