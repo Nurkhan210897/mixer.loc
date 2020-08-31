@@ -2085,6 +2085,16 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   mixins: [_mixins_main_js__WEBPACK_IMPORTED_MODULE_0__["default"]],
@@ -2095,15 +2105,27 @@ __webpack_require__.r(__webpack_exports__);
         value: "name",
         sortable: false
       }, {
+        text: "Порядковый номер",
+        value: "serial_number",
+        sortable: false
+      }, {
+        text: "На главной",
+        value: "in_index",
+        sortable: false
+      }, {
         text: "Действия",
         value: "actions",
         sortable: false
       }],
       editedItem: {
-        name: ""
+        name: "",
+        serial_number: "",
+        in_index: ""
       },
       defaultItem: {
-        name: ""
+        name: "",
+        serial_number: "",
+        in_index: ""
       }
     };
   },
@@ -2132,6 +2154,8 @@ __webpack_require__.r(__webpack_exports__);
         var res = response.data;
 
         if (res.success) {
+          res.data.in_index = Number(res.data.in_index);
+
           _this2.data.unshift(res.data);
 
           _this2.close();
@@ -2149,6 +2173,7 @@ __webpack_require__.r(__webpack_exports__);
         var res = response.data;
 
         if (res.success) {
+          _this3.editedItem.in_index = Number(_this3.editedItem.in_index);
           Object.assign(_this3.data[_this3.editedIndex], _this3.editedItem);
 
           _this3.close();
@@ -39863,6 +39888,67 @@ var render = function() {
                                                   )
                                                 },
                                                 expression: "editedItem.name"
+                                              }
+                                            })
+                                          ],
+                                          1
+                                        )
+                                      ],
+                                      1
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "v-row",
+                                      [
+                                        _c(
+                                          "v-col",
+                                          { attrs: { cols: "12" } },
+                                          [
+                                            _c("v-text-field", {
+                                              attrs: {
+                                                label: "Порядковый номер"
+                                              },
+                                              model: {
+                                                value:
+                                                  _vm.editedItem.serial_number,
+                                                callback: function($$v) {
+                                                  _vm.$set(
+                                                    _vm.editedItem,
+                                                    "serial_number",
+                                                    $$v
+                                                  )
+                                                },
+                                                expression:
+                                                  "editedItem.serial_number"
+                                              }
+                                            })
+                                          ],
+                                          1
+                                        )
+                                      ],
+                                      1
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "v-row",
+                                      [
+                                        _c(
+                                          "v-col",
+                                          { attrs: { cols: "12" } },
+                                          [
+                                            _c("v-switch", {
+                                              attrs: { label: "На главной" },
+                                              model: {
+                                                value: _vm.editedItem.in_index,
+                                                callback: function($$v) {
+                                                  _vm.$set(
+                                                    _vm.editedItem,
+                                                    "in_index",
+                                                    $$v
+                                                  )
+                                                },
+                                                expression:
+                                                  "editedItem.in_index"
                                               }
                                             })
                                           ],

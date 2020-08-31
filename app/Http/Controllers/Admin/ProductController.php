@@ -27,14 +27,6 @@ class ProductController extends Controller
         return response()->json(['success' => true, 'data' => $data]);
     }
 
-    public function show()
-    {
-        $data['categories'] = Category::all();
-        $data['subCategories'] = SubCategory::with('directories')->get();
-        $data['products'] = Product::with('directories')->get();
-        return response()->json(['success' => true, 'data' => $data]);
-    }
-
     public function getDirectories(Request $request)
     {
         $data = $this->directoryType->getSubCategoryDirectories($request->directories);
