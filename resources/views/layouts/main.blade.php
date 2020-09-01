@@ -114,42 +114,18 @@
                                         <i class="fas fa-chevron-down"></i>
                                     </a>
                                     <ul class="dropdown-main">
+                                        @foreach($headerCategories as $category)
                                         <li class="dropdown-link">
-                                            <a href="#">link</a>
+                                            <a href="#">{{$category->name}}</a>
                                             <ul class="dropdown-children">
+                                                @foreach($category->subCategories as $subCategory)
                                                 <li>
-                                                    <a href="#">item1</a>
+                                                    <a href="#">{{$subCategory->name}}</a>
                                                 </li>
+                                                @endforeach
                                             </ul>
                                         </li>
-                                        <li class="dropdown-link">
-                                            <a href="#">link</a>
-                                            <ul class="dropdown-children">
-                                                <li>
-                                                    <a href="#">item2</a>
-                                                </li>
-                                                <li>
-                                                    <a href="#">item2</a>
-                                                </li>
-                                                <li>
-                                                    <a href="#">item2</a>
-                                                </li>
-                                            </ul>
-                                        </li>
-                                        <li class="dropdown-link">
-                                            <a href="#">link</a>
-                                            <ul class="dropdown-children">
-                                                <li>
-                                                    <a href="#">item3</a>
-                                                </li>
-                                                <li>
-                                                    <a href="#">item3</a>
-                                                </li>
-                                                <li>
-                                                    <a href="#">item3</a>
-                                                </li>
-                                            </ul>
-                                        </li>
+                                        @endforeach
                                     </ul>
                                 </li>
                             </ul>

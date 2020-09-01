@@ -26,6 +26,11 @@ class SubCategory extends Model
         );
     }
 
+    public function products()
+    {
+        return $this->hasMany('App\Models\Admin\Product');
+    }
+
     public static function updData($request, $id)
     {
         $updData = [

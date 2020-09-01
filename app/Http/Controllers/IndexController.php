@@ -8,8 +8,16 @@ use App\Models\Admin\SubCategory;
 
 class IndexController extends Controller
 {
+    private $category;
+
+    public function __construct()
+    {
+        $this->categoryModel = new Category();
+    }
     public function show()
     {
-        return view('index');
+        $data['categories'] = $this->categoryModel->getIndexData();
+        // return response()->json($data);
+        return view('index', $data);
     }
 }
