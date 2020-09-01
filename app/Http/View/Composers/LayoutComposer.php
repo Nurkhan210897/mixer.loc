@@ -10,7 +10,7 @@ class LayoutComposer
 {
     public function compose(View $view)
     {
-        $data['headerCategories'] = Category::with('subCategories')->get();
+        $data['categories'] = Category::with('subCategories')->get();
         $view->with($data);
     }
 }

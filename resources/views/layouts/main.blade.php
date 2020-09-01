@@ -114,7 +114,7 @@
                                         <i class="fas fa-chevron-down"></i>
                                     </a>
                                     <ul class="dropdown-main">
-                                        @foreach($headerCategories as $category)
+                                        @foreach($categories as $category)
                                         <li class="dropdown-link">
                                             <a href="#">{{$category->name}}</a>
                                             <ul class="dropdown-children">
