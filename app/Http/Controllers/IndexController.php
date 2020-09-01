@@ -10,8 +10,6 @@ class IndexController extends Controller
 {
     public function show()
     {
-        // $data['categories'] = Category::all();
-        // $data['subCategories'] = SubCategory::all();
         return view('index');
     }
 }
