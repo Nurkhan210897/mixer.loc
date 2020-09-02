@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Admin\Category;
-use App\Models\Admin\SubCategory;
+use App\Models\Admin\Slider;
 
 class IndexController extends Controller
 {
@@ -17,7 +17,7 @@ class IndexController extends Controller
     public function show()
     {
         $data['categories'] = $this->categoryModel->getIndexData();
-        // return response()->json($data);
+        $data['sliders'] = Slider::orderBy('serial_number', 'ASC')->get();
         return view('index', $data);
     }
 }

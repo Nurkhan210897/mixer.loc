@@ -6,44 +6,26 @@
         <div class="container">
             <div class="main-bg">
                 <div class="main-slider">
+                    @foreach($sliders as $slider)
                     <div class="slider-item">
-                        <div style="background-image: url(./assets/images/main-slider-1.jpg);">
+                        <div style="background-image: url({{asset('storage/'.$slider->image)}})">
                             <div class="col-xl-6 slider-content">
                                 <p>
                                     <span class="blue-text">
-                                        СМЕСИТЕЛИ
-                                        <br />GAPPO:
+                                        {{$slider->title}}
                                     </span>
-                                    <br />ПЕРЕДОВЫЕ
-                                    <br />ТЕХНОЛОГИИ
-                                    <br />ИЗ ГЕРМАНИИ
+                                    </br>
+                                    {{$slider->description}}
                                 </p>
                                 <br />
-                                <a href="#">
-                                    Узнать больше о GAPPO
+                                <a href="{{$slider->link}}">
+                                    {{$slider->link_name}}
                                     <i class="fas fa-chevron-right"></i>
                                 </a>
                             </div>
                         </div>
                     </div>
-                    <div class="slider-item">
-                        <div class="col-xl-6 slider-content">
-                            <p>
-                                <span class="blue-text">
-                                    САНТЕХНИКА
-                                    <br />GAPPO:
-                                </span>
-                                <br />НАСТОЯЩЕЕ
-                                <br />НЕМЕЦКОЕ
-                                <br />КАЧЕСТВО
-                            </p>
-                            <br />
-                            <a href="#">
-                                Узнать больше о GAPPO
-                                <i class="fas fa-chevron-right"></i>
-                            </a>
-                        </div>
-                    </div>
+                    @endforeach
                 </div>
                 <div class="row m-0">
                     <div class="col-xl-2 info-main">
