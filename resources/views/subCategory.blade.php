@@ -3,7 +3,7 @@
 <div class="catalog padding-page">
     <div class="container">
         <div class="title-page">
-            <h2>Душевые углы и ограждения</h2>
+            <h2>{{$subCategory->name}}</h2>
             <a href="#">
                 вернуться назад
                 <i class="fas fa-chevron-right"></i>
@@ -14,7 +14,7 @@
             <div>
                 <p>
                     НАЙДЕНО ТОВАРОВ:
-                    <span>51</span>
+                    <span>{{count($products)}}</span>
                 </p>
             </div>
             <div class="category">
@@ -24,16 +24,20 @@
                     <option value>Цене, сначала недорогие</option>
                 </select>
             </div>
+            @if(count($products)>24)
             <div class="category">
                 <p>ПОКАЗЫВАТЬ:</p>
                 <select name id>
+                    <option value>24</option>
+                    @if(count($products)>48)
                     <option value>48</option>
-                    <option value>42</option>
-                    <option value>45</option>
-                    <option value>46</option>
-                    <option value>47</option>
+                    @if(count($products)>96)
+                    <option value>56</option>
+                    @endif
+                    @endif
                 </select>
             </div>
+            @endif
         </div>
         <div class="catalog-content">
             <div class="row">
@@ -42,42 +46,35 @@
                         <p class="title-category">ВЫ ВЫБРАЛИ:</p>
                         <div class="check-category">
                             <i class="fas fa-times"></i>
-                            <a href="#">Душевые углы и ограждения</a>
+                            <a href="#">{{$subCategory->name}}</a>
                         </div>
-                        <p class="title-category">ВЫБЕРИТЕ ПОДКАТЕГОРИЮ:</p>
+                        @foreach($subCategory->directoryTypes as $directoryType)
+                        <p class="title-category">ВЫБЕРИТЕ {{$directoryType->name}}:</p>
                         <ul>
+                            @foreach($directoryType->directories as $directory)
                             <li>
                                 <input type="checkbox" id="check1">
-                                <label for="check1">Угловые</label>
+                                <label for="check1">{{$directory->name}}</label>
                             </li>
-                            <li>
-                                <input type="checkbox" id="check2">
-                                <label for="check2">Угловые</label>
-                            </li>
-                            <li>
-                                <input type="checkbox" id="check3">
-                                <label for="check3">Угловые</label>
-                            </li>
+                            @endforeach
                         </ul>
-                        <br>
-                        <p class="title-category">ВЫБЕРИТЕ КОЛЛЕКЦИЮ:</p>
+                        @endforeach
                     </div>
                 </div>
                 <div class="col-xl-9">
                     <div class="row">
+                        @foreach($products as $product)
                         <div class="col-xl-4">
                             <div class="catalog-card">
                                 <a href="#">
-                                    <img src="@/assets/images/catalog-bg.jpg" alt />
+                                    <img src="{{asset('storage/'.$product->images[0]->path)}}" alt />
                                 </a>
                                 <div class="catalog-card-text">
-                                    <a href>Напольный смеситель для ванны Gappo G3007-8</a>
-                                    <span class="silver-text">G202.1.1010.2-1</span>
-                                    <br />
+                                    <a href="/products/{{$product->id}}">{{$product->name}}</a>
                                     <br />
                                     <p>
-                                        <span class="blue-text">17672</span>
-                                        <span class="silver-text">РУБ.</span>
+                                        <span class="blue-text">{{$product->price}}</span>
+                                        <span class="silver-text">тг.</span>
                                     </p>
                                     <div class="button-card">
                                         <button class="btn btn-cart">
@@ -94,79 +91,19 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-xl-4">
-                            <div class="catalog-card">
-                                <a href="#"><img src="@/assets/images/catalog-bg.jpg" alt /></a>
-                                <div class="catalog-card-text">
-                                    <a href>Напольный смеситель для ванны Gappo G3007-8</a>
-                                    <span class="silver-text">G202.1.1010.2-1</span>
-                                    <br />
-                                    <br />
-                                    <p>
-                                        <span class="blue-text">17672</span>
-                                        <span class="silver-text">РУБ.</span>
-                                    </p>
-                                    <div class="button-card">
-                                        <button class="btn btn-cart">
-                                            Купить
-                                            <i class="fas fa-shopping-basket"></i>
-                                        </button>
-                                        <button class="btn">
-                                            <i class="fas fa-chart-bar"></i>
-                                        </button>
-                                        <button class="btn">
-                                            <i class="fas fa-bookmark"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-xl-4">
-                            <div class="catalog-card">
-                                <a href="#"><img src="@/assets/images/catalog-bg.jpg" alt /></a>
-                                <div class="catalog-card-text">
-                                    <a href>Напольный смеситель для ванны Gappo G3007-8</a>
-                                    <span class="silver-text">G202.1.1010.2-1</span>
-                                    <br />
-                                    <br />
-                                    <p>
-                                        <span class="blue-text">17672</span>
-                                        <span class="silver-text">РУБ.</span>
-                                    </p>
-                                    <div class="button-card">
-                                        <button class="btn btn-cart">
-                                            Купить
-                                            <i class="fas fa-shopping-basket"></i>
-                                        </button>
-                                        <button class="btn">
-                                            <i class="fas fa-chart-bar"></i>
-                                        </button>
-                                        <button class="btn">
-                                            <i class="fas fa-bookmark"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        @endforeach
                         <div class="col-xl-12">
-                            <a class="show-more" href="#">
+                            <!-- <a class="show-more" href="#">
                                 Показать еще
                                 <span class="blue-text">48</span> товаров из
                                 <span class="blue-text">51</span>
-                            </a>
-                            <div class="paginate">
-                                <a href="#" class="paginate-link active-link">1</a>
-                                <a href="#" class="paginate-link">2</a>
-                                <div class="next-page">
-                                    <a href="#">
-                                        ВПЕРЕД
-                                        <i class="fas fa-chevron-right"></i>
-                                    </a>
-                                    <a href="#">
+                            </a> -->
+                            <div class="paginate" style="margin-top:20px;">
+                                {{$products->links()}}
+                                <!-- <a href="#">
                                         ПОСЛЕДНЯЯ
                                         <i class="fas fa-chevron-right"></i>
-                                    </a>
-                                </div>
+                                    </a> -->
                             </div>
                         </div>
                     </div>
@@ -174,5 +111,6 @@
             </div>
         </div>
     </div>
+</div>
 </div>
 @endsection

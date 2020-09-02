@@ -4,6 +4,7 @@ namespace App\Models\Admin;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
+use App\Models\Admin\Product;
 
 class SubCategory extends Model
 {
@@ -16,7 +17,7 @@ class SubCategory extends Model
         return $this->belongsTo('App\Models\Admin\Category');
     }
 
-    public function directories()
+    public function directoryTypes()
     {
         return $this->belongsToMany(
             'App\Models\Admin\DirectoryType',
@@ -51,5 +52,14 @@ class SubCategory extends Model
         }
 
         $subCategory = SubCategory::where('id', $id)->update($updData);
+    }
+
+    public function getProductsWithPaginate($id, $paginate = 24)
+    {
+        $products = Product::with(['images' => function ($query) {
+            $query->where('avatar', 1);
+        }])->select('id', 'name', 'price')->where('sub_category_id', $id)->paginate($paginate);
+
+        return $products;
     }
 }

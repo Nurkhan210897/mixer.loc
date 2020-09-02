@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Route;
 
 //Фронтенд
 Route::get('/', 'IndexController@show');
-Route::get('/subCategories', 'SubCategoryController@show');
+Route::get('/sub-categories/{id}', 'SubCategoryController@show');
 Route::get('/products', 'ProductController@show');
 
 //Админка

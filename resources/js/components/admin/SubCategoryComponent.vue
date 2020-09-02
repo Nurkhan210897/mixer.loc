@@ -14,8 +14,8 @@
       hide-default-footer
       v-show="!skeleton"
     >
-      <template v-slot:item.directories="{ item }">
-        <span>{{implodeDirectoryNames(item.directories)}}</span>
+      <template v-slot:item.directory_types="{ item }">
+        <span>{{implodeDirectoryNames(item.directory_types)}}</span>
       </template>
       <template v-slot:top>
         <v-toolbar flat color="white">
@@ -158,7 +158,7 @@ export default {
       { text: "Категория", value: "category.name", sortable: false },
       { text: "Название", value: "name", sortable: false },
       { text: "Порядковый номер", value: "serial_number", sortable: false },
-      { text: "Справочники", value: "directories", sortable: false },
+      { text: "Справочники", value: "directory_types", sortable: false },
       { text: "На главной", value: "in_index", sortable: false },
       {
         text: "category_id",

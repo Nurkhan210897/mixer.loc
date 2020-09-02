@@ -111,28 +111,12 @@ class Product extends Model
         Product::where('id', $this->id)->delete();
     }
 
-    // public function getIndexData()
-    // {
-    //     $products = DB::table('products')
-    //         ->join('product_directory', 'products.id', '=', 'product_directory.product_id')
-    //         ->join('directories', 'product_directory.directory_id', '=', 'directories.id')
-    //         ->join('directory_types', 'directories.directory_type_id', '=', 'directory_types.id')
-    //         ->join('categories', 'products.category_id', '=', 'categories.id')
-    //         ->join('sub_categories', 'products.sub_category_id', '=', 'sub_categories.id')
-    //         ->select(
-    //             'products.name',
-    //             'products.price',
-    //             'products.count',
-    //             'products.length',
-    //             'products.height',
-    //             'products.width',
-    //             'products.weight',
-    //             'categories.name as category',
-    //             'sub_categories.name as subCategory',
-    //             'directories.name as directory',
-    //             'directory_types.name as directoryType'
-    //         )
-    //         ->get();
-    //     return $products;
-    // }
+    public function getProductsWithPaginate($id, $count)
+    {
+        $product = Product::with(['images' => function ($query) {
+            $query->where('avatar', 1);
+        }])->select('id', 'name', 'price')->where('sub_category_id', $id)->paginate($count);
+
+        return $product;
+    }
 }

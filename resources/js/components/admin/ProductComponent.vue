@@ -389,7 +389,7 @@ export default {
       var directories;
       for (var key in this.subCategories) {
         if (Number(this.subCategories[key].id) === Number(id)) {
-          directories = this.subCategories[key].directories;
+          directories = this.subCategories[key].directory_types;
           break;
         }
       }

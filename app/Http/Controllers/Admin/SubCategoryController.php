@@ -23,7 +23,7 @@ class SubCategoryController extends Controller
     public function index()
     {
         $data['categories'] = Category::orderBy('id', 'DESC')->get();
-        $data['subCategories'] = SubCategory::orderBy('id', 'DESC')->with(['category', 'directories'])->get();
+        $data['subCategories'] = SubCategory::orderBy('id', 'DESC')->with(['category', 'directoryTypes'])->get();
         $data['directoryTypes'] = DirectoryType::all();
         return response()->json(['success' => true, 'data' => $data]);
     }
@@ -44,7 +44,7 @@ class SubCategoryController extends Controller
             'avatar' => $request->file('avatar')->store('images/subCategories'),
         ]);
         $this->subCategoryDirectory->store($subCategory->id, json_decode($request->directories));
-        $data = SubCategory::where('id', $subCategory->id)->orderBy('id', 'DESC')->with(['category', 'directories'])->get();
+        $data = SubCategory::where('id', $subCategory->id)->orderBy('id', 'DESC')->with(['category', 'directoryTypes'])->get();
         return response()->json(['success' => true, 'data' => $data]);
     }
 
@@ -59,7 +59,7 @@ class SubCategoryController extends Controller
     {
         SubCategory::updData($request, $id);
         $this->subCategoryDirectory->updateDirectories($id, json_decode($request->directories));
-        $data = SubCategory::where('id', $id)->orderBy('id', 'DESC')->with(['category', 'directories'])->get();
+        $data = SubCategory::where('id', $id)->orderBy('id', 'DESC')->with(['category', 'directoryTypes'])->get();
         return response()->json(['success' => true, 'data' => $data]);
     }
 

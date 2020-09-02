@@ -22,7 +22,7 @@ class ProductController extends Controller
     public function index()
     {
         $data['categories'] = Category::all();
-        $data['subCategories'] = SubCategory::with('directories')->get();
+        $data['subCategories'] = SubCategory::with('directoryTypes')->get();
         $data['products'] = Product::with('category', 'subCategory', 'directories', 'images')->get();
         return response()->json(['success' => true, 'data' => $data]);
     }
