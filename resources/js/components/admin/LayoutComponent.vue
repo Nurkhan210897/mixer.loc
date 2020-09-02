@@ -9,11 +9,14 @@
           <v-list-item to="/admin/subCategories">
             <v-list-item-content>Подкатегории</v-list-item-content>
           </v-list-item>
-          <v-list-item to="/admin/directory_types/Типы справочников">
-            <v-list-item-content>Типы справочников</v-list-item-content>
-          </v-list-item>
           <v-list-item to="/admin/products">
             <v-list-item-content>Продукты</v-list-item-content>
+          </v-list-item>
+          <v-list-item to="/admin/sliders">
+            <v-list-item-content>Карусель</v-list-item-content>
+          </v-list-item>
+          <v-list-item to="/admin/directory_types/Типы справочников">
+            <v-list-item-content>Типы справочников</v-list-item-content>
           </v-list-item>
           <v-list-group>
             <template v-slot:activator>
