@@ -70,7 +70,7 @@
                           v-model="editedItem.avatar"
                         ></v-file-input>
                       </v-col>
-                      <v-col cols="4" v-if="editedIndex>-1 && editedItem.avatar!=null">
+                      <v-col cols="9" v-if="editedIndex>-1 && editedItem.avatar!=''">
                         <v-img :src="'/storage/'+editedItem.avatar"></v-img>
                         <v-btn
                           x-small
@@ -318,6 +318,7 @@ export default {
     },
     delAvatar() {
       this.editedItem.delAvatar = this.editedItem.avatar;
+      this.editedItem.avatar = "";
     },
   },
 };
