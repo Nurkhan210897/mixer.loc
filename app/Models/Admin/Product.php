@@ -10,7 +10,6 @@ use DB;
 
 class Product extends Model
 {
-
     public function category()
     {
         return $this->belongsTo('App\Models\Admin\Category');
@@ -109,14 +108,5 @@ class Product extends Model
             $this->delImages($value);
         }
         Product::where('id', $this->id)->delete();
-    }
-
-    public function getProductsWithPaginate($id, $count)
-    {
-        $product = Product::with(['images' => function ($query) {
-            $query->where('avatar', 1);
-        }])->select('id', 'name', 'price')->where('sub_category_id', $id)->paginate($count);
-
-        return $product;
     }
 }

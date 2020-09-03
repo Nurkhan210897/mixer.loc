@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Admin\Product;
 use App\Models\Admin\SubCategory;
+use App\Models\Admin\SubCategoryDirectory;
 
 class SubCategoryController extends Controller
 {
@@ -18,11 +19,11 @@ class SubCategoryController extends Controller
 
     public function show($id, Request $request)
     {
-        $data['subCategory'] = SubCategory::with(['directoryTypes' => function ($query) {
-            $query->with('directories')->get();
-        }])->where('id', $id)->get()[0];
+        // dd($request->all());
+        $data['subCategory'] =  SubCategory::where('id', $id)->get()[0];
+        $data['products'] = $this->subCategoryModel->getProducts($id, $request->all());
+        $data['pageInfo'] = $this->subCategoryModel->getPageInfo($id);
 
-        $data['products'] = $this->subCategoryModel->getProductsWithPaginate($id, 1);
         // return response()->json($data);
         return view('subCategory', $data);
     }

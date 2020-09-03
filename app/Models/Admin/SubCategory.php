@@ -5,12 +5,15 @@ namespace App\Models\Admin;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 use App\Models\Admin\Product;
+use DB;
 
 class SubCategory extends Model
 {
 
     protected $fillable = ['name', 'category_id', 'serial_number', 'in_index', 'avatar'];
     public $timestamps = false;
+
+    private $directoryTypes;
 
     public function category()
     {
@@ -54,12 +57,67 @@ class SubCategory extends Model
         $subCategory = SubCategory::where('id', $id)->update($updData);
     }
 
-    public function getProductsWithPaginate($id, $paginate = 24)
+    public function getProducts($id, $data, $count = 24)
     {
-        $products = Product::with(['images' => function ($query) {
-            $query->where('avatar', 1);
-        }])->select('id', 'name', 'price')->where('sub_category_id', $id)->paginate($paginate);
+        $products = DB::table('products')
+            ->join('product_directory', 'products.id', '=', 'product_directory.product_id')
+            ->join('images', 'products.id', '=', 'images.product_id')
+            ->select(
+                'products.id',
+                'products.name',
+                'products.price',
+                'images.path as image'
+            )->where('images.avatar', 1)
+            ->where('products.sub_category_id', $id);
+
+        if (!empty($data)) {
+            $products = $products->whereIn('product_directory.directory_id', $this->getDirectoryIdsFromRequest($data));
+        }
+
+        $products = $products->distinct()->paginate($count);
 
         return $products;
+    }
+
+    private function getDirectoryIdsFromRequest($data)
+    {
+        $ids = [];
+        foreach ($data as $value) {
+            $ids[] = $value;
+        }
+
+        return $ids;
+    }
+
+    public function getPageInfo($id)
+    {
+        $products = Product::with([
+            'directories' => function ($query) {
+                $query->with('directoryTypes')->get();
+            }
+        ])->select('id', 'name', 'price')
+            ->where('products.sub_category_id', $id)->get();
+
+        $data['productCount'] = count($products);
+        $data['directoryTypes'] = $this->setProductsDirectoryTypesWithDirectories($products);
+        return $data;
+    }
+    // Данный метод нужен для того чтобы 
+    // использовать только те справочники которые относятся
+    // к существующим товарам подкатегории
+    private function setProductsDirectoryTypesWithDirectories($products)
+    {
+        $directoryTypes = [];
+
+        foreach ($products as $product) {
+            foreach ($product->directories as $i => $directory) {
+                $dirType = $directory->directoryTypes;
+                $directoryTypes[$dirType->id]['name'] = $dirType->name;
+                $directoryTypes[$dirType->id]['directories'][$directory->id]['id'] = $directory->id;
+                $directoryTypes[$dirType->id]['directories'][$directory->id]['name'] = $directory->name;
+            }
+        }
+
+        return $directoryTypes;
     }
 }
