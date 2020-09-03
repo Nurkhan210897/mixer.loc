@@ -1,6 +1,7 @@
 export default {
   data: () => ({
     data: [],
+    valid: true,
     skeleton: true,
     editedIndex: -1,
     dialog: false,
@@ -24,6 +25,15 @@ export default {
     },
   },
   methods: {
+    requiredText(name) {
+      return [(v) => !!v || name + " не заполнено!"];
+    },
+    requiredImage(name) {
+      return [(v) => !!v || "'" + name + "' не загружена!"];
+    },
+    requiredList(name) {
+      return [(v) => !!v || name + " не выбрана!"];
+    },
     editItem(item) {
       this.editedIndex = this.data.indexOf(item);
       this.editedItem = Object.assign(this.editedItem, item);

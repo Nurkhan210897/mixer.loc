@@ -43,21 +43,27 @@
 
               <v-card-text>
                 <v-container>
-                  <v-row>
-                    <v-col cols="12">
-                      <v-text-field v-model="editedItem.name" label="Название"></v-text-field>
-                    </v-col>
-                  </v-row>
-                  <v-row>
-                    <v-col cols="12">
-                      <v-text-field v-model="editedItem.serial_number" label="Порядковый номер"></v-text-field>
-                    </v-col>
-                  </v-row>
-                  <v-row>
-                    <v-col cols="12">
-                      <v-switch v-model="editedItem.in_index" label="На главной"></v-switch>
-                    </v-col>
-                  </v-row>
+                  <v-form ref="form" v-model="valid" lazy-validation>
+                    <v-row>
+                      <v-col cols="12">
+                        <v-text-field
+                          v-model="editedItem.name"
+                          label="Название"
+                          :rules="requiredText('Название')"
+                        ></v-text-field>
+                      </v-col>
+                    </v-row>
+                    <v-row>
+                      <v-col cols="12">
+                        <v-text-field v-model="editedItem.serial_number" label="Порядковый номер"></v-text-field>
+                      </v-col>
+                    </v-row>
+                    <v-row>
+                      <v-col cols="12">
+                        <v-switch v-model="editedItem.in_index" label="На главной"></v-switch>
+                      </v-col>
+                    </v-row>
+                  </v-form>
                 </v-container>
               </v-card-text>
 
@@ -140,21 +146,24 @@ export default {
         .catch(function (error) {});
     },
     store() {
-      axios
-        .post("/api/categories", this.editedItem)
-        .then((response) => {
-          var res = response.data;
-          if (res.success) {
-            res.data.in_index = Number(res.data.in_index);
-            this.data.unshift(res.data);
-            this.close();
-          } else {
-            alert(res.msg);
-          }
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
+      var validate = this.$refs.form.validate();
+      if (validate) {
+        axios
+          .post("/api/categories", this.editedItem)
+          .then((response) => {
+            var res = response.data;
+            if (res.success) {
+              res.data.in_index = Number(res.data.in_index);
+              this.data.unshift(res.data);
+              this.close();
+            } else {
+              alert(res.msg);
+            }
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+      }
     },
     update() {
       axios

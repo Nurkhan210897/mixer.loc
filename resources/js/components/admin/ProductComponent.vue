@@ -49,137 +49,156 @@
               </v-toolbar>
               <v-card-text>
                 <v-container>
-                  <v-row>
-                    <v-col cols="5">
-                      <h5 class="productH5">Основные данные</h5>
-                      <v-row>
-                        <v-text-field v-model="editedItem.name" label="Название"></v-text-field>
-                      </v-row>
-                      <v-row>
-                        <v-text-field v-model="editedItem.price" label="Цена"></v-text-field>
-                      </v-row>
-                      <v-row>
-                        <v-text-field v-model="editedItem.count" label="Кол-во"></v-text-field>
-                      </v-row>
-                      <v-row>
-                        <v-select
-                          :items="categories"
-                          item-value="id"
-                          item-text="name"
-                          v-model="editedItem.category_id"
-                          label="Категория"
-                        ></v-select>
-                      </v-row>
-                      <v-row>
-                        <v-select
-                          :items="filteredSubCategories"
-                          item-value="id"
-                          item-text="name"
-                          v-model="editedItem.sub_category_id"
-                          label="Подкатегория"
-                          @change="setDirectories"
-                        ></v-select>
-                      </v-row>
-                      <v-row>
-                        <v-col cols="5">
-                          <v-row>
-                            <v-text-field v-model="editedItem.weight" label="Вес"></v-text-field>
-                          </v-row>
-                          <v-row>
-                            <v-text-field v-model="editedItem.length" label="Длина"></v-text-field>
-                          </v-row>
-                        </v-col>
-                        <v-col cols="1"></v-col>
-                        <v-col cols="5">
-                          <v-row>
-                            <v-text-field v-model="editedItem.width" label="Ширина"></v-text-field>
-                          </v-row>
-                          <v-row>
-                            <v-text-field v-model="editedItem.height" label="Высота"></v-text-field>
-                          </v-row>
-                        </v-col>
-                      </v-row>
-                      <!-- При изменении -->
-                      <div v-if="editedIndex > -1">
+                  <v-form ref="form" v-model="valid" lazy-validation>
+                    <v-row>
+                      <v-col cols="5">
+                        <h5 class="productH5">Основные данные</h5>
                         <v-row>
-                          <v-file-input
-                            accept="image/png, image/jpeg, image/bmp"
-                            prepend-icon="mdi-camera"
-                            label="Обложка"
-                            v-model="editedItem.updAvatar"
-                            ref="avatar"
-                          ></v-file-input>
+                          <v-text-field
+                            v-model="editedItem.name"
+                            label="Название"
+                            :rules="requiredText('Название')"
+                          ></v-text-field>
                         </v-row>
-                        <v-row v-if="editedItem.avatar.id!==undefined">
-                          <v-col cols="4">
-                            <v-img :src="'/storage/'+editedItem.avatar.path"></v-img>
-                            <v-btn
-                              x-small
-                              color="error"
-                              style="margin-top:5px"
-                              @click="delImage(0,true)"
-                            >Удалить</v-btn>
+                        <v-row>
+                          <v-text-field
+                            v-model="editedItem.price"
+                            label="Цена"
+                            :rules="requiredText('Цена')"
+                          ></v-text-field>
+                        </v-row>
+                        <v-row>
+                          <v-text-field
+                            v-model="editedItem.count"
+                            label="Кол-во"
+                            :rules="requiredText('Кол-во')"
+                          ></v-text-field>
+                        </v-row>
+                        <v-row>
+                          <v-select
+                            :items="categories"
+                            item-value="id"
+                            item-text="name"
+                            v-model="editedItem.category_id"
+                            label="Категория"
+                            :rules="requiredList('Категория')"
+                          ></v-select>
+                        </v-row>
+                        <v-row>
+                          <v-select
+                            :items="filteredSubCategories"
+                            item-value="id"
+                            item-text="name"
+                            v-model="editedItem.sub_category_id"
+                            label="Подкатегория"
+                            @change="setDirectories"
+                            :rules="requiredList('Подкатегория')"
+                          ></v-select>
+                        </v-row>
+                        <v-row>
+                          <v-col cols="5">
+                            <v-row>
+                              <v-text-field v-model="editedItem.weight" label="Вес"></v-text-field>
+                            </v-row>
+                            <v-row>
+                              <v-text-field v-model="editedItem.length" label="Длина"></v-text-field>
+                            </v-row>
+                          </v-col>
+                          <v-col cols="1"></v-col>
+                          <v-col cols="5">
+                            <v-row>
+                              <v-text-field v-model="editedItem.width" label="Ширина"></v-text-field>
+                            </v-row>
+                            <v-row>
+                              <v-text-field v-model="editedItem.height" label="Высота"></v-text-field>
+                            </v-row>
                           </v-col>
                         </v-row>
-                        <v-row>
-                          <v-file-input
-                            accept="image/png, image/jpeg, image/bmp"
-                            prepend-icon="mdi-camera"
-                            multiple
-                            label="Картинки"
-                            v-model="editedItem.updImages"
-                            ref="images"
-                          ></v-file-input>
+                        <!-- При изменении -->
+                        <div v-if="editedIndex > -1">
+                          <v-row>
+                            <v-file-input
+                              accept="image/png, image/jpeg, image/bmp"
+                              prepend-icon="mdi-camera"
+                              label="Обложка"
+                              v-model="editedItem.updAvatar"
+                              ref="avatar"
+                            ></v-file-input>
+                          </v-row>
+                          <v-row v-if="editedItem.avatar.id!==undefined">
+                            <v-col cols="4">
+                              <v-img :src="'/storage/'+editedItem.avatar.path"></v-img>
+                              <v-btn
+                                x-small
+                                color="error"
+                                style="margin-top:5px"
+                                @click="delImage(0,true)"
+                              >Удалить</v-btn>
+                            </v-col>
+                          </v-row>
+                          <v-row>
+                            <v-file-input
+                              accept="image/png, image/jpeg, image/bmp"
+                              prepend-icon="mdi-camera"
+                              multiple
+                              label="Картинки"
+                              v-model="editedItem.updImages"
+                              ref="images"
+                            ></v-file-input>
+                          </v-row>
+                          <v-row v-if="editedItem.images.length!=0">
+                            <v-col cols="4" v-for="(item,i) in editedItem.images" :key="i">
+                              <v-img :src="'/storage/'+item.path"></v-img>
+                              <v-btn
+                                x-small
+                                color="error"
+                                style="margin-top:5px"
+                                @click="delImage(i)"
+                              >Удалить</v-btn>
+                            </v-col>
+                          </v-row>
+                        </div>
+                        <!-- При добавлении -->
+                        <div v-else>
+                          <v-row>
+                            <v-file-input
+                              accept="image/png, image/jpeg, image/bmp"
+                              prepend-icon="mdi-camera"
+                              label="Обложка"
+                              v-model="editedItem.avatar"
+                              ref="avatar"
+                              :rules="requiredImage('Обложка')"
+                            ></v-file-input>
+                          </v-row>
+                          <v-row>
+                            <v-file-input
+                              accept="image/png, image/jpeg, image/bmp"
+                              prepend-icon="mdi-camera"
+                              multiple
+                              label="Картинки"
+                              v-model="editedItem.images"
+                              ref="images"
+                              :rules="requiredImage('Картинки')"
+                            ></v-file-input>
+                          </v-row>
+                        </div>
+                      </v-col>
+                      <v-col cols="2"></v-col>
+                      <v-col cols="5">
+                        <h5 class="productH5">Технические характеристики</h5>
+                        <v-row v-for="(item,i) in directories" :key="i">
+                          <v-select
+                            :items="item.directories"
+                            item-value="id"
+                            item-text="name"
+                            v-model="editedItem.directories[i]"
+                            :label="item.name"
+                            :rules="requiredList(item.name)"
+                          ></v-select>
                         </v-row>
-                        <v-row v-if="editedItem.images.length!=0">
-                          <v-col cols="4" v-for="(item,i) in editedItem.images" :key="i">
-                            <v-img :src="'/storage/'+item.path"></v-img>
-                            <v-btn
-                              x-small
-                              color="error"
-                              style="margin-top:5px"
-                              @click="delImage(i)"
-                            >Удалить</v-btn>
-                          </v-col>
-                        </v-row>
-                      </div>
-                      <!-- При добавлении -->
-                      <div v-else>
-                        <v-row>
-                          <v-file-input
-                            accept="image/png, image/jpeg, image/bmp"
-                            prepend-icon="mdi-camera"
-                            label="Обложка"
-                            v-model="editedItem.avatar"
-                            ref="avatar"
-                          ></v-file-input>
-                        </v-row>
-                        <v-row>
-                          <v-file-input
-                            accept="image/png, image/jpeg, image/bmp"
-                            prepend-icon="mdi-camera"
-                            multiple
-                            label="Картинки"
-                            v-model="editedItem.images"
-                            ref="images"
-                          ></v-file-input>
-                        </v-row>
-                      </div>
-                    </v-col>
-                    <v-col cols="2"></v-col>
-                    <v-col cols="5">
-                      <h5 class="productH5">Технические характеристики</h5>
-                      <v-row v-for="(item,i) in directories" :key="i">
-                        <v-select
-                          :items="item.directories"
-                          item-value="id"
-                          item-text="name"
-                          v-model="editedItem.directories[i]"
-                          :label="item.name"
-                        ></v-select>
-                      </v-row>
-                    </v-col>
-                  </v-row>
+                      </v-col>
+                    </v-row>
+                  </v-form>
                 </v-container>
               </v-card-text>
             </v-card>
@@ -243,10 +262,10 @@ export default {
       category_id: "",
       sub_category_id: "",
       directories: [],
-      avatar: {},
+      avatar: null,
       updAvatar: [],
       delAvatar: [],
-      images: [],
+      images: null,
       updImages: [],
       delImages: [],
     },
@@ -297,26 +316,29 @@ export default {
         .catch(function (error) {});
     },
     store() {
-      var formData = this.getFormData();
-      axios
-        .post("/api/products", formData, {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        })
-        .then((response) => {
-          var res = response.data;
-          if (res.success) {
-            this.showSnack("success", "Данные успешно добавлены!");
-            this.data.unshift(res.data[0]);
-            this.close();
-          } else {
-            alert(res.msg);
-          }
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
+      var validate = this.$refs.form.validate();
+      if (validate) {
+        var formData = this.getFormData();
+        axios
+          .post("/api/products", formData, {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          })
+          .then((response) => {
+            var res = response.data;
+            if (res.success) {
+              this.showSnack("success", "Данные успешно добавлены!");
+              this.data.unshift(res.data[0]);
+              this.close();
+            } else {
+              alert(res.msg);
+            }
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+      }
     },
     editItem(item) {
       this.editedIndex = this.data.indexOf(item);

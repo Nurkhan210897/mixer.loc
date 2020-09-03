@@ -46,66 +46,75 @@
 
               <v-card-text>
                 <v-container>
-                  <v-row>
-                    <v-col cols="6">
-                      <v-col cols="12">
-                        <v-text-field v-model="editedItem.name" label="Название"></v-text-field>
+                  <v-form ref="form" v-model="valid" lazy-validation>
+                    <v-row>
+                      <v-col cols="6">
+                        <v-col cols="12">
+                          <v-text-field
+                            v-model="editedItem.name"
+                            label="Название"
+                            :rules="requiredText('Название')"
+                          ></v-text-field>
+                        </v-col>
+                        <v-col cols="12">
+                          <v-text-field v-model="editedItem.serial_number" label="Порядковый номер"></v-text-field>
+                        </v-col>
+                        <v-col cols="12" v-if="editedIndex>-1">
+                          <v-file-input
+                            accept="image/png, image/jpeg, image/bmp"
+                            prepend-icon="mdi-camera"
+                            label="Обложка"
+                            v-model="editedItem.updAvatar"
+                          ></v-file-input>
+                        </v-col>
+                        <v-col cols="12" v-else>
+                          <v-file-input
+                            accept="image/png, image/jpeg, image/bmp"
+                            prepend-icon="mdi-camera"
+                            label="Обложка"
+                            v-model="editedItem.avatar"
+                            :rules="requiredImage('Обложка')"
+                          ></v-file-input>
+                        </v-col>
+                        <v-col cols="9" v-if="editedIndex>-1 && editedItem.avatar!=''">
+                          <v-img :src="'/storage/'+editedItem.avatar"></v-img>
+                          <v-btn
+                            x-small
+                            color="error"
+                            style="margin-top:5px"
+                            @click="delAvatar"
+                          >Удалить</v-btn>
+                        </v-col>
+                        <v-col cols="12">
+                          <v-switch v-model="editedItem.in_index" label="На главной"></v-switch>
+                        </v-col>
                       </v-col>
-                      <v-col cols="12">
-                        <v-text-field v-model="editedItem.serial_number" label="Порядковый номер"></v-text-field>
+                      <v-col cols="6">
+                        <v-col cols="12">
+                          <v-select
+                            :items="categories"
+                            item-value="id"
+                            item-text="name"
+                            v-model="editedItem.category_id"
+                            label="Категория"
+                            :rules="requiredList('Категория')"
+                          ></v-select>
+                        </v-col>
+                        <v-col cols="12">
+                          <v-combobox
+                            v-model="editedItem.directories"
+                            :items="directoryTypes"
+                            item-value="id"
+                            item-text="name"
+                            label="Тех характеристики"
+                            :rules="requiredList('Тех характеристики')"
+                            multiple
+                            chips
+                          ></v-combobox>
+                        </v-col>
                       </v-col>
-                      <v-col cols="12" v-if="editedIndex>-1">
-                        <v-file-input
-                          accept="image/png, image/jpeg, image/bmp"
-                          prepend-icon="mdi-camera"
-                          label="Обложка"
-                          v-model="editedItem.updAvatar"
-                        ></v-file-input>
-                      </v-col>
-                      <v-col cols="12" v-else>
-                        <v-file-input
-                          accept="image/png, image/jpeg, image/bmp"
-                          prepend-icon="mdi-camera"
-                          label="Обложка"
-                          v-model="editedItem.avatar"
-                        ></v-file-input>
-                      </v-col>
-                      <v-col cols="9" v-if="editedIndex>-1 && editedItem.avatar!=''">
-                        <v-img :src="'/storage/'+editedItem.avatar"></v-img>
-                        <v-btn
-                          x-small
-                          color="error"
-                          style="margin-top:5px"
-                          @click="delAvatar"
-                        >Удалить</v-btn>
-                      </v-col>
-                      <v-col cols="12">
-                        <v-switch v-model="editedItem.in_index" label="На главной"></v-switch>
-                      </v-col>
-                    </v-col>
-                    <v-col cols="6">
-                      <v-col cols="12">
-                        <v-select
-                          :items="categories"
-                          item-value="id"
-                          item-text="name"
-                          v-model="editedItem.category_id"
-                          label="Категория"
-                        ></v-select>
-                      </v-col>
-                      <v-col cols="12">
-                        <v-combobox
-                          v-model="editedItem.directories"
-                          :items="directoryTypes"
-                          item-value="id"
-                          item-text="name"
-                          label="Тех характеристики"
-                          multiple
-                          chips
-                        ></v-combobox>
-                      </v-col>
-                    </v-col>
-                  </v-row>
+                    </v-row>
+                  </v-form>
                 </v-container>
               </v-card-text>
 
@@ -155,8 +164,8 @@ export default {
     directoryTypes: [],
     categories: [],
     headers: [
-      { text: "Категория", value: "category.name", sortable: false },
       { text: "Название", value: "name", sortable: false },
+      { text: "Категория", value: "category.name", sortable: false },
       { text: "Порядковый номер", value: "serial_number", sortable: false },
       { text: "Справочники", value: "directory_types", sortable: false },
       { text: "На главной", value: "in_index", sortable: false },
@@ -176,7 +185,7 @@ export default {
       avatar: null,
       updAvatar: null,
       delAvatar: null,
-      directories: [],
+      directories: null,
     },
     defaultItem: {
       name: "",
@@ -186,7 +195,7 @@ export default {
       avatar: null,
       updAvatar: null,
       delAvatar: null,
-      directories: [],
+      directories: null,
     },
   }),
   created() {
@@ -210,26 +219,29 @@ export default {
         .catch(function (error) {});
     },
     store() {
-      var formData = this.getFormData();
-      axios
-        .post("/api/subCategories", formData, {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        })
-        .then((response) => {
-          var res = response.data;
-          if (res.success) {
-            this.showSnack("success", "Данные успешно добавлены !");
-            this.data.unshift(res.data[0]);
-            this.close();
-          } else {
-            alert(res.msg);
-          }
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
+      var validate = this.$refs.form.validate();
+      if (validate) {
+        var formData = this.getFormData();
+        axios
+          .post("/api/subCategories", formData, {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          })
+          .then((response) => {
+            var res = response.data;
+            if (res.success) {
+              this.showSnack("success", "Данные успешно добавлены !");
+              this.data.unshift(res.data[0]);
+              this.close();
+            } else {
+              alert(res.msg);
+            }
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+      }
     },
     update() {
       var formData = this.getFormData();
