@@ -279,10 +279,10 @@ export default {
       category_id: "",
       sub_category_id: "",
       directories: [],
-      avatar: {},
+      avatar: null,
       updAvatar: [],
       delAvatar: [],
-      images: [],
+      images: null,
       updImages: [],
       delImages: [],
     },
@@ -519,7 +519,8 @@ export default {
         } else {
           this.editedItem.images.unshift(this.editedItem.avatar);
         }
-        this.editedItem = this.defaultItem;
+        this.editedItem = Object.assign({}, this.defaultItem);
+        this.$refs.form.resetValidation();
         this.editedIndex = -1;
       });
     },
@@ -529,9 +530,10 @@ export default {
       this.$nextTick(() => {
         this.editedItem.updImages = [];
         this.editedItem.updAvatar = [];
-        this.editedItem = this.defaultItem;
+        this.editedItem = Object.assign({}, this.defaultItem);
         this.editedIndex = -1;
       });
+      this.$refs.form.resetValidation();
     },
   },
 };

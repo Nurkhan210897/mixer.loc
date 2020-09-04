@@ -57,6 +57,7 @@ export default {
         this.editedItem = Object.assign({}, this.defaultItem);
         this.editedIndex = -1;
       });
+      this.$refs.form.resetValidation();
     },
     save() {
       if (this.editedIndex > -1) {
