@@ -125,7 +125,7 @@ body {
             .category {
                 ul {
                     width: 230px;
-                    display: block;
+                    display: none;
                     position: absolute;
                     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
                     background-color: #0d0d0d;
@@ -210,4 +210,35 @@ body {
         background-color: #313131;
         right: 0;
     }
+}
+
+.home-category {
+    .home-left {
+        ul {
+            .category {
+                ul {
+                    li {
+                        a {
+                            &:hover {
+                                background-color: #121212;
+                                border-color: #0d0d0d;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+.category {
+    &:hover {
+        .dropdown-main {
+            display: block !important;
+        }
+    }
+}
+
+.dropdown-link:hover .dropdown-children {
+    display: block !important;
 }

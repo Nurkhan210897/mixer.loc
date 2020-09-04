@@ -22,16 +22,8 @@ class ProductController extends Controller
     public function index()
     {
         $data['categories'] = Category::all();
-        $data['subCategories'] = SubCategory::with('directories')->get();
-        $data['products'] = Product::with('category', 'subCategory', 'directories')->get();
-        return response()->json(['success' => true, 'data' => $data]);
-    }
-
-    public function show()
-    {
-        $data['categories'] = Category::all();
-        $data['subCategories'] = SubCategory::with('directories')->get();
-        $data['products'] = Product::with('directories')->get();
+        $data['subCategories'] = SubCategory::with('directoryTypes')->get();
+        $data['products'] = Product::with('category', 'subCategory', 'directories', 'images')->get();
         return response()->json(['success' => true, 'data' => $data]);
     }
 
@@ -56,9 +48,11 @@ class ProductController extends Controller
         $product->save();
 
         $product->storeDirectories($request->directories);
-        $product->storeImages($request->avatar, $request->images);
 
-        $resData = Product::where('id', $product->id)->with('category', 'subCategory', 'directories')->get();
+        $product->storeImages($request->avatar);
+        $product->storeImages($request->images);
+
+        $resData = Product::where('id', $product->id)->with('category', 'subCategory', 'directories', 'images')->get();
         return response()->json(['success' => true, 'data' => $resData]);
     }
 
@@ -77,9 +71,23 @@ class ProductController extends Controller
         $product->save();
 
         $product->updateDirectories($request->directories);
-        $product->updateImages($request->avatar, $request->images);
+        if ($request->has('updAvatar')) {
+            $product->storeImages($request->updAvatar);
+            if ($request->has('avatar')) {
+                $product->delImages(json_decode($request->avatar));
+            }
+        }
+        if ($request->has('delAvatar')) {
+            $product->delImages(json_decode($request->delAvatar));
+        }
+        if ($request->has('updImages')) {
+            $product->storeImages($request->updImages);
+        }
+        if ($request->has('delImages')) {
+            $product->delImages(json_decode($request->delImages));
+        }
 
-        $resData = Product::where('id', $product->id)->with('category', 'subCategory', 'directories')->get();
+        $resData = Product::where('id', $product->id)->with('category', 'subCategory', 'directories', 'images')->get();
         return response()->json(['success' => true, 'data' => $resData]);
     }
 

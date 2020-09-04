@@ -43,11 +43,27 @@
 
               <v-card-text>
                 <v-container>
-                  <v-row>
-                    <v-col cols="12">
-                      <v-text-field v-model="editedItem.name" label="Название"></v-text-field>
-                    </v-col>
-                  </v-row>
+                  <v-form ref="form" v-model="valid" lazy-validation>
+                    <v-row>
+                      <v-col cols="12">
+                        <v-text-field
+                          v-model="editedItem.name"
+                          label="Название"
+                          :rules="requiredText('Название')"
+                        ></v-text-field>
+                      </v-col>
+                    </v-row>
+                    <v-row>
+                      <v-col cols="12">
+                        <v-text-field v-model="editedItem.serial_number" label="Порядковый номер"></v-text-field>
+                      </v-col>
+                    </v-row>
+                    <v-row>
+                      <v-col cols="12">
+                        <v-switch v-model="editedItem.in_index" label="На главной"></v-switch>
+                      </v-col>
+                    </v-row>
+                  </v-form>
                 </v-container>
               </v-card-text>
 
@@ -96,13 +112,19 @@ export default {
   data: () => ({
     headers: [
       { text: "Название", value: "name", sortable: false },
+      { text: "Порядковый номер", value: "serial_number", sortable: false },
+      { text: "На главной", value: "in_index", sortable: false },
       { text: "Действия", value: "actions", sortable: false },
     ],
     editedItem: {
       name: "",
+      serial_number: "",
+      in_index: "",
     },
     defaultItem: {
       name: "",
+      serial_number: "",
+      in_index: "",
     },
   }),
   created() {
@@ -124,20 +146,24 @@ export default {
         .catch(function (error) {});
     },
     store() {
-      axios
-        .post("/api/categories", this.editedItem)
-        .then((response) => {
-          var res = response.data;
-          if (res.success) {
-            this.data.unshift(res.data);
-            this.close();
-          } else {
-            alert(res.msg);
-          }
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
+      var validate = this.$refs.form.validate();
+      if (validate) {
+        axios
+          .post("/api/categories", this.editedItem)
+          .then((response) => {
+            var res = response.data;
+            if (res.success) {
+              res.data.in_index = Number(res.data.in_index);
+              this.data.unshift(res.data);
+              this.close();
+            } else {
+              alert(res.msg);
+            }
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+      }
     },
     update() {
       axios
@@ -145,6 +171,7 @@ export default {
         .then((response) => {
           var res = response.data;
           if (res.success) {
+            this.editedItem.in_index = Number(this.editedItem.in_index);
             Object.assign(this.data[this.editedIndex], this.editedItem);
             this.close();
           } else {

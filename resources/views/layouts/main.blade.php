@@ -4,6 +4,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script defer src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.js" integrity="sha512-WNZwVebQjhSxEzwbettGuQgWxbpYdoLf7mH+25A7sfQbbxKeS5SQ9QBf97zOY4nOlwtksgDA/czSTmfj4DUEiQ==" crossorigin="anonymous"></script>
+    <script src="/js/main.js"></script>
+    <link rel=stylesheet href=https://pro.fontawesome.com/releases/v5.10.0/css/all.css integrity=sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p crossorigin=anonymous>
+    <link rel=icon href=/favicon.ico> <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css" integrity="sha512-yHknP1/AwR+yx26cB1y0cjvQUMvEa2PFzt1c9LlS4pRQ5NOTZFWbhBig+X9G9eYW/8m0/4OXNx8pxJ6z57x0dw==" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css" integrity="sha512-17EgCFERpgZKcm0j0fEq1YCJuyAWdz9KUtv1EjVuaOz8pDnh/0nZxmU6BBXwaaxqoi9PQXnRWqlcDB027hgv9A==" crossorigin="anonymous" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link href="/css/main.css" rel='stylesheet'>
     <title>Aibek sait</title>
@@ -15,26 +23,35 @@
         <div class="header">
             <div class="nav-top">
                 <div class="container">
-                    <ul>
-                        <li>
-                            <a href="#">О КОМПАНИИ</a>
-                        </li>
-                        <li>
-                            <a href="#">ДОСТАВКА</a>
-                        </li>
-                        <li>
-                            <a href="#">ОПЛАТА</a>
-                        </li>
-                        <li>
-                            <a href="#">СОТРУДНИЧЕСТВО</a>
-                        </li>
-                        <li>
-                            <a href="#">СЕРВИС</a>
-                        </li>
-                        <li>
-                            <a href="#">КОНТАКТЫ</a>
-                        </li>
-                    </ul>
+                    <nav class="navbar-expand-lg navbar-light">
+                        <button class="navbar-toggler bg-dark" type="button" data-toggle="collapse" data-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                        <div class="collapse navbar-collapse" id="navbarToggleExternalContent">
+                            <ul>
+                                <li>
+                                    <a href="#">О КОМПАНИИ</a>
+                                </li>
+                                <li>
+                                    <a href="#">ДОСТАВКА</a>
+                                </li>
+                                <li>
+                                    <a href="#">ОПЛАТА</a>
+                                </li>
+                                <li>
+                                    <a href="#">СОТРУДНИЧЕСТВО</a>
+                                </li>
+                                <li>
+                                    <a href="#">СЕРВИС</a>
+                                </li>
+                                <li>
+                                    <a href="#">КОНТАКТЫ</a>
+                                </li>
+                            </ul>
+                        </div>
+
+                    </nav>
+
                 </div>
             </div>
         </div>
@@ -96,15 +113,19 @@
                                         Каталог
                                         <i class="fas fa-chevron-down"></i>
                                     </a>
-                                    <ul>
-                                        <li>
-                                            <a href="#">link</a>
-                                            <ul v-if="item.linkCategory" v-show="linkCategoryShow">
+                                    <ul class="dropdown-main">
+                                        @foreach($categories as $category)
+                                        <li class="dropdown-link">
+                                            <a href="#">{{$category->name}}</a>
+                                            <ul class="dropdown-children">
+                                                @foreach($category->subCategories as $subCategory)
                                                 <li>
-                                                    <a href="#">item</a>
+                                                    <a href="/sub-categories/{{$subCategory->id}}?page=1">{{$subCategory->name}}</a>
                                                 </li>
+                                                @endforeach
                                             </ul>
                                         </li>
+                                        @endforeach
                                     </ul>
                                 </li>
                             </ul>

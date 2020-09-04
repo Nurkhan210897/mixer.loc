@@ -21,14 +21,14 @@ class SubCategoryDirectory extends Model
         $data = [];
         foreach ($directories as $key => $value) {
             $data[$key]['sub_category_id'] = $subCategoryId;
-            $data[$key]['directory_type_id'] = $value['id'];
+            $data[$key]['directory_type_id'] = $value->id;
         }
         return $data;
     }
 
     public function updateDirectories($subCategoryId, $directories)
     {
-        $this->delete($subCategoryId);
+        $this->deleteDirectories($subCategoryId);
         $this->store($subCategoryId, $directories);
     }
 

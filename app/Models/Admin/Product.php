@@ -10,7 +10,6 @@ use DB;
 
 class Product extends Model
 {
-
     public function category()
     {
         return $this->belongsTo('App\Models\Admin\Category');
@@ -59,22 +58,22 @@ class Product extends Model
         return $data;
     }
 
-    public function updateImages($avatar, $images)
+    public function updateImages($images)
     {
         Image::where('id', $this->id)->delete();
-        $this->storeImages($avatar, $images);
+        $this->storeImages($images);
     }
 
-    public function storeImages($avatar, $images)
+    public function storeImages($data)
     {
-        if (!empty($avatar) and !empty($images)) {
-            $imagesInfo = [];
-            $imagesInfo[] = $this->saveAndGetImageInfoForStore($avatar, true);
-            foreach ($images as $value) {
+        if (is_array($data)) {
+            foreach ($data as $value) {
                 $imagesInfo[] = $this->saveAndGetImageInfoForStore($value);
             }
-            Image::insert($imagesInfo);
+        } else {
+            $imagesInfo[] = $this->saveAndGetImageInfoForStore($data, true);
         }
+        Image::insert($imagesInfo);
     }
 
     private function saveAndGetImageInfoForStore($image, $avatar = false)
@@ -87,35 +86,38 @@ class Product extends Model
         ];
     }
 
+    public function delImages($images)
+    {
+        if (is_array($images)) {
+            $ids = [];
+            foreach ($images as $value) {
+                Storage::delete($value->path);
+                Image::where('id', $value->id)->delete();
+            }
+        } else {
+            Storage::delete($images->path);
+            Image::where('id', $images->id)->delete();
+        }
+    }
+
     public function deleteAllData()
     {
         ProductDirectory::where('product_id', $this->id)->delete();
-        Image::where('product_id', $this->id)->delete();
+        $images = Image::where('product_id', $this->id)->get();
+        foreach ($images as $value) {
+            $this->delImages($value);
+        }
         Product::where('id', $this->id)->delete();
     }
 
-    // public function getIndexData()
-    // {
-    //     $products = DB::table('products')
-    //         ->join('product_directory', 'products.id', '=', 'product_directory.product_id')
-    //         ->join('directories', 'product_directory.directory_id', '=', 'directories.id')
-    //         ->join('directory_types', 'directories.directory_type_id', '=', 'directory_types.id')
-    //         ->join('categories', 'products.category_id', '=', 'categories.id')
-    //         ->join('sub_categories', 'products.sub_category_id', '=', 'sub_categories.id')
-    //         ->select(
-    //             'products.name',
-    //             'products.price',
-    //             'products.count',
-    //             'products.length',
-    //             'products.height',
-    //             'products.width',
-    //             'products.weight',
-    //             'categories.name as category',
-    //             'sub_categories.name as subCategory',
-    //             'directories.name as directory',
-    //             'directory_types.name as directoryType'
-    //         )
-    //         ->get();
-    //     return $products;
-    // }
+    public function getSelectedProduct($id)
+    {
+        $data = Product::with([
+            'directories' => function ($query) {
+                $query->with('directoryTypes')->get();
+            },
+            'images'
+        ])->where('id', $id)->first();
+        return $data;
+    }
 }

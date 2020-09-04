@@ -25,6 +25,10 @@ const router = new VueRouter({
       component: require("./components/admin/ProductComponent.vue").default,
     },
     {
+      path: "/admin/sliders",
+      component: require("./components/admin/SliderComponent.vue").default,
+    },
+    {
       path: "/admin/directory/:tableRussName/:directoryTypeId",
       component: require("./components/admin/DirectoryComponent.vue").default,
       props: true,

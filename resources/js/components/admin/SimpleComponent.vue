@@ -138,6 +138,7 @@ export default {
           var res = response.data;
           if (res.success) {
             this.editedItem.id = res.id;
+            console.log(this.editedItem);
             this.data.unshift(this.editedItem);
             this.close();
           } else {
