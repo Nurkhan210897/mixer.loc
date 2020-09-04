@@ -36,7 +36,7 @@
                         <div class="category-left">
                             <!-- <p class="title-category">ВЫ ВЫБРАЛИ:</p> -->
                             <p class="title-category">
-                                <button class="btn btn-default">Применить</button>
+                                <button class="btn btn-cart">Применить</button>
                             </p>
                             <div class="check-category">
                                 <i class="fas fa-times"></i>

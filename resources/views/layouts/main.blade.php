@@ -10,7 +10,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.js" integrity="sha512-WNZwVebQjhSxEzwbettGuQgWxbpYdoLf7mH+25A7sfQbbxKeS5SQ9QBf97zOY4nOlwtksgDA/czSTmfj4DUEiQ==" crossorigin="anonymous"></script>
     <script src="/js/main.js"></script>
     <link rel=stylesheet href=https://pro.fontawesome.com/releases/v5.10.0/css/all.css integrity=sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p crossorigin=anonymous>
-    <link rel=icon href=/favicon.ico> <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css" integrity="sha512-yHknP1/AwR+yx26cB1y0cjvQUMvEa2PFzt1c9LlS4pRQ5NOTZFWbhBig+X9G9eYW/8m0/4OXNx8pxJ6z57x0dw==" crossorigin="anonymous" />
+    <link rel=icon href=/favicon.ico>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css" integrity="sha512-yHknP1/AwR+yx26cB1y0cjvQUMvEa2PFzt1c9LlS4pRQ5NOTZFWbhBig+X9G9eYW/8m0/4OXNx8pxJ6z57x0dw==" crossorigin="anonymous" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css" integrity="sha512-17EgCFERpgZKcm0j0fEq1YCJuyAWdz9KUtv1EjVuaOz8pDnh/0nZxmU6BBXwaaxqoi9PQXnRWqlcDB027hgv9A==" crossorigin="anonymous" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link href="/css/main.css" rel='stylesheet'>
@@ -132,22 +133,38 @@
                         </div>
                     </div>
                     <div class="col-xl-5">
-                        <form action>
-                            <input type="text" placeholder="Поиск" />
-                            <button type="submit">
-                                <i class="fas fa-search"></i>
-                            </button>
-                        </form>
+                        <div class="search">
+                            <form action="">
+                                <input type="text" placeholder="Поиск">
+                                <button type="submit">
+                                    <i class="fas fa-search"></i>
+                                </button>
+                            </form>
+                            <div class="search-results">
+                                <ul>
+                                    <li><a href="#">
+                                            Lorem ipsum dolor <span class="blue-text">sit amet</span>, consectetur
+                                            adipisicing elit. Assumenda, itaque.
+                                        </a></li>
+                                    <li><a href="#">
+                                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Assumenda, itaque.
+                                        </a></li>
+                                </ul>
+                                <div class="button-card">
+                                    <a href="#" type="button" class="btn btn-cart">
+                                        Все результаты
+                                        <i class="fas fa-chevron-right"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    @show
-
-    @yield('main')
-
-    @section('footer')
+    @show @yield('main') @section('footer')
     <div>
         <footer>
             <div class="container">
