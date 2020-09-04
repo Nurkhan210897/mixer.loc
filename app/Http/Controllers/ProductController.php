@@ -3,11 +3,20 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Admin\Product;
 
 class ProductController extends Controller
 {
-    public function show()
+    private $productModel;
+
+    public function __construct()
     {
-        return view('product');
+        $this->productModel = new Product();
+    }
+    public function show($id)
+    {
+        $data['product'] = $this->productModel->getSelectedProduct($id);
+        $data['subCategoryProducts']=$this->productModel->get
+        return view('product', $data);
     }
 }

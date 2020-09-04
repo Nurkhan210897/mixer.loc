@@ -4,7 +4,7 @@
     <div class="container">
         <div class="title-page">
             <div class="col-xl-8">
-                <h1>Напольный смеситель для ванны Gappo Jacob G3007-8</h1>
+                <h1>{{$product->name}}</h1>
             </div>
             <a href="#">
                 вернуться назад
@@ -18,11 +18,6 @@
                 <div class="col-xl-3 col-lg-3">
                     <div class="product-page-left">
                         <ul>
-                            <li class="left-header">
-                                <p class="silver-text">НАШЛИ ДЕШЕВЛЕ?</p>
-                                <p>СНИЗИМ ЦЕНУ!</p>
-                                <button class="btn btn-cart">ХОЧУ ДЕШЕВЛЕ <i class="fas fa-coins"></i></button>
-                            </li>
                             <li class="left-content">
                                 <a href="#">
                                     <i class="fas fa-truck"></i>
@@ -61,28 +56,17 @@
                 <div class="col-xl-6 col-lg-6">
                     <div class="product-page-center">
                         <div class="photo-gallery">
-                            <img src="/storage/images/4.jpg" alt="">
+                            <img src="{{asset('storage/'.$product->images[0]->path)}}" alt="">
                         </div>
                         <div class="photo-gallery-bottom">
                             <ul>
+                                @foreach($product->images as $key=>$image)
+                                @if($key>0)
                                 <li>
-                                    <img src="/storage/images/1.jpg" alt="">
+                                    <img src="{{asset('storage/'.$image->path)}}" alt="">
                                 </li>
-                                <li>
-                                    <img src="/storage/images/2.jpg" alt="">
-                                </li>
-                                <li>
-                                    <img src="/storage/images/3.jpg" alt="">
-                                </li>
-                                <li>
-                                    <img src="/storage/images/1.jpg" alt="">
-                                </li>
-                                <li>
-                                    <img src="/storage/images/2.jpg" alt="">
-                                </li>
-                                <li>
-                                    <img src="/storage/images/3.jpg" alt="">
-                                </li>
+                                @endif
+                                @endforeach
                             </ul>
                         </div>
                     </div>
@@ -92,8 +76,8 @@
                         <span class="silver-text">Код товара: <span class="blue-text">00493</span></span>
                         <div class="price">
                             <p>
-                                <span class="blue-text">17672</span>
-                                <span class="silver-text">РУБ.</span>
+                                <span class="blue-text">{{$product->price}}</span>
+                                <span class="silver-text">тг.</span>
                             </p>
                         </div>
                         <div class="button-card">
@@ -121,12 +105,14 @@
                         </div>
                         <div class="specifications-content">
                             <ul>
+                                @foreach($product->directories as $directory)
                                 <li>
                                     <div>
-                                        <p class="silver-text">АРТИКУЛ:</p>
+                                        <p class="silver-text">{{$directory->directoryTypes->name}}:</p>
                                     </div>
-                                    <span> G3007-8</span>
+                                    <span>{{$directory->name}}</span>
                                 </li>
+                                @endforeach
                             </ul>
                         </div>
                     </div>

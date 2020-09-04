@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Route;
 //Фронтенд
 Route::get('/', 'IndexController@show');
 Route::get('/sub-categories/{id}', 'SubCategoryController@show');
-Route::get('/products', 'ProductController@show');
+Route::get('/products/{id}', 'ProductController@show');
 
 //Админка
 Route::get('/admin', 'Admin\MainController@index');

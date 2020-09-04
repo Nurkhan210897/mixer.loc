@@ -19,7 +19,6 @@ class SubCategoryController extends Controller
 
     public function show($id, Request $request)
     {
-        // dd($request->all());
         $data['subCategory'] =  SubCategory::where('id', $id)->get()[0];
         $data['products'] = $this->subCategoryModel->getProducts($id, $request->all());
         $data['pageInfo'] = $this->subCategoryModel->getPageInfo($id);

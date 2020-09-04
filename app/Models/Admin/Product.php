@@ -109,4 +109,15 @@ class Product extends Model
         }
         Product::where('id', $this->id)->delete();
     }
+
+    public function getSelectedProduct($id)
+    {
+        $data = Product::with([
+            'directories' => function ($query) {
+                $query->with('directoryTypes')->get();
+            },
+            'images'
+        ])->where('id', $id)->first();
+        return $data;
+    }
 }
