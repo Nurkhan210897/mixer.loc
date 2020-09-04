@@ -65,7 +65,7 @@
         @foreach($products as $product)
         <div class="col-xl-4">
             <div class="catalog-card">
-                <a href="#">
+                <a href="/products/{{$product->id}}">
                     <img src="{{asset('storage/'.$product->image)}}" alt />
                 </a>
                 <div class="catalog-card-text">

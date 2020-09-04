@@ -158,25 +158,25 @@
     <div class="container">
         <div class="title-block">
             <h3>ДРУГИЕ ТОВАРЫ ЭТОЙ КОЛЛЕКЦИИ:</h3>
-            <a href="#">
-                ВСЕ ДУШЕВЫЕ СИСТЕМЫ
+            <a href="/sub-categories/{{$product->sub_category_id}}">
+                ПЕРЕЙТИ В КОЛЛЕКЦИ
                 <i class="fas fa-chevron-right"></i>
             </a>
         </div>
         <div class="row">
+            @foreach($subCategoryProducts as $subProduct)
+            @if($subProduct->id!=$product->id)
             <div class="col-xl-3 col-md-6 col-lg-4">
                 <div class="catalog-card">
-                    <a href="#">
-                        <img src="@/assets/images/catalog-bg.jpg" alt />
+                    <a href="/products/{{$subProduct->id}}">
+                        <img src="{{asset('storage/'.$product->image)}}" alt />
                     </a>
                     <div class="catalog-card-text">
-                        <a href>Напольный смеситель для ванны Gappo G3007-8</a>
-                        <span class="silver-text">G202.1.1010.2-1</span>
-                        <br />
+                        <a href="/products/{{$subProduct->id}}">{{$subProduct->name}}</a>
                         <br />
                         <p>
-                            <span class="blue-text">17672</span>
-                            <span class="silver-text">РУБ.</span>
+                            <span class="blue-text">{{$subProduct->price}}</span>
+                            <span class="silver-text">тг.</span>
                         </p>
                         <div class="button-card">
                             <button class="btn btn-cart">
@@ -193,60 +193,8 @@
                     </div>
                 </div>
             </div>
-            <div class="col-xl-3 col-md-6 col-lg-4">
-                <div class="catalog-card">
-                    <a href="#"><img src="@/assets/images/catalog-bg.jpg" alt /></a>
-                    <div class="catalog-card-text">
-                        <a href>Напольный смеситель для ванны Gappo G3007-8</a>
-                        <span class="silver-text">G202.1.1010.2-1</span>
-                        <br />
-                        <br />
-                        <p>
-                            <span class="blue-text">17672</span>
-                            <span class="silver-text">РУБ.</span>
-                        </p>
-                        <div class="button-card">
-                            <button class="btn btn-cart">
-                                Купить
-                                <i class="fas fa-shopping-basket"></i>
-                            </button>
-                            <button class="btn">
-                                <i class="fas fa-chart-bar"></i>
-                            </button>
-                            <button class="btn">
-                                <i class="fas fa-bookmark"></i>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-xl-3 col-md-6 col-lg-4">
-                <div class="catalog-card">
-                    <a href="#"><img src="@/assets/images/catalog-bg.jpg" alt /></a>
-                    <div class="catalog-card-text">
-                        <a href>Напольный смеситель для ванны Gappo G3007-8</a>
-                        <span class="silver-text">G202.1.1010.2-1</span>
-                        <br />
-                        <br />
-                        <p>
-                            <span class="blue-text">17672</span>
-                            <span class="silver-text">РУБ.</span>
-                        </p>
-                        <div class="button-card">
-                            <button class="btn btn-cart">
-                                Купить
-                                <i class="fas fa-shopping-basket"></i>
-                            </button>
-                            <button class="btn">
-                                <i class="fas fa-chart-bar"></i>
-                            </button>
-                            <button class="btn">
-                                <i class="fas fa-bookmark"></i>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            @endif
+            @endforeach
         </div>
     </div>
 

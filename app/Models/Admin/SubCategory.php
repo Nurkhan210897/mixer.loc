@@ -57,7 +57,7 @@ class SubCategory extends Model
         $subCategory = SubCategory::where('id', $id)->update($updData);
     }
 
-    public function getProducts($id, $data, $count = 24)
+    public function getProducts($id, $data = [], $count = 24)
     {
         $products = DB::table('products')
             ->join('product_directory', 'products.id', '=', 'product_directory.product_id')
