@@ -115,23 +115,4 @@
 </div>
 </div>
 </div>
-<script>
-    $(document).ready(function() {
-        $('select[name="sort"]').on('change', function() {
-            var url = window.location.href;
-            if (url.indexOf('?') === -1) {
-                url = url + "?sort=" + $(this).val();
-            } else {
-                if (url.indexOf('sort') === -1) {
-                    url = url + "&sort=" + $(this).val();
-                } else {
-                    url = url.replace(/sort=ASC/g, 'sort=' + $(this).val());
-                    url = url.replace(/sort=DESC/g, 'sort=' + $(this).val());
-                }
-            }
-
-            window.location.href = url;
-        });
-    });
-</script>
 @endsection
