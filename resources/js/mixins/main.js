@@ -28,6 +28,12 @@ export default {
     requiredText(name) {
       return [(v) => !!v || name + " не заполнено!"];
     },
+    requiredNumber(name) {
+      return [
+        (v) => !!v || name + " не заполнено!",
+        (v) => Number.isInteger(Number(v)) || name + " должен быть числом!",
+      ];
+    },
     requiredImage(name) {
       return [(v) => !!v || "'" + name + "' не загружена!"];
     },

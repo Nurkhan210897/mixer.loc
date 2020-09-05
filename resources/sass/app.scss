@@ -60,6 +60,12 @@
   .productH5 {
     color: #1976d2 !important;
   }
+
+  .v-card {
+    .v-card__text {
+      padding-bottom: 0px;
+    }
+  }
 }
 
 /* width */

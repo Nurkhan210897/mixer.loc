@@ -73,13 +73,11 @@ class ProductController extends Controller
         $product->updateDirectories($request->directories);
         if ($request->has('updAvatar')) {
             $product->storeImages($request->updAvatar);
-            if ($request->has('avatar')) {
-                $product->delImages(json_decode($request->avatar));
-            }
         }
         if ($request->has('delAvatar')) {
             $product->delImages(json_decode($request->delAvatar));
         }
+
         if ($request->has('updImages')) {
             $product->storeImages($request->updImages);
         }
