@@ -19,11 +19,11 @@ class SubCategoryController extends Controller
 
     public function show($id, Request $request)
     {
-        $data['subCategory'] =  SubCategory::where('id', $id)->get()[0];
+        $data['subCategory'] =  SubCategory::where('id', $id)->first();
         $data['products'] = $this->subCategoryModel->getProducts($id, $request->all());
         $data['pageInfo'] = $this->subCategoryModel->getPageInfo($id);
 
-        // return response()->json($data);
+        // return response()->json($data['products']);
         return view('subCategory', $data);
     }
 }
