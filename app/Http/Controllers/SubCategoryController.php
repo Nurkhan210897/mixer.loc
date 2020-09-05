@@ -3,9 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Admin\Product;
 use App\Models\Admin\SubCategory;
-use App\Models\Admin\SubCategoryDirectory;
+use App\Http\Requests\SubCategoryRequest;
 
 class SubCategoryController extends Controller
 {
@@ -17,7 +16,7 @@ class SubCategoryController extends Controller
         $this->subCategoryModel = new SubCategory();
     }
 
-    public function show($id, Request $request)
+    public function show($id, SubCategoryRequest $request)
     {
         $data['subCategory'] =  SubCategory::where('id', $id)->first();
         $data['products'] = $this->subCategoryModel->getProducts($id, $request->all());
