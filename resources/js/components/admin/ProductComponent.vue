@@ -62,6 +62,13 @@
                         </v-row>
                         <v-row>
                           <v-text-field
+                            v-model="editedItem.code"
+                            label="Код товара"
+                            :rules="requiredText('Код товара')"
+                          ></v-text-field>
+                        </v-row>
+                        <v-row>
+                          <v-text-field
                             v-model="editedItem.price"
                             label="Цена"
                             :rules="requiredNumber('Цена')"
@@ -243,6 +250,7 @@ export default {
   data: () => ({
     headers: [
       { text: "Название", value: "name", sortable: false },
+      { text: "Код", value: "name", sortable: false },
       { text: "Цена", value: "price", sortable: false },
       { text: "Кол-во", value: "count", sortable: false },
       { text: "Категория", value: "category.name", sortable: false },
@@ -256,6 +264,7 @@ export default {
     directories: [],
     editedItem: {
       name: "",
+      code: "",
       price: "",
       count: "",
       weight: "",
@@ -273,6 +282,7 @@ export default {
     },
     defaultItem: {
       name: "",
+      code: "",
       price: "",
       count: "",
       weight: "",
@@ -438,6 +448,7 @@ export default {
     getFormData() {
       var formData = new FormData();
       formData.append("name", this.editedItem.name);
+      formData.append("code", this.editedItem.code);
       formData.append("price", this.editedItem.price);
       formData.append("count", this.editedItem.count);
 
@@ -511,6 +522,7 @@ export default {
       this.dialog = false;
       this.deleteDialog = false;
       this.$nextTick(() => {
+        this.directories = [];
         this.editedItem.updImages = null;
         this.editedItem.updAvatar = null;
         if (this.editedItem.delImages[0] !== undefined) {
@@ -534,6 +546,7 @@ export default {
       this.dialog = false;
       this.deleteDialog = false;
       this.$nextTick(() => {
+        this.directories = [];
         this.editedItem.updImages = null;
         this.editedItem.updAvatar = null;
         this.editedItem = Object.assign({}, this.defaultItem);
