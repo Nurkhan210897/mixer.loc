@@ -53,13 +53,19 @@
                         ></v-text-field>
                       </v-col>
                     </v-row>
-                    <v-row>
+                    <v-row v-show="editedItem.in_index">
                       <v-col cols="12">
-                        <v-text-field v-model="editedItem.serial_number" label="Порядковый номер"></v-text-field>
+                        <v-text-field
+                          v-model="editedItem.serial_number"
+                          label="Порядковый номер"
+                          type="number"
+                          min="0"
+                          :rules="serialNumber()"
+                        ></v-text-field>
                       </v-col>
                     </v-row>
                     <v-row>
-                      <v-col cols="12">
+                      <v-col cols="7">
                         <v-switch v-model="editedItem.in_index" label="На главной"></v-switch>
                       </v-col>
                     </v-row>
@@ -118,15 +124,25 @@ export default {
     ],
     editedItem: {
       name: "",
-      serial_number: "",
-      in_index: "",
+      serial_number: 0,
+      in_index: false,
     },
     defaultItem: {
       name: "",
-      serial_number: "",
-      in_index: "",
+      serial_number: 0,
+      in_index: false,
     },
   }),
+  watch: {
+    "editedItem.in_index": function (val) {
+      if (val) {
+        this.editedItem.serial_number = 1;
+      } else {
+        this.editedItem.serial_number = 0;
+      }
+      console.log(this.editedItem.serial_number);
+    },
+  },
   created() {
     this.index();
   },
@@ -198,6 +214,13 @@ export default {
         .catch(function (error) {
           console.log(error);
         });
+    },
+    serialNumber() {
+      if (this.editedItem.in_index) {
+        return this.requiredNumber("Порядковый номер");
+      } else {
+        return [];
+      }
     },
   },
 };
