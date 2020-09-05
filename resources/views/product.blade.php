@@ -3,7 +3,7 @@
 <div class="product-page padding-page">
     <div class="container">
         <div class="title-page">
-            <div class="col-xl-8">
+            <div class="col-xl-8 col-xl-5">
                 <h1>{{$product->name}}</h1>
             </div>
             <a href="#">

@@ -78,15 +78,19 @@
                                 </div>
                                 <div class="icon">
                                     <span>
-                                        <i class="fas fa-chart-bar"></i>
-                                        1
+                                       <a href="#"> <i class="fas fa-chart-bar"></i>
+                                        1</a>
                                     </span>
                                     <span>
-                                        <i class="fas fa-bookmark"></i>
+                                        <a href="#">
+                                            <i class="fas fa-bookmark"></i>
                                         0
+                                        </a>
                                     </span>
                                     <span>
-                                        <i class="fas fa-shopping-basket"></i>1
+                                        <a href="#">
+                                            <i class="fas fa-shopping-basket"></i>1
+                                        </a>
                                     </span>
                                 </div>
                             </div>

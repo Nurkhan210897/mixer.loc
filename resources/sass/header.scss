@@ -45,6 +45,12 @@
             .nav-right {
                 display: flex;
                 align-items: center;
+                a {
+                    color: #808080;
+                    &:hover {
+                        text-decoration: none;
+                    }
+                }
                 i {
                     color: #21A7D9;
                     margin-right: 5px;

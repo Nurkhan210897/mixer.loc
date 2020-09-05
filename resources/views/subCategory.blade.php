@@ -2,7 +2,7 @@
 @section('main')
 <div class="catalog padding-page">
     <div class="container">
-        <div class="title-page">
+        <div class="title-page col-xl-5">
             <h2>{{$subCategory->name}}</h2>
             <a href="/">
                 вернуться назад
