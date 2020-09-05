@@ -65,6 +65,7 @@
                             @if(!empty($_GET['sort']))
                             <input type="text" name='sort' value="{{$_GET['sort']}}" hidden />
                             @endif
+                            <input type="number" name='page' value="1" hidden />
         </form>
     </div>
 </div>
