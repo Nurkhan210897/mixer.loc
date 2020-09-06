@@ -24,6 +24,7 @@ Route::apiResource('/subCategories', 'Admin\SubCategoryController');
 Route::apiResource('/simple', 'Admin\SimpleController');
 Route::apiResource('/directory', 'Admin\DirectoryController');
 Route::apiResource('/sliders', 'Admin\SliderController');
+Route::apiResource('/questions', 'Admin\QuestionController');
 
 Route::get('/products/directories', 'Admin\ProductController@getDirectories');
 Route::apiResource('/products', 'Admin\ProductController');
