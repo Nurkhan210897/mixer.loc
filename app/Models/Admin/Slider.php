@@ -25,7 +25,9 @@ class Slider extends Model
         $slider->serial_number = $request->serial_number;
         $slider->link_name = $request->link_name;
         $slider->link = $request->link;
-        $slider->image = $this->handleImage($request);
+        if ($request->has('delImage') or $request->has('updImage')) {
+            $slider->image = $this->handleImage($request);
+        }
         $slider->save();
         return $slider;
     }

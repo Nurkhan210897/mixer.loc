@@ -57,8 +57,41 @@
                           ></v-text-field>
                         </v-col>
                         <v-col cols="12">
-                          <v-text-field v-model="editedItem.serial_number" label="Порядковый номер"></v-text-field>
+                          <v-select
+                            :items="categories"
+                            item-value="id"
+                            item-text="name"
+                            v-model="editedItem.category_id"
+                            label="Категория"
+                            :rules="requiredList('Категория')"
+                          ></v-select>
                         </v-col>
+                        <v-col cols="12">
+                          <v-combobox
+                            v-model="editedItem.directory_types"
+                            :items="directoryTypes"
+                            item-value="id"
+                            item-text="name"
+                            label="Тех характеристики"
+                            :rules="requiredList('Тех характеристики')"
+                            multiple
+                            chips
+                          ></v-combobox>
+                        </v-col>
+                        <v-col cols="12" v-show="editedItem.in_index">
+                          <v-text-field
+                            v-model="editedItem.serial_number"
+                            label="Порядковый номер"
+                            type="number"
+                            min="0"
+                            :rules="serialNumber()"
+                          ></v-text-field>
+                        </v-col>
+                        <v-col cols="6">
+                          <v-switch v-model="editedItem.in_index" label="На главной"></v-switch>
+                        </v-col>
+                      </v-col>
+                      <v-col cols="6">
                         <v-col cols="12" v-if="editedIndex>-1">
                           <v-file-input
                             accept="image/png, image/jpeg, image/bmp"
@@ -84,33 +117,6 @@
                             style="margin-top:5px"
                             @click="delAvatar"
                           >Удалить</v-btn>
-                        </v-col>
-                        <v-col cols="12">
-                          <v-switch v-model="editedItem.in_index" label="На главной"></v-switch>
-                        </v-col>
-                      </v-col>
-                      <v-col cols="6">
-                        <v-col cols="12">
-                          <v-select
-                            :items="categories"
-                            item-value="id"
-                            item-text="name"
-                            v-model="editedItem.category_id"
-                            label="Категория"
-                            :rules="requiredList('Категория')"
-                          ></v-select>
-                        </v-col>
-                        <v-col cols="12">
-                          <v-combobox
-                            v-model="editedItem.directories"
-                            :items="directoryTypes"
-                            item-value="id"
-                            item-text="name"
-                            label="Тех характеристики"
-                            :rules="requiredList('Тех характеристики')"
-                            multiple
-                            chips
-                          ></v-combobox>
                         </v-col>
                       </v-col>
                     </v-row>
@@ -166,8 +172,8 @@ export default {
     headers: [
       { text: "Название", value: "name", sortable: false },
       { text: "Категория", value: "category.name", sortable: false },
-      { text: "Порядковый номер", value: "serial_number", sortable: false },
       { text: "Справочники", value: "directory_types", sortable: false },
+      { text: "Порядковый номер", value: "serial_number", sortable: false },
       { text: "На главной", value: "in_index", sortable: false },
       {
         text: "category_id",
@@ -180,26 +186,36 @@ export default {
     editedItem: {
       name: "",
       category_id: "",
-      serial_number: "",
+      serial_number: 0,
       in_index: false,
       avatar: null,
       updAvatar: null,
       delAvatar: null,
-      directories: null,
+      directory_types: null,
     },
     defaultItem: {
       name: "",
       category_id: "",
-      serial_number: "",
+      serial_number: 0,
       in_index: false,
       avatar: null,
       updAvatar: null,
       delAvatar: null,
-      directories: null,
+      directory_types: null,
     },
   }),
   created() {
     this.index();
+  },
+  watch: {
+    "editedItem.in_index": function (val) {
+      if (val) {
+        this.editedItem.serial_number = 1;
+      } else {
+        this.editedItem.serial_number = 0;
+      }
+      console.log(this.editedItem.serial_number);
+    },
   },
   methods: {
     index() {
@@ -277,8 +293,8 @@ export default {
       formData.append("avatar", this.editedItem.avatar);
       formData.append("category_id", this.editedItem.category_id);
       formData.append(
-        "directories",
-        JSON.stringify(this.editedItem.directories)
+        "directory_types",
+        JSON.stringify(this.editedItem.directory_types)
       );
       if (this.editedIndex > -1) {
         if (this.editedItem.updAvatar !== null) {
@@ -331,6 +347,13 @@ export default {
     delAvatar() {
       this.editedItem.delAvatar = this.editedItem.avatar;
       this.editedItem.avatar = "";
+    },
+    serialNumber() {
+      if (this.editedItem.in_index) {
+        return this.requiredNumber("Порядковый номер");
+      } else {
+        return [];
+      }
     },
   },
 };

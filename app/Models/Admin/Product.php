@@ -120,4 +120,12 @@ class Product extends Model
         ])->where('id', $id)->first();
         return $data;
     }
+
+    public function search($searched)
+    {
+        return Product::where('name', 'like', '%' . $searched . '%')
+            ->select('id', 'name', 'price', 'code')
+            ->take(10)
+            ->get();
+    }
 }

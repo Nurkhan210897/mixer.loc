@@ -77,15 +77,19 @@
                                 </div>
                                 <div class="icon">
                                     <span>
-                                        <i class="fas fa-chart-bar"></i>
-                                        1
+                                        <a href="#"> <i class="fas fa-chart-bar"></i>
+                                            1</a>
                                     </span>
                                     <span>
-                                        <i class="fas fa-bookmark"></i>
-                                        0
+                                        <a href="#">
+                                            <i class="fas fa-bookmark"></i>
+                                            0
+                                        </a>
                                     </span>
                                     <span>
-                                        <i class="fas fa-shopping-basket"></i>1
+                                        <a href="#">
+                                            <i class="fas fa-shopping-basket"></i>1
+                                        </a>
                                     </span>
                                 </div>
                             </div>
@@ -132,22 +136,31 @@
                         </div>
                     </div>
                     <div class="col-xl-5">
-                        <form action>
-                            <input type="text" placeholder="Поиск" />
-                            <button type="submit">
-                                <i class="fas fa-search"></i>
-                            </button>
-                        </form>
+                        <div class="search">
+                            <form action="">
+                                <input type="text" placeholder="Поиск">
+                                <button type="submit">
+                                    <i class="fas fa-search"></i>
+                                </button>
+                            </form>
+                            <div class="search-results">
+                                <ul id='searchList'>
+                                </ul>
+                                <div class="button-card" style="display: none;">
+                                    <a href="#" type="button" class="btn btn-cart">
+                                        Все результаты
+                                        <i class="fas fa-chevron-right"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    @show
-
-    @yield('main')
-
-    @section('footer')
+    @show @yield('main') @section('footer')
     <div>
         <footer>
             <div class="container">

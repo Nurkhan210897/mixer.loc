@@ -43,52 +43,76 @@
 
               <v-card-text>
                 <v-container>
-                  <v-row>
-                    <v-col cols="6">
-                      <v-col cols="12">
-                        <v-text-field v-model="editedItem.title" label="Заголовок"></v-text-field>
+                  <v-form ref="form" v-model="valid" lazy-validation>
+                    <v-row>
+                      <v-col cols="6">
+                        <v-col cols="12">
+                          <v-text-field
+                            v-model="editedItem.title"
+                            label="Заголовок"
+                            :rules="requiredText('Заголовок')"
+                          ></v-text-field>
+                        </v-col>
+                        <v-col cols="12">
+                          <v-text-field
+                            v-model="editedItem.description"
+                            label="Описание"
+                            :rules="requiredText('Описание')"
+                          ></v-text-field>
+                        </v-col>
+                        <v-col cols="12">
+                          <v-text-field
+                            v-model="editedItem.serial_number"
+                            label="Порядковый номер"
+                            :rules="requiredNumber('Порядковый номер')"
+                          ></v-text-field>
+                        </v-col>
                       </v-col>
-                      <v-col cols="12">
-                        <v-text-field v-model="editedItem.description" label="Описание"></v-text-field>
+                      <v-col cols="6">
+                        <v-col cols="12">
+                          <v-text-field
+                            v-model="editedItem.link_name"
+                            label="Название ссылки"
+                            :rules="requiredText('Название ссылки')"
+                          ></v-text-field>
+                        </v-col>
+                        <v-col cols="12">
+                          <v-text-field
+                            v-model="editedItem.link"
+                            label="Ссылка"
+                            :rules="requiredText('Ссылка')"
+                          ></v-text-field>
+                        </v-col>
+                        <v-col cols="12" v-if="editedIndex>-1">
+                          <v-file-input
+                            accept="image/png, image/jpeg, image/bmp"
+                            prepend-icon="mdi-camera"
+                            label="Картинка"
+                            v-model="editedItem.updImage"
+                            :rules="updImageValidate()"
+                          ></v-file-input>
+                        </v-col>
+                        <v-col cols="12" v-else>
+                          <v-file-input
+                            accept="image/png, image/jpeg, image/bmp"
+                            prepend-icon="mdi-camera"
+                            label="Картинка"
+                            v-model="editedItem.image"
+                            :rules="requiredImage('Картинка')"
+                          ></v-file-input>
+                        </v-col>
+                        <v-col cols="10" v-if="editedIndex>-1 && editedItem.image!=''">
+                          <v-img :src="'/storage/'+editedItem.image"></v-img>
+                          <v-btn
+                            x-small
+                            color="error"
+                            style="margin-top:5px"
+                            @click="deleteImage"
+                          >Удалить</v-btn>
+                        </v-col>
                       </v-col>
-                      <v-col cols="12">
-                        <v-text-field v-model="editedItem.serial_number" label="Порядковый номер"></v-text-field>
-                      </v-col>
-                    </v-col>
-                    <v-col cols="6">
-                      <v-col cols="12">
-                        <v-text-field v-model="editedItem.link_name" label="Название ссылки"></v-text-field>
-                      </v-col>
-                      <v-col cols="12">
-                        <v-text-field v-model="editedItem.link" label="Ссылка"></v-text-field>
-                      </v-col>
-                      <v-col cols="12" v-if="editedIndex>-1">
-                        <v-file-input
-                          accept="image/png, image/jpeg, image/bmp"
-                          prepend-icon="mdi-camera"
-                          label="Картинка"
-                          v-model="editedItem.updImage"
-                        ></v-file-input>
-                      </v-col>
-                      <v-col cols="12" v-else>
-                        <v-file-input
-                          accept="image/png, image/jpeg, image/bmp"
-                          prepend-icon="mdi-camera"
-                          label="Картинка"
-                          v-model="editedItem.image"
-                        ></v-file-input>
-                      </v-col>
-                      <v-col cols="10" v-if="editedIndex>-1 && editedItem.image!=''">
-                        <v-img :src="'/storage/'+editedItem.image"></v-img>
-                        <v-btn
-                          x-small
-                          color="error"
-                          style="margin-top:5px"
-                          @click="deleteImage"
-                        >Удалить</v-btn>
-                      </v-col>
-                    </v-col>
-                  </v-row>
+                    </v-row>
+                  </v-form>
                 </v-container>
               </v-card-text>
 
@@ -185,48 +209,58 @@ export default {
         .catch(function (error) {});
     },
     store() {
-      var formData = this.getFormData();
-      axios
-        .post("/api/sliders", formData, {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        })
-        .then((response) => {
-          var res = response.data;
-          if (res.success) {
-            this.showSnack("success", "Данные успешно добавлены !");
-            this.data.unshift(res.data);
-            this.close();
-          } else {
-            alert(res.msg);
-          }
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
+      var validate = this.$refs.form.validate();
+      if (validate) {
+        var formData = this.getFormData();
+        axios
+          .post("/api/sliders", formData, {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          })
+          .then((response) => {
+            var res = response.data;
+            if (res.success) {
+              this.showSnack("success", "Данные успешно добавлены !");
+              this.data.unshift(res.data);
+              this.close();
+            } else {
+              alert(res.msg);
+            }
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+      }
     },
     update() {
-      var formData = this.getFormData();
-      axios
-        .post("/api/sliders/" + this.editedItem.id + "?_method=PUT", formData, {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        })
-        .then((response) => {
-          var res = response.data;
-          if (res.success) {
-            this.showSnack("success", "Данные успешно изменены !");
-            this.$set(this.data, this.editedIndex, res.data);
-            this.close();
-          } else {
-            alert(res.msg);
-          }
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
+      var validate = this.$refs.form.validate();
+      if (validate) {
+        var formData = this.getFormData();
+        axios
+          .post(
+            "/api/sliders/" + this.editedItem.id + "?_method=PUT",
+            formData,
+            {
+              headers: {
+                "Content-Type": "multipart/form-data",
+              },
+            }
+          )
+          .then((response) => {
+            var res = response.data;
+            if (res.success) {
+              this.showSnack("success", "Данные успешно изменены !");
+              this.$set(this.data, this.editedIndex, res.data);
+              this.close();
+            } else {
+              alert(res.msg);
+            }
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+      }
     },
     getFormData() {
       var formData = new FormData();
@@ -275,6 +309,13 @@ export default {
     deleteImage() {
       this.editedItem.delImage = this.editedItem.image;
       this.editedItem.image = "";
+    },
+    updImageValidate() {
+      if (this.editedItem.delImage != null) {
+        return this.requiredImage("Обложка");
+      } else {
+        return [];
+      }
     },
   },
 };

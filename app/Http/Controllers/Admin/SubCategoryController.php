@@ -43,7 +43,7 @@ class SubCategoryController extends Controller
             'in_index' => (int)$request->in_index,
             'avatar' => $request->file('avatar')->store('images/subCategories'),
         ]);
-        $this->subCategoryDirectory->store($subCategory->id, json_decode($request->directories));
+        $this->subCategoryDirectory->store($subCategory->id, json_decode($request->directory_types));
         $data = SubCategory::where('id', $subCategory->id)->orderBy('id', 'DESC')->with(['category', 'directoryTypes'])->get();
         return response()->json(['success' => true, 'data' => $data]);
     }
@@ -58,7 +58,7 @@ class SubCategoryController extends Controller
     public function update(Request $request, $id)
     {
         SubCategory::updData($request, $id);
-        $this->subCategoryDirectory->updateDirectories($id, json_decode($request->directories));
+        $this->subCategoryDirectory->updateDirectories($id, json_decode($request->directory_types));
         $data = SubCategory::where('id', $id)->orderBy('id', 'DESC')->with(['category', 'directoryTypes'])->get();
         return response()->json(['success' => true, 'data' => $data]);
     }
@@ -74,6 +74,7 @@ class SubCategoryController extends Controller
         if (!empty($request->avatar)) {
             Storage::delete($request->avatar);
         }
+        SubCategoryDirectory::where('sub_category_id', $id)->delete();
         SubCategory::where('id', $id)->delete();
         return response()->json(['success' => true]);
     }

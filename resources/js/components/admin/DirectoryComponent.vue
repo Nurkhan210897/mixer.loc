@@ -43,11 +43,17 @@
 
               <v-card-text>
                 <v-container>
-                  <v-row>
-                    <v-col cols="12">
-                      <v-text-field v-model="editedItem.name" label="Название"></v-text-field>
-                    </v-col>
-                  </v-row>
+                  <v-form ref="form" v-model="valid" lazy-validation>
+                    <v-row>
+                      <v-col cols="12">
+                        <v-text-field
+                          v-model="editedItem.name"
+                          label="Название"
+                          :rules="requiredText('Название')"
+                        ></v-text-field>
+                      </v-col>
+                    </v-row>
+                  </v-form>
                 </v-container>
               </v-card-text>
 
@@ -131,39 +137,45 @@ export default {
         .catch(function (error) {});
     },
     store() {
-      this.editedItem.directoryTypeId = this.directoryTypeId;
-      axios
-        .post("/api/directory", this.editedItem)
-        .then((response) => {
-          var res = response.data;
-          if (res.success) {
-            this.editedItem.id = res.id;
-            this.data.unshift(this.editedItem);
-            this.close();
-          } else {
-            alert(res.msg);
-          }
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
+      var validate = this.$refs.form.validate();
+      if (validate) {
+        this.editedItem.directoryTypeId = this.directoryTypeId;
+        axios
+          .post("/api/directory", this.editedItem)
+          .then((response) => {
+            var res = response.data;
+            if (res.success) {
+              this.editedItem.id = res.id;
+              this.data.unshift(this.editedItem);
+              this.close();
+            } else {
+              alert(res.msg);
+            }
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+      }
     },
     update() {
-      this.editedItem.directoryTypeId = this.directoryTypeId;
-      axios
-        .put("/api/directory/" + this.editedItem.id, this.editedItem)
-        .then((response) => {
-          var res = response.data;
-          if (res.success) {
-            Object.assign(this.data[this.editedIndex], this.editedItem);
-            this.close();
-          } else {
-            alert(res.msg);
-          }
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
+      var validate = this.$refs.form.validate();
+      if (validate) {
+        this.editedItem.directoryTypeId = this.directoryTypeId;
+        axios
+          .put("/api/directory/" + this.editedItem.id, this.editedItem)
+          .then((response) => {
+            var res = response.data;
+            if (res.success) {
+              Object.assign(this.data[this.editedIndex], this.editedItem);
+              this.close();
+            } else {
+              alert(res.msg);
+            }
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+      }
     },
     deleteItem() {
       axios

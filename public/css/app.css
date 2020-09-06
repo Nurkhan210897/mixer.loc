@@ -10971,6 +10971,10 @@ a.text-dark:focus {
   color: #1976d2 !important;
 }
 
+#adminPanel .v-card .v-card__text {
+  padding-bottom: 0px;
+}
+
 /* width */
 
 ::-webkit-scrollbar {

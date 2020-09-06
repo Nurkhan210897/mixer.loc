@@ -65,16 +65,23 @@ class SubCategory extends Model
             ->select(
                 'products.id',
                 'products.name',
+                'products.code',
                 'products.price',
                 'images.path as image'
             )->where('images.avatar', 1)
             ->where('products.sub_category_id', $id);
 
-        if (!empty($data)) {
-            $products = $products->whereIn('product_directory.directory_id', $this->getDirectoryIdsFromRequest($data));
+        if (!empty($data['dir'])) {
+            $products = $products->whereIn('product_directory.directory_id', $this->getDirectoryIdsFromRequest($data['dir']));
         }
 
-        $products = $products->distinct()->paginate($count);
+        if (!empty($data['sort'])) {
+            $sort = $data['sort'];
+        } else {
+            $sort = 'ASC';
+        }
+
+        $products = $products->orderBy('products.price', $sort)->distinct('products.id')->paginate($count);
 
         return $products;
     }

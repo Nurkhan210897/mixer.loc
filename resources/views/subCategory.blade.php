@@ -2,7 +2,7 @@
 @section('main')
 <div class="catalog padding-page">
     <div class="container">
-        <div class="title-page">
+        <div class="title-page col-xl-5">
             <h2>{{$subCategory->name}}</h2>
             <a href="/">
                 вернуться назад
@@ -23,20 +23,25 @@
             </div>
             <div class="category">
                 <p>СОРТИРОВАТЬ ПО:</p>
-                <select name id>
-                    <option value>Цене, сначала дорогие</option>
-                    <option value>Цене, сначала недорогие</option>
+                <select name='sort'>
+                    @if(!empty($_GET['sort']) AND $_GET['sort']=='DESC')
+                    <option value='DESC'>Цене, сначала дорогие</option>
+                    <option value='ASC'>Цене, сначала недорогие</option>
+                    @else
+                    <option value='ASC'>Цене, сначала недорогие</option>
+                    <option value='DESC'>Цене, сначала дорогие</option>
+                    @endif
                 </select>
             </div>
         </div>
-        <form action="/sub-categories/{{$subCategory->id}}" name='subCategoriesFilterForm'>
+        <form action="/sub-categories/{{$subCategory->id}}?page=1" name='subCategoriesFilterForm'>
             <div class="catalog-content">
                 <div class="row">
                     <div class="col-xl-3">
                         <div class="category-left">
                             <!-- <p class="title-category">ВЫ ВЫБРАЛИ:</p> -->
                             <p class="title-category">
-                                <button class="btn btn-default">Применить</button>
+                                <button class="btn btn-cart">Применить</button>
                             </p>
                             <div class="check-category">
                                 <i class="fas fa-times"></i>
@@ -47,16 +52,20 @@
                             <ul>
                                 @foreach($directoryType['directories'] as $directory)
                                 <li>
-                                    @if(isset($_GET[$directory['name']]))
-                                    <input type="checkbox" value="{{$directory['id']}}" checked name="{{$directory['name']}}">
+                                    @if(isset($_GET['dir'][$directory['name']]))
+                                    <input type="checkbox" value="{{$directory['id']}}" checked name="dir[{{$directory['name']}}]">
                                     @else
-                                    <input type="checkbox" value="{{$directory['id']}}" name="{{$directory['name']}}">
+                                    <input type="checkbox" value="{{$directory['id']}}" name="dir[{{$directory['name']}}]">
                                     @endif
                                     <label for="check1">{{$directory['name']}}</label>
                                 </li>
                                 @endforeach
                             </ul>
                             @endforeach
+                            @if(!empty($_GET['sort']))
+                            <input type="text" name='sort' value="{{$_GET['sort']}}" hidden />
+                            @endif
+                            <input type="number" name='page' value="1" hidden />
         </form>
     </div>
 </div>
@@ -70,6 +79,7 @@
                 </a>
                 <div class="catalog-card-text">
                     <a href="/products/{{$product->id}}">{{$product->name}}</a>
+                    <span class="silver-text">{{$product->code}}</span>
                     <br />
                     <p>
                         <span class="blue-text">{{$product->price}}</span>
@@ -91,11 +101,13 @@
             </div>
         </div>
         @endforeach
+        @if($products->hasPages())
         <div class="col-xl-12">
             <div class="paginate" style="margin-top:20px;">
-                {{$products->links()}}
+                {{$products->withQueryString()->links()}}
             </div>
         </div>
+        @endif
     </div>
 </div>
 </div>

@@ -62,16 +62,23 @@
                         </v-row>
                         <v-row>
                           <v-text-field
+                            v-model="editedItem.code"
+                            label="Код товара"
+                            :rules="requiredText('Код товара')"
+                          ></v-text-field>
+                        </v-row>
+                        <v-row>
+                          <v-text-field
                             v-model="editedItem.price"
                             label="Цена"
-                            :rules="requiredText('Цена')"
+                            :rules="requiredNumber('Цена')"
                           ></v-text-field>
                         </v-row>
                         <v-row>
                           <v-text-field
                             v-model="editedItem.count"
                             label="Кол-во"
-                            :rules="requiredText('Кол-во')"
+                            :rules="requiredNumber('Кол-во')"
                           ></v-text-field>
                         </v-row>
                         <v-row>
@@ -122,10 +129,11 @@
                               prepend-icon="mdi-camera"
                               label="Обложка"
                               v-model="editedItem.updAvatar"
+                              :rules="updAvatarValidate()"
                               ref="avatar"
                             ></v-file-input>
                           </v-row>
-                          <v-row v-if="editedItem.avatar.id!==undefined">
+                          <v-row v-if="editedItem.avatar!==null">
                             <v-col cols="4">
                               <v-img :src="'/storage/'+editedItem.avatar.path"></v-img>
                               <v-btn
@@ -143,6 +151,7 @@
                               multiple
                               label="Картинки"
                               v-model="editedItem.updImages"
+                              :rules="updImagesValidate()"
                               ref="images"
                             ></v-file-input>
                           </v-row>
@@ -241,6 +250,7 @@ export default {
   data: () => ({
     headers: [
       { text: "Название", value: "name", sortable: false },
+      { text: "Код", value: "name", sortable: false },
       { text: "Цена", value: "price", sortable: false },
       { text: "Кол-во", value: "count", sortable: false },
       { text: "Категория", value: "category.name", sortable: false },
@@ -254,6 +264,7 @@ export default {
     directories: [],
     editedItem: {
       name: "",
+      code: "",
       price: "",
       count: "",
       weight: "",
@@ -263,14 +274,15 @@ export default {
       sub_category_id: "",
       directories: [],
       avatar: null,
-      updAvatar: [],
+      updAvatar: null,
       delAvatar: [],
       images: null,
-      updImages: [],
+      updImages: null,
       delImages: [],
     },
     defaultItem: {
       name: "",
+      code: "",
       price: "",
       count: "",
       weight: "",
@@ -280,10 +292,10 @@ export default {
       sub_category_id: "",
       directories: [],
       avatar: null,
-      updAvatar: [],
+      updAvatar: null,
       delAvatar: [],
       images: null,
-      updImages: [],
+      updImages: null,
       delImages: [],
     },
   }),
@@ -358,33 +370,37 @@ export default {
           this.editedItem.images.splice(key, 1);
         }
       }
+      console.log(this.editedItem);
       this.dialog = true;
     },
     update() {
-      var formData = this.getFormData();
-      axios
-        .post(
-          "/api/products/" + this.editedItem.id + "?_method=PUT",
-          formData,
-          {
-            headers: {
-              "Content-Type": "multipart/form-data",
-            },
-          }
-        )
-        .then((response) => {
-          var res = response.data;
-          if (res.success) {
-            this.showSnack("success", "Данные успешно изменены!");
-            this.$set(this.data, this.editedIndex, res.data[0]);
-            this.close();
-          } else {
-            alert(res.msg);
-          }
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
+      var validate = this.$refs.form.validate();
+      if (validate) {
+        var formData = this.getFormData();
+        axios
+          .post(
+            "/api/products/" + this.editedItem.id + "?_method=PUT",
+            formData,
+            {
+              headers: {
+                "Content-Type": "multipart/form-data",
+              },
+            }
+          )
+          .then((response) => {
+            var res = response.data;
+            if (res.success) {
+              this.showSnack("success", "Данные успешно изменены!");
+              this.$set(this.data, this.editedIndex, res.data[0]);
+              this.close();
+            } else {
+              alert(res.msg);
+            }
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+      }
     },
     deleteItem() {
       axios
@@ -432,6 +448,7 @@ export default {
     getFormData() {
       var formData = new FormData();
       formData.append("name", this.editedItem.name);
+      formData.append("code", this.editedItem.code);
       formData.append("price", this.editedItem.price);
       formData.append("count", this.editedItem.count);
 
@@ -452,7 +469,7 @@ export default {
       //При изменении
       if (this.editedIndex > -1) {
         //Если есть новые картинки
-        if (this.editedItem.updImages[0] !== undefined) {
+        if (this.editedItem.updImages != null) {
           for (var key in this.editedItem.updImages) {
             formData.append("updImages[]", this.editedItem.updImages[key]);
           }
@@ -469,7 +486,7 @@ export default {
           formData.append("delImages", JSON.stringify(delImages));
         }
         //Если добавлена новая обложка
-        if (this.editedItem.updAvatar.lastModified !== undefined) {
+        if (this.editedItem.updAvatar != null) {
           formData.append("updAvatar", this.editedItem.updAvatar);
         }
         if (this.editedItem.delAvatar.id !== undefined) {
@@ -495,7 +512,7 @@ export default {
     delImage(i, avatar = false) {
       if (avatar === true) {
         this.editedItem.delAvatar = this.editedItem.avatar;
-        this.editedItem.avatar = {};
+        this.editedItem.avatar = null;
       } else {
         this.editedItem.delImages.push(this.editedItem.images[i]);
         this.editedItem.images.splice(i, 1);
@@ -505,8 +522,9 @@ export default {
       this.dialog = false;
       this.deleteDialog = false;
       this.$nextTick(() => {
-        this.editedItem.updImages = [];
-        this.editedItem.updAvatar = [];
+        this.directories = [];
+        this.editedItem.updImages = null;
+        this.editedItem.updAvatar = null;
         if (this.editedItem.delImages[0] !== undefined) {
           for (var key in this.editedItem.delImages) {
             this.editedItem.images.unshift(this.editedItem.delImages[key]);
@@ -516,7 +534,7 @@ export default {
         if (this.editedItem.delAvatar.id !== undefined) {
           this.editedItem.images.unshift(this.editedItem.delAvatar);
           this.editedItem.delAvatar = {};
-        } else {
+        } else if (this.editedItem.avatar != null) {
           this.editedItem.images.unshift(this.editedItem.avatar);
         }
         this.editedItem = Object.assign({}, this.defaultItem);
@@ -528,12 +546,31 @@ export default {
       this.dialog = false;
       this.deleteDialog = false;
       this.$nextTick(() => {
-        this.editedItem.updImages = [];
-        this.editedItem.updAvatar = [];
+        this.directories = [];
+        this.editedItem.updImages = null;
+        this.editedItem.updAvatar = null;
         this.editedItem = Object.assign({}, this.defaultItem);
         this.editedIndex = -1;
       });
       this.$refs.form.resetValidation();
+    },
+    updAvatarValidate() {
+      if (
+        this.editedItem.avatar === null &&
+        this.editedItem.updAvatar === null
+      ) {
+        return this.requiredImage("Обложка");
+      }
+    },
+    updImagesValidate() {
+      if (
+        (this.editedItem.images == null ||
+          this.editedItem.images.length == 0) &&
+        (this.editedItem.updImages == null ||
+          this.editedItem.updImages.length == 0)
+      ) {
+        return this.requiredImage("Картинки");
+      }
     },
   },
 };

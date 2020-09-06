@@ -37,6 +37,7 @@ class ProductController extends Controller
     {
         $product = new Product();
         $product->name = $request->name;
+        $product->code = $request->code;
         $product->count = $request->count;
         $product->price = $request->price;
         $product->category_id = $request->category_id;
@@ -60,6 +61,7 @@ class ProductController extends Controller
     {
         $product = Product::find($id);
         $product->name = $request->name;
+        $product->code = $request->code;
         $product->price = $request->price;
         $product->count = $request->count;
         $product->weight = $request->weight;
@@ -73,13 +75,11 @@ class ProductController extends Controller
         $product->updateDirectories($request->directories);
         if ($request->has('updAvatar')) {
             $product->storeImages($request->updAvatar);
-            if ($request->has('avatar')) {
-                $product->delImages(json_decode($request->avatar));
-            }
         }
         if ($request->has('delAvatar')) {
             $product->delImages(json_decode($request->delAvatar));
         }
+
         if ($request->has('updImages')) {
             $product->storeImages($request->updImages);
         }

@@ -16,12 +16,18 @@ class ProductController extends Controller
         $this->productModel = new Product();
         $this->subCategoryModel = new SubCategory();
     }
-    public function show($id)
+    public function index($id)
     {
         $product = $this->productModel->getSelectedProduct($id);
         $data['product'] = $product;
         $data['subCategoryProducts'] = $this->subCategoryModel->getProducts($product->sub_category_id);
         // return response()->json($data);
         return view('product', $data);
+    }
+
+    public function search(Request $request)
+    {
+        $products = $this->productModel->search($request->searched);
+        return response()->json($products);
     }
 }
