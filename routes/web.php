@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 
+Route::get('/artisan', 'ArtisanController@run');
 //Фронтенд
 Route::get('/', 'IndexController@show');
 Route::get('/sub-categories/{id}', 'SubCategoryController@show');
