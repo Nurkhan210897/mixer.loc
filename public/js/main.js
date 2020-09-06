@@ -94,14 +94,19 @@ $(document).ready(function () {
     $('.inBasketBtn[data-productId="' + data.id + '"]').show();
   });
 
-  function addBasket(data) {
+  function addBasket(data, basketForm = false) {
     $.ajax({
       url: "/basket/put",
       type: "POST",
+      async: false,
       data: data,
       success(res) {
         if (res.success) {
-          $("#basketTotal").html(res.total);
+          $("#basketTotal").html(res.totalCount);
+          if (basketForm) {
+            updateBasketForm(res.product);
+            $("#basketTotalPrice").html(res.totalPrice);
+          }
         }
       },
     });
@@ -110,4 +115,36 @@ $(document).ready(function () {
   $(".inBasketBtn").on("click", function (event) {
     event.preventDefault();
   });
+
+  //Кнопки плюс минус
+  $(".count .fa-plus").on("click", function (event) {
+    event.preventDefault();
+    var productId = $(this).attr("data-productId");
+    var count =
+      Number($('.count input[data-productId="' + productId + '"]').val()) + 1;
+    var data = {
+      id: productId,
+      count: count,
+    };
+    addBasket(data, true);
+  });
+
+  $(".count .fa-minus").on("click", function (event) {
+    event.preventDefault();
+    var productId = $(this).attr("data-productId");
+    var count =
+      Number($('.count input[data-productId="' + productId + '"]').val()) - 1;
+    var data = {
+      id: productId,
+      count: count,
+    };
+    addBasket(data, true);
+  });
+
+  function updateBasketForm(product) {
+    $('.count input[data-productId="' + product.id + '"]').val(
+      product.totalCount
+    );
+    $('td[data-productId="' + product.id + '"]').html(product.totalPrice);
+  }
 });

@@ -90,8 +90,8 @@
                                     <span>
                                         <a href="/basket">
                                             <i class="fas fa-shopping-basket"></i>
-                                            @if(session()->has('basketTotal'))
-                                            <span id='basketTotal'>{{session('basketTotal')}}</span>
+                                            @if(session()->has('basketTotalCount'))
+                                            <span id='basketTotal'>{{session('basketTotalCount')}}</span>
                                             @else
                                             <span id='basketTotal'>0</span>
                                             @endif

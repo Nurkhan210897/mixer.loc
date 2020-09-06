@@ -10,6 +10,7 @@
                 <i class="fas fa-chevron-right"></i>
             </a>
         </div>
+        @if(!empty($products))
         <div class="basket-content">
             <div class="p-5 table-responsive table-responsive-md">
                 <table class="table ">
@@ -33,12 +34,14 @@
                             <td class="text-center price">{{$product['price']}}</td>
                             <td class="text-center">
                                 <div class="count">
-                                    <span><i class="fas fa-plus"></i></span>
-                                    <span class="quantity"><input type="text"></span>
-                                    <span><i class="fas fa-minus"></i></span>
+                                    <span><i class="fas fa-plus" data-productId="{{$product['id']}}"></i></span>
+                                    <span class="quantity">
+                                        <input type="text" value="{{$product['totalCount']}}" data-productId="{{$product['id']}}">
+                                    </span>
+                                    <span><i class="fas fa-minus" data-productId="{{$product['id']}}"></i></span>
                                 </div>
                             </td>
-                            <td class="text-center last-price">8795 </td>
+                            <td class="text-center last-price" data-productId="{{$product['id']}}">{{$product['totalPrice']}}</td>
                             <td class="del"><i class="fas fa-times"></i></td>
                         </tr>
                         @endforeach
@@ -51,11 +54,14 @@
                     <span>
                         ИТОГО:
                     </span>
-                    <span class="blue-text">{{$totalPrice}} </span>
+                    <span class="blue-text" id='basketTotalPrice'>{{$totalPrice}} </span>
                     <span>ТГ.</span>
                 </div>
             </div>
         </div>
+        @else
+        <p style="color:white;text-align:center">Корзина пуста!</p>
+        @endif
     </div>
 
 </div>
