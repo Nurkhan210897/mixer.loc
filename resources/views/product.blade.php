@@ -27,27 +27,30 @@
                                     </div>
                                 </a>
                             </li>
-                            <li class="left-content">
-                                <a href="#">
-                                    <i class="fas fa-truck"></i>
-                                    <div>
-                                        <p class="silver-text">Срок доставки:</p>
-                                        <p> 1-2 рабочих дня</p>
-                                    </div>
-                                </a>
-                            </li>
                         </ul>
                         <ul class="left-bottom">
-                            <li>Бесплатная доставка *
+                            <li class="green-tooltip">Бесплатная доставка *
                                 <div class="tooltip-block">
                                     <p>Бесплатная доставка</p>
-                                    <span>Lorem ipsum dolor sit amet consectetur adipisicing elit. Id, facilis.</span>
+                                    <span>Доставим быстро и в срок!</span>
                                 </div>
                             </li>
-                            <li>Бесплатная доставка *
+                            <li class="yellow-tooltip">Официальная гарантия
                                 <div class="tooltip-block">
-                                    <p>Бесплатная доставка</p>
-                                    <span>Lorem ipsum dolor sit amet consectetur adipisicing elit. Id, facilis elit. Id, facilis elit. Id, facilis.</span>
+                                    <p>Официальная гарантия</p>
+                                    <span>Тестовая запись</span>
+                                </div>
+                            </li>
+                            <li class="red-tooltip">Официальная гарантия
+                                <div class="tooltip-block">
+                                    <p>Официальная гарантия</p>
+                                    <span>Тестовая запись</span>
+                                </div>
+                            </li>
+                            <li class="blue-tooltip">Официальная гарантия
+                                <div class="tooltip-block">
+                                    <p>Официальная гарантия</p>
+                                    <span>Тестовая запись</span>
                                 </div>
                             </li>
                         </ul>
@@ -81,10 +84,21 @@
                             </p>
                         </div>
                         <div class="button-card">
-                            <button class="btn btn-cart main-btn">
+                            @if(session()->has('basket.'.$product->id))
+                            <button class="btn btn-cart inBasketBtn">
+                                В корзине
+                                <i class="fas fa-shopping-basket"></i>
+                            </button>
+                            @else
+                            <button class="btn btn-cart addBasketBtn" data-productId='{{$product->id}}'>
                                 Купить
                                 <i class="fas fa-shopping-basket"></i>
                             </button>
+                            <button class="btn btn-cart inBasketBtn" data-productId='{{$product->id}}' style="display: none;">
+                                В корзине
+                                <i class="fas fa-shopping-basket"></i>
+                            </button>
+                            @endif
                             <button class="btn">
                                 К сравнению
                                 <i class="fas fa-chart-bar"></i>

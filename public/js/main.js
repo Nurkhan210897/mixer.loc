@@ -13,6 +13,13 @@ $(document).ready(function () {
     $(".photo-gallery img").attr("src", attr);
   });
 
+  //csrf
+  $.ajaxSetup({
+    headers: {
+      "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+    },
+  });
+
   //Переключатель дорогие/дешевые
   $('.catalog select[name="sort"]').on("change", function () {
     var url = window.location.href;
@@ -73,5 +80,71 @@ $(document).ready(function () {
         }
       },
     });
+  }
+
+  //Добавление в корзину (подкатегории)
+  $(".addBasketBtn").on("click", function (event) {
+    event.preventDefault();
+    var data = {
+      id: $(this).attr("data-productId"),
+      count: 1,
+    };
+    addBasket(data);
+    $(this).hide();
+    $('.inBasketBtn[data-productId="' + data.id + '"]').show();
+  });
+
+  function addBasket(data, basketForm = false) {
+    $.ajax({
+      url: "/basket/put",
+      type: "POST",
+      async: false,
+      data: data,
+      success(res) {
+        if (res.success) {
+          $("#basketTotal").html(res.totalCount);
+          if (basketForm) {
+            updateBasketForm(res.product);
+            $("#basketTotalPrice").html(res.totalPrice);
+          }
+        }
+      },
+    });
+  }
+
+  $(".inBasketBtn").on("click", function (event) {
+    event.preventDefault();
+  });
+
+  //Кнопки плюс минус
+  $(".count .fa-plus").on("click", function (event) {
+    event.preventDefault();
+    var productId = $(this).attr("data-productId");
+    var count =
+      Number($('.count input[data-productId="' + productId + '"]').val()) + 1;
+    var data = {
+      id: productId,
+      count: count,
+    };
+    addBasket(data, true);
+  });
+
+  $(".count .fa-minus").on("click", function (event) {
+    event.preventDefault();
+    var productId = $(this).attr("data-productId");
+    var count =
+      Number($('.count input[data-productId="' + productId + '"]').val()) - 1;
+    var data = {
+      id: productId,
+      count: count,
+    };
+    addBasket(data, true);
+  });
+
+  function updateBasketForm(product) {
+    $('.count input[data-productId="' + product.id + '"]').val(
+      product.totalCount
+    );
+    $('td[data-productId="' + product.id + '"]').html(product.totalPrice);
   }
 });

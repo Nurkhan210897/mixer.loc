@@ -2,7 +2,7 @@
 @section('main')
 <div class="catalog padding-page">
     <div class="container">
-        <div class="title-page col-xl-5">
+        <div class="title-page">
             <h2>{{$subCategory->name}}</h2>
             <a href="/">
                 вернуться назад
@@ -86,10 +86,21 @@
                         <span class="silver-text">тг.</span>
                     </p>
                     <div class="button-card">
-                        <button class="btn btn-cart">
+                        @if(session()->has('basket.'.$product->id))
+                        <button class="btn btn-cart inBasketBtn">
+                            В корзине
+                            <i class="fas fa-shopping-basket"></i>
+                        </button>
+                        @else
+                        <button class="btn btn-cart addBasketBtn" data-productId='{{$product->id}}'>
                             Купить
                             <i class="fas fa-shopping-basket"></i>
                         </button>
+                        <button class="btn btn-cart inBasketBtn" data-productId='{{$product->id}}' style="display: none;">
+                            В корзине
+                            <i class="fas fa-shopping-basket"></i>
+                        </button>
+                        @endif
                         <button class="btn">
                             <i class="fas fa-chart-bar"></i>
                         </button>

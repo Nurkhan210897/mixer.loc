@@ -14,6 +14,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css" integrity="sha512-17EgCFERpgZKcm0j0fEq1YCJuyAWdz9KUtv1EjVuaOz8pDnh/0nZxmU6BBXwaaxqoi9PQXnRWqlcDB027hgv9A==" crossorigin="anonymous" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link href="/css/main.css" rel='stylesheet'>
+    <meta name="csrf-token" content="{{ csrf_token() }}" />
     <title>Aibek sait</title>
 </head>
 
@@ -60,7 +61,9 @@
                 <div class="row align-items-center">
                     <div class="col-xl-2">
                         <div class="logo">
-                            <img src="/storage/main/logo.png" alt />
+                            <a href="/">
+                                <img src="{{asset('storage/images/logo.png')}}" alt style="width: 168px;height:36px" />
+                            </a>
                         </div>
                     </div>
                     <div class="col-xl-10 pl-5">
@@ -78,7 +81,7 @@
                                 <div class="icon">
                                     <span>
                                         <a href="#"> <i class="fas fa-chart-bar"></i>
-                                            1</a>
+                                            0</a>
                                     </span>
                                     <span>
                                         <a href="#">
@@ -87,8 +90,13 @@
                                         </a>
                                     </span>
                                     <span>
-                                        <a href="#">
-                                            <i class="fas fa-shopping-basket"></i>1
+                                        <a href="/basket">
+                                            <i class="fas fa-shopping-basket"></i>
+                                            @if(session()->has('basketTotalCount'))
+                                            <span id='basketTotal'>{{session('basketTotalCount')}}</span>
+                                            @else
+                                            <span id='basketTotal'>0</span>
+                                            @endif
                                         </a>
                                     </span>
                                 </div>
@@ -104,7 +112,7 @@
                     <div class="col-xl-7">
                         <div class="home-left">
                             <span class="blue-text">
-                                <a href="#">
+                                <a href="/">
                                     <i class="fas fa-home"></i>
                                 </a>
                             </span>
@@ -188,45 +196,11 @@
                     <div class="col-xl-3 col-md-6 col-lg-3">
                         <h5>КАТАЛОГ ПРОДУКЦИИ</h5>
                         <ul>
+                            @foreach($categories as $category)
                             <li>
-                                <a href="#">СМЕСИТЕЛИ</a>
+                                <a href="#">{{$category->name}}</a>
                             </li>
-                            <li>
-                                <a href="#">ВОДОСНАБЖЕНИЕ</a>
-                            </li>
-                            <li>
-                                <a href="#">ДУШЕВЫЕ УГЛЫ И ОГРАЖДЕНИЯ</a>
-                            </li>
-                            <li>
-                                <a href="#">ДВЕРИ В НИШУ</a>
-                            </li>
-                            <li>
-                                <a href="#">ШТОРКИ ДЛЯ ВАННЫ</a>
-                            </li>
-                            <li>
-                                <a href="#">ДУШЕВЫЕ ПОДДОНЫ</a>
-                            </li>
-                            <li>
-                                <a href="#">КОМПЛЕКТУЮЩИЕ ДЛЯ ДУШЕВЫХ ПОДДОНОВ</a>
-                            </li>
-                            <li>
-                                <a href="#">ДУШЕВЫЕ СИСТЕМЫ</a>
-                            </li>
-                            <li>
-                                <a href="#">АКСЕССУАРЫ</a>
-                            </li>
-                            <li>
-                                <a href="#">РАКОВИНЫ</a>
-                            </li>
-                            <li>
-                                <a href="#">ЗЕРКАЛА</a>
-                            </li>
-                            <li>
-                                <a href="#">ДРЕНАЖНЫЕ КАНАЛЫ</a>
-                            </li>
-                            <li>
-                                <a href="#">КОМПЛЕКТУЮЩИЕ ДЛЯ СМЕСИТЕЛЕЙ</a>
-                            </li>
+                            @endforeach
                         </ul>
                     </div>
                     <div class="col-xl-3 col-md-6 col-lg-3">
@@ -259,7 +233,7 @@
                         <div class="phone">
                             <a href="tel: +7 495 374 68 54">
                                 <i class="fas fa-phone-alt"></i>
-                                <span>+7 495</span> 374 68 54
+                                <span>+7 771</span> 599 99 98
                             </a>
                         </div>
                         <ul>
@@ -270,7 +244,7 @@
                                 </a>
                             </li>
                         </ul>
-                        <p class="silver-text">GAPPO В СОЦСЕТЯХ:</p>
+                        <p class="silver-text">QUALITAT В СОЦСЕТЯХ:</p>
                         <ul class="social">
                             <li>
                                 <a href="#">
@@ -299,18 +273,12 @@
         </footer>
         <div class="bottom-footer">
             <div class="container">
-                <div class="bottom-footer-text">
+                <div class="bottom-footer-text" style="justify-content: center;">
                     <div class="bottom-text">
                         <div class="logo">
-                            <img src="@/assets/images/logo.png" alt />
+                            <img src="{{asset('storage/images/logo.png')}}" alt style="width: 168px;height:36px" />
                         </div>
-                        <p>© 2016 GAPPO. ТЕХНОЛОГИИ ЛИДЕРСТВА.</p>
-                    </div>
-                    <div class="bottom-text">
-                        <p>ВСЕ ПРАВА ЗАЩИЩЕНЫ.СОЗДАНИЕ САЙТА: SMARTSOFT</p>
-                        <div class="logo">
-                            <img src="@/assets/images/logo.png" alt />
-                        </div>
+                        <p>© 2020 QUALITAT. ТЕХНОЛОГИИ ЛИДЕРСТВА.</p>
                     </div>
                 </div>
             </div>
