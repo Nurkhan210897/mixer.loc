@@ -8,12 +8,8 @@ Route::get('/sub-categories/{id}', 'SubCategoryController@show');
 Route::get('/products/search', 'ProductController@search');
 Route::get('/products/{id}', 'ProductController@index');
 
-
-//front
-Route::get('/basket', function () {
-    return view('basket');
-});
-//
+Route::get('/basket', 'BasketController@index');
+Route::post('/basket/put', 'BasketController@put');
 
 //Админка
 Route::get('/admin', 'Admin\MainController@index');

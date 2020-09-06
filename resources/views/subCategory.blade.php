@@ -86,8 +86,12 @@
                         <span class="silver-text">тг.</span>
                     </p>
                     <div class="button-card">
-                        <button class="btn btn-cart">
+                        <button class="btn btn-cart addBasketBtn" data-productId='{{$product->id}}'>
                             Купить
+                            <i class="fas fa-shopping-basket"></i>
+                        </button>
+                        <button class="btn btn-cart inBasketBtn" data-productId='{{$product->id}}' style="display: none;">
+                            В корзине
                             <i class="fas fa-shopping-basket"></i>
                         </button>
                         <button class="btn">

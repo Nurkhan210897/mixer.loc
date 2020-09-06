@@ -14,6 +14,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css" integrity="sha512-17EgCFERpgZKcm0j0fEq1YCJuyAWdz9KUtv1EjVuaOz8pDnh/0nZxmU6BBXwaaxqoi9PQXnRWqlcDB027hgv9A==" crossorigin="anonymous" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link href="/css/main.css" rel='stylesheet'>
+    <meta name="csrf-token" content="{{ csrf_token() }}" />
     <title>Aibek sait</title>
 </head>
 
@@ -87,8 +88,13 @@
                                         </a>
                                     </span>
                                     <span>
-                                        <a href="#">
-                                            <i class="fas fa-shopping-basket"></i>1
+                                        <a href="/basket">
+                                            <i class="fas fa-shopping-basket"></i>
+                                            @if(session()->has('basketTotal'))
+                                            <span id='basketTotal'>{{session('basketTotal')}}</span>
+                                            @else
+                                            <span id='basketTotal'>0</span>
+                                            @endif
                                         </a>
                                     </span>
                                 </div>
