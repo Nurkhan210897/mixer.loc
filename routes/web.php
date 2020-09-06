@@ -11,6 +11,9 @@ Route::get('/products/{id}', 'ProductController@index');
 
 Route::get('/basket', 'BasketController@index');
 Route::post('/basket/put', 'BasketController@put');
+Route::get('/collection', function(){
+ return view('collection');
+});
 
 //Админка
 Route::get('/admin', 'Admin\MainController@index');
