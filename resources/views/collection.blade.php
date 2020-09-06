@@ -114,7 +114,7 @@
    <div class="product-block last-product-block">
     <div class="last-product">
      <div class="row">
-      <div class="col-xl-6">
+      <div class="col-xl-6 col-lg-6 col-md-6">
        <div class="first-text center-text">
         <h3>
          <span class="white-text">БРЕНД GAPPO:</span>
@@ -138,7 +138,7 @@
         </div>
        </div>
       </div>
-      <div class="col-xl-6 p-0">
+      <div class="col-xl-6 col-lg-6 col-md-6 p-0">
        <div class="last-product-img">
         <img src="@/assets/images/catalog-bg.jpg" alt />
        </div>
@@ -154,7 +154,7 @@
       </a>
      </div>
      <div class="row">
-      <div class="col-xl-2 col-6 col-md-3 col-lg-2">
+      <div class="col-xl-2 col-6 col-md-3 col-lg-3">
        <div class="colection-content">
         <a href="#">
          <img src="@/assets/images/product1.jpg" alt />
@@ -165,41 +165,7 @@
         </a>
        </div>
       </div>
-      <div class="col-xl-2 col-6 col-md-3 col-lg-2">
-       <div class="colection-content">
-        <span class="stock">new</span>
-        <a href="#">
-         <img src="@/assets/images/product1.jpg" alt />
-         <div class="product-bottom-text">
-          <span class="white-text">Atlantic</span>
-          <span class="silver-text">Серия</span>
-         </div>
-        </a>
-       </div>
-      </div>
-     </div>
-    </div>
-    <div class="product-colection">
-     <div class="title-block">
-      <h4>СМЕСИТЕЛИ</h4>
-      <a href="#">
-       Все Смесители
-       <i class="fas fa-chevron-right"></i>
-      </a>
-     </div>
-     <div class="row">
-      <div class="col-xl-2 col-6 col-md-3 col-lg-2">
-       <div class="colection-content">
-        <a href="#">
-         <img src="@/assets/images/product1.jpg" alt />
-         <div class="product-bottom-text">
-          <span class="white-text">Atlantic</span>
-          <span class="silver-text">Серия</span>
-         </div>
-        </a>
-       </div>
-      </div>
-      <div class="col-xl-2 col-6 col-md-3 col-lg-2">
+      <div class="col-xl-2 col-6 col-md-3 col-lg-3">
        <div class="colection-content">
         <span class="stock">new</span>
         <a href="#">
@@ -222,7 +188,7 @@
       </a>
      </div>
      <div class="row">
-      <div class="col-xl-2 col-6 col-md-3 col-lg-2">
+      <div class="col-xl-2 col-6 col-md-3 col-lg-3">
        <div class="colection-content">
         <a href="#">
          <img src="@/assets/images/product1.jpg" alt />
@@ -233,7 +199,41 @@
         </a>
        </div>
       </div>
-      <div class="col-xl-2 col-6 col-md-3 col-lg-2">
+      <div class="col-xl-2 col-6 col-md-3 col-lg-3">
+       <div class="colection-content">
+        <span class="stock">new</span>
+        <a href="#">
+         <img src="@/assets/images/product1.jpg" alt />
+         <div class="product-bottom-text">
+          <span class="white-text">Atlantic</span>
+          <span class="silver-text">Серия</span>
+         </div>
+        </a>
+       </div>
+      </div>
+     </div>
+    </div>
+    <div class="product-colection">
+     <div class="title-block">
+      <h4>СМЕСИТЕЛИ</h4>
+      <a href="#">
+       Все Смесители
+       <i class="fas fa-chevron-right"></i>
+      </a>
+     </div>
+     <div class="row">
+      <div class="col-xl-2 col-6 col-md-3 col-lg-3">
+       <div class="colection-content">
+        <a href="#">
+         <img src="@/assets/images/product1.jpg" alt />
+         <div class="product-bottom-text">
+          <span class="white-text">Atlantic</span>
+          <span class="silver-text">Серия</span>
+         </div>
+        </a>
+       </div>
+      </div>
+      <div class="col-xl-2 col-6 col-md-3 col-lg-3">
        <div class="colection-content">
         <span class="stock">new</span>
         <a href="#">

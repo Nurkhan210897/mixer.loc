@@ -285,6 +285,12 @@
     .px-5 {
         padding-left: 0 !important;
     }
+    .p-0 {
+        padding: 0 15px !important;
+    }
+    .last-product-img {
+        object-fit: contain;
+    }
     .main-bg {
         .slider-content {
             padding: 20px !important;
