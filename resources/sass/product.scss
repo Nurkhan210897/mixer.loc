@@ -1,209 +1,220 @@
 .product-page-left ul li.left-header {
-    list-style-type: none;
-    color: #fff;
-    background-color: #0d0d0d;
-    padding: 16px 20px 20px 20px;
-    margin-bottom: 20px;
+  list-style-type: none;
+  color: #fff;
+  background-color: #0d0d0d;
+  padding: 16px 20px 20px 20px;
+  margin-bottom: 20px;
 }
 
 .product-page-left ul {
-    padding-left: 0;
+  padding-left: 0;
 }
 
 .left-header p {
-    margin-bottom: 5px;
-    font-size: 14px;
-    line-height: 14px;
+  margin-bottom: 5px;
+  font-size: 14px;
+  line-height: 14px;
 }
 
 .left-header button {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-top: 15px;
-    width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 15px;
+  width: 100%;
 }
 
 .left-content a {
-    list-style-type: none;
-    color: #fff;
-    background-color: #0d0d0d;
-    padding: 16px 20px 20px 20px;
-    margin-bottom: 20px;
-    display: flex;
-    align-items: center;
+  list-style-type: none;
+  color: #fff;
+  background-color: #0d0d0d;
+  padding: 16px 20px 20px 20px;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
 }
 
 .left-content a:hover {
-    text-decoration: none;
+  text-decoration: none;
 }
 
 .left-content i {
-    color: #21a7d9;
-    margin-right: 20px;
+  color: #21a7d9;
+  margin-right: 20px;
 }
 
 .left-content p {
-    font-size: 14px;
-    line-height: 14px;
-    margin-bottom: 7px;
+  font-size: 14px;
+  line-height: 14px;
+  margin-bottom: 7px;
 }
 
 .left-bottom ul {
-    padding-left: 0;
+  padding-left: 0;
 }
 
 .left-bottom li {
-    list-style-type: none;
-    background-color: #50b359;
-    width: 100%;
-    height: 40px;
-    padding: 0;
-    line-height: 38px;
-    text-align: center;
-    color: #fff;
-    cursor: pointer;
-    position: relative;
-    margin-bottom: 20px;
+  list-style-type: none;
+  width: 100%;
+  height: 40px;
+  padding: 0;
+  line-height: 38px;
+  text-align: center;
+  color: #fff;
+  cursor: pointer;
+  position: relative;
+  margin-bottom: 20px;
 }
-
+.green-tooltip {
+  background-color: #50b359;
+}
+.yellow-tooltip {
+  background-color: #cccc14;
+}
+.red-tooltip {
+  background-color: #d93021;
+}
+.blue-tooltip {
+  background-color: #0078b3;
+}
 .left-bottom li:hover .tooltip-block {
-    display: block !important;
+  display: flex !important;
+  flex-direction: column;
 }
 
 .tooltip-block {
-    background-color: #fff;
-    border-radius: 5px;
-    text-align: left;
-    color: #000;
-    position: absolute;
-    right: -120%;
-    width: 280px;
-    padding: 15px 20px 20px;
-    top: -50%;
-    display: none;
-    z-index: 999;
+  background-color: #fff;
+  border-radius: 5px;
+  text-align: left;
+  color: #000;
+  position: absolute;
+  right: -120%;
+  width: 280px;
+  padding: 15px 20px 20px;
+  top: -50%;
+  display: none;
+  z-index: 999;
 }
 
 .tooltip-block::after {
-    content: '';
-    position: absolute;
-    width: 25px;
-    height: 25px;
-    background-color: #fff;
-    left: -12px;
-    top: 32%;
-    transform: rotate(45deg);
+  content: "";
+  position: absolute;
+  width: 25px;
+  height: 25px;
+  background-color: #fff;
+  left: -12px;
+  top: 32%;
+  transform: rotate(45deg);
 }
 
 .tooltip-block span {
-    line-height: 16px;
-    font-size: 14px;
-    display: block;
+  line-height: 16px;
+  font-size: 14px;
+  display: block;
 }
 
 .tooltip-block p {
-    font-size: 15px;
-    font-weight: 500;
-    line-height: 15px;
-    margin-bottom: 0;
-    margin-bottom: 10px;
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 15px;
+  margin-bottom: 0;
+  margin-bottom: 10px;
 }
 
 .photo-gallery img {
-    width: 100%;
-    max-width: 100%;
-    max-height: 350px;
-    min-height: 350px;
+  width: 100%;
+  max-width: 100%;
+  max-height: 350px;
+  min-height: 350px;
 }
 
 .photo-gallery-bottom ul li {
-    width: fit-content;
-    list-style-type: none;
-    margin: 0 0px 20px;
+  width: fit-content;
+  list-style-type: none;
+  margin: 0 0px 20px;
 }
 
 .photo-gallery-bottom ul li img {
-    max-width: 95px;
-    cursor: pointer;
-    padding: 10px;
+  max-width: 95px;
+  cursor: pointer;
+  padding: 10px;
 }
 
 .photo-gallery-bottom ul {
-    padding: 35px 45px;
-    background-color: #0d0d0d;
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
+  padding: 35px 45px;
+  background-color: #0d0d0d;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
 }
 
 .active-img {
-    border: 1px solid #21a7d9;
+  border: 1px solid #21a7d9;
 }
 
 .product-page-right {
-    background-color: #0d0d0d;
-    padding: 25px 28px 25px 28px;
+  background-color: #0d0d0d;
+  padding: 25px 28px 25px 28px;
 }
 
 .price .blue-text {
-    font-size: 40px;
-    font-family: roboto-light;
+  font-size: 40px;
+  font-family: roboto-light;
 }
 
 .product-page-right .button-card {
-    display: block;
+  display: block;
 }
 
 .product-page-right span {
-    font-size: 14px;
+  font-size: 14px;
 }
 
 .main-btn {
-    font-size: 20px;
-    padding: 19px;
-    margin-bottom: 30px !important;
+  font-size: 20px;
+  padding: 19px;
+  margin-bottom: 30px !important;
 }
 
 .product-page-right .button-card button {
-    display: block;
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 15px;
+  display: block;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
 }
 
 .specifications {
-    padding: 30px;
-    margin-top: 2rem;
-    background-color: #0d0d0d;
+  padding: 30px;
+  margin-top: 2rem;
+  background-color: #0d0d0d;
 }
 
 .specifications ul,
 .specifications li {
-    padding: 0;
-    list-style-type: none;
+  padding: 0;
+  list-style-type: none;
 }
 
 .specifications li {
-    display: flex;
-    color: #fff;
-    border-bottom: 1px solid #333;
+  display: flex;
+  color: #fff;
+  border-bottom: 1px solid #333;
 }
 
 .specifications li p {
-    margin-bottom: 10px;
+  margin-bottom: 10px;
 }
 
 .specifications .form-title {
-    border-bottom: 1px solid #21a7d9;
+  border-bottom: 1px solid #21a7d9;
 }
 
 .specifications li div {
-    width: 40%;
+  width: 40%;
 }
 
 .specifications li span {
-    font-size: 14px;
+  font-size: 14px;
 }

@@ -27,27 +27,30 @@
                                     </div>
                                 </a>
                             </li>
-                            <li class="left-content">
-                                <a href="#">
-                                    <i class="fas fa-truck"></i>
-                                    <div>
-                                        <p class="silver-text">Срок доставки:</p>
-                                        <p> 1-2 рабочих дня</p>
-                                    </div>
-                                </a>
-                            </li>
                         </ul>
                         <ul class="left-bottom">
-                            <li>Бесплатная доставка *
+                            <li class="green-tooltip">Бесплатная доставка *
                                 <div class="tooltip-block">
                                     <p>Бесплатная доставка</p>
-                                    <span>Lorem ipsum dolor sit amet consectetur adipisicing elit. Id, facilis.</span>
+                                    <span>Доставим быстро и в срок!</span>
                                 </div>
                             </li>
-                            <li>Бесплатная доставка *
+                            <li class="yellow-tooltip">Официальная гарантия
                                 <div class="tooltip-block">
-                                    <p>Бесплатная доставка</p>
-                                    <span>Lorem ipsum dolor sit amet consectetur adipisicing elit. Id, facilis elit. Id, facilis elit. Id, facilis.</span>
+                                    <p>Официальная гарантия</p>
+                                    <span>Тестовая запись</span>
+                                </div>
+                            </li>
+                            <li class="red-tooltip">Официальная гарантия
+                                <div class="tooltip-block">
+                                    <p>Официальная гарантия</p>
+                                    <span>Тестовая запись</span>
+                                </div>
+                            </li>
+                            <li class="blue-tooltip">Официальная гарантия
+                                <div class="tooltip-block">
+                                    <p>Официальная гарантия</p>
+                                    <span>Тестовая запись</span>
                                 </div>
                             </li>
                         </ul>

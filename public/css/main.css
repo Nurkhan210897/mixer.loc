@@ -331,7 +331,7 @@ body {
 }
 
 .nav-bottom .nav-content .nav-right i {
-  color: #21A7D9;
+  color: #21a7d9;
   margin-right: 5px;
 }
 
@@ -391,13 +391,13 @@ body {
 }
 
 .home-category .home-left ul li .colection-btn i {
-  color: #21A7D9;
+  color: #21a7d9;
   margin-left: 10px;
   font-size: 10px;
 }
 
 .home-category .home-left ul li .colection-btn:hover {
-  background-color: #21A7D9;
+  background-color: #21a7d9;
   color: #fff !important;
 }
 
@@ -504,7 +504,7 @@ body {
 }
 
 .phone a i {
-  color: #21A7D9;
+  color: #21a7d9;
   font-size: 15px;
   margin-right: 10px;
 }
@@ -564,7 +564,7 @@ body {
   top: -10px;
   left: -1.5%;
   width: 103%;
-  min-height: 200px;
+  min-height: 0px;
   background-color: #0d0d0d;
   padding: 50px 0px 20px;
   z-index: 8;
@@ -1076,7 +1076,7 @@ body {
 }
 
 .category-left .check-category i {
-  color: #21A7D9;
+  color: #21a7d9;
   margin-right: 10px;
 }
 
@@ -1105,7 +1105,7 @@ body {
 .catalog-card img {
   width: 100%;
   max-height: 320px;
-  min-width: 320px;
+  width: 100%;
 }
 
 .catalog-card .catalog-card-text {
@@ -1331,7 +1331,6 @@ body {
 
 .left-bottom li {
   list-style-type: none;
-  background-color: #50b359;
   width: 100%;
   height: 40px;
   padding: 0;
@@ -1343,8 +1342,25 @@ body {
   margin-bottom: 20px;
 }
 
+.green-tooltip {
+  background-color: #50b359;
+}
+
+.yellow-tooltip {
+  background-color: #cccc14;
+}
+
+.red-tooltip {
+  background-color: #d93021;
+}
+
+.blue-tooltip {
+  background-color: #0078b3;
+}
+
 .left-bottom li:hover .tooltip-block {
-  display: block !important;
+  display: flex !important;
+  flex-direction: column;
 }
 
 .tooltip-block {
@@ -2020,6 +2036,32 @@ form .input-form textarea {
   .table th {
     font-size: 12px !important;
     vertical-align: inherit !important;
+  }
+
+  .photo-gallery img {
+    max-height: 300px;
+    min-height: auto;
+    -o-object-fit: cover;
+       object-fit: cover;
+  }
+
+  .left-bottom li {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .tooltip-block {
+    top: 45px;
+    right: auto;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+  }
+
+  .tooltip-block::after {
+    top: -13px;
+    left: auto;
   }
 }
 
