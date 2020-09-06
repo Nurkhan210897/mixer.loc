@@ -26,6 +26,8 @@ class CreateProductsTable extends Migration
             $table->unsignedSmallInteger('category_id');
             $table->unsignedSmallInteger('sub_category_id');
             $table->timestamps();
+
+            $table->index('name');
         });
     }
 
