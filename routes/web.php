@@ -12,6 +12,7 @@ Route::get('/products/{id}', 'ProductController@index');
 Route::get('/basket', 'BasketController@index');
 Route::post('/basket/put', 'BasketController@put');
 
+Route::post('/question', 'QuestionController@create');
 //Админка
 Route::get('/admin', 'Admin\MainController@index');
 Route::post('/admin/uploadImage', 'Admin\MainController@uploadImage');

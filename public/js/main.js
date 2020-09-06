@@ -147,4 +147,26 @@ $(document).ready(function () {
     );
     $('td[data-productId="' + product.id + '"]').html(product.totalPrice);
   }
+
+  $("#questionBtn").on("click", function (event) {
+    // event.preventDefault();
+    var data = $("#questionForm").serializeArray();
+    $.ajax({
+      url: "/question",
+      type: "POST",
+      data: data,
+      success(res) {
+        if (res.success) {
+          Swal.fire({
+            position: "top-end",
+            title: "Ваш вопрос успешно отправлен в обработку!",
+            showConfirmButton: false,
+            timer: 1500,
+            height: 50,
+            customClass: "swal-height",
+          });
+        }
+      },
+    });
+  });
 });
