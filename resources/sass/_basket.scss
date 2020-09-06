@@ -49,66 +49,61 @@
             line-height: 25px;
         }
     }
-}
-
-.table thead th {
-    border-bottom: none !important;
-}
-
-.table-head {
-    border-bottom: 1px solid #0bafe6;
-}
-
-.table td,
-.table th {
-    padding: 20px 0;
-    border-top: unset;
-    border-bottom: none;
-    color: #808080;
-    img {
-        max-width: 58px;
-        max-height: 58px;
+    .table thead th {
+        border-bottom: none !important;
     }
-}
-
-tr {
-    border-bottom: 1px solid #808080;
-    &:last-child {
+    .table-head {
+        border-bottom: 1px solid #0bafe6;
+    }
+    .table td,
+    .table th {
+        padding: 20px 0;
+        border-top: unset;
         border-bottom: none;
-    }
-}
-
-.td-1 {
-    a {
-        color: #fff;
-        font-size: 20px;
-        line-height: 20px;
-        padding: 0px 20px 0px 0px;
-    }
-}
-
-.total-sum {
-    padding: 30px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    background-color: #121212;
-    button {
-        font-size: 20px;
-        i {
-            color: #fff;
-            margin-left: 20px;
+        color: #808080;
+        img {
+            max-width: 58px;
+            max-height: 58px;
+            margin-right: 10px;
         }
     }
-    .blue-text {
-        font-size: 40px;
-        line-height: 38px;
-        display: block;
-        margin: 0 15px;
+    tr {
+        border-bottom: 1px solid #808080;
+        &:last-child {
+            border-bottom: none;
+        }
     }
-    .total-price {
+    .td-1 {
+        a {
+            color: #fff;
+            font-size: 20px;
+            line-height: 20px;
+            padding: 0px 20px 0px 0px;
+        }
+    }
+    .total-sum {
+        padding: 30px;
         display: flex;
         align-items: center;
-        color: #808080;
+        justify-content: space-between;
+        background-color: #121212;
+        button {
+            font-size: 20px;
+            i {
+                color: #fff;
+                margin-left: 20px;
+            }
+        }
+        .blue-text {
+            font-size: 40px;
+            line-height: 38px;
+            display: block;
+            margin: 0 15px;
+        }
+        .total-price {
+            display: flex;
+            align-items: center;
+            color: #808080;
+        }
     }
 }

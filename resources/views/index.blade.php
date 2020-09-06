@@ -28,7 +28,7 @@
                     @endforeach
                 </div>
                 <div class="row m-0">
-                    <div class="col-xl-2 info-main">
+                    <div class=" col-xl-2 col-lg-4 col-md-4 info-main">
                         <a href="#">
                             <i class="fas fa-microphone-slash"></i>
                             <p>
@@ -37,7 +37,7 @@
                             </p>
                         </a>
                     </div>
-                    <div class="col-xl-2 info-main">
+                    <div class="col-xl-2 col-lg-4 col-md-4 info-main">
                         <a href="#">
                             <i class="fas fa-globe"></i>
                             <p>
@@ -46,7 +46,7 @@
                             </p>
                         </a>
                     </div>
-                    <div class="col-xl-2 info-main">
+                    <div class="col-xl-2 col-lg-4 col-md-4 info-main">
                         <a href="#">
                             <i class="fas fa-sun"></i>
                             <p>
@@ -55,7 +55,7 @@
                             </p>
                         </a>
                     </div>
-                    <div class="col-xl-2 info-main">
+                    <div class="col-xl-2 col-lg-4 col-md-4 info-main">
                         <a href="#">
                             <i class="fas fa-sync-alt"></i>
                             <p>
@@ -64,7 +64,7 @@
                             </p>
                         </a>
                     </div>
-                    <div class="col-xl-2 info-main">
+                    <div class="col-xl-2 col-lg-4 col-md-4 info-main">
                         <a href="#">
                             <i class="fas fa-tint"></i>
                             <p>
@@ -73,7 +73,7 @@
                             </p>
                         </a>
                     </div>
-                    <div class="col-xl-2 info-main">
+                    <div class="col-xl-2 col-lg-4 col-md-4 info-main">
                         <a href="#">
                             <i class="fas fa-clipboard-check"></i>
                             <p>
@@ -100,7 +100,7 @@
                 <div class="product-content">
                     <div class="row m-0">
                         @foreach($category->subCategories as $subCategory)
-                        <div class="col-xl-3 p-0">
+                        <div class="col-xl-3 p-0 col-md-4 col-lg-4">
                             <a href="#" class="product">
                                 <img src="{{asset('storage/'.$subCategory->avatar)}}" alt />
                                 <div class="product-text">
