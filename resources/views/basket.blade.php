@@ -11,8 +11,8 @@
             </a>
         </div>
         <div class="basket-content">
-            <div class="p-5">
-                <table class="table table-responsive table-responsive-md">
+            <div class="p-5 table-responsive table-responsive-md">
+                <table class="table ">
                     <thead class="table-head">
                         <tr>
                             <th scope="col">
