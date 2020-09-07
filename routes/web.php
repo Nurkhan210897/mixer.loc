@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/artisan', 'ArtisanController@run');
 //Фронтенд
 Route::get('/', 'IndexController@show');
+Route::get('/categories/{id}', 'CategoryController@show');
 Route::get('/sub-categories/{id}', 'SubCategoryController@show');
 Route::get('/products/search', 'ProductController@search');
 Route::get('/products/{id}', 'ProductController@index');

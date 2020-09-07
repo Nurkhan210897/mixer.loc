@@ -129,7 +129,7 @@
                                     <ul class="dropdown-main">
                                         @foreach($categories as $category)
                                         <li class="dropdown-link">
-                                            <a href="#">{{$category->name}}</a>
+                                            <a href="/categories/{{$category->id}}">{{$category->name}}</a>
                                             <ul class="dropdown-children">
                                                 @foreach($category->subCategories as $subCategory)
                                                 <li>
