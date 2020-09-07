@@ -14,7 +14,24 @@ Route::post('/basket/put', 'BasketController@put');
 Route::get('/collection', function(){
  return view('collection');
 });
-
+Route::get('/about', function(){
+ return view('about');
+});
+Route::get('/contacts', function(){
+ return view('collection');
+});
+Route::get('/servis', function(){
+ return view('servis');
+});
+Route::get('/rekvizit', function(){
+ return view('rekvizit');
+});
+Route::get('/delivery', function(){
+ return view('delivery');
+});
+Route::get('/payment', function(){
+ return view('payment');
+});
 //Админка
 Route::get('/admin', 'Admin\MainController@index');
 Route::post('/admin/uploadImage', 'Admin\MainController@uploadImage');
