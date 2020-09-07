@@ -4,7 +4,7 @@
   <div class="title-main mt-0">
    <h1>Оплата</h1>
    <a href="#">
-    ВСЕ ДУШЕВЫЕ СИСТЕМЫ
+    ВСЕ ДУШЕВЫЕ СИСТЕМЫfafa
     <i class="fas fa-chevron-right"></i>
    </a>
   </div>
