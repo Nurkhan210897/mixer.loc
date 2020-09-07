@@ -14,6 +14,16 @@ Route::post('/basket/put', 'BasketController@put');
 Route::post('/basket/delete', 'BasketController@delete');
 
 Route::post('/question', 'QuestionController@create');
+
+//Инфо шапка/футер
+Route::get('/contacts', 'InfoController@contacts');
+Route::get('/about', 'InfoController@about');
+Route::get('/delivery', 'InfoController@delivery');
+Route::get('/payment', 'InfoController@payment');
+Route::get('/requisites', 'InfoController@requisites');
+Route::get('/services', 'InfoController@services');
+Route::get('/cooperation', 'InfoController@cooperation');
+
 //Админка
 Route::get('/admin', 'Admin\MainController@index');
 Route::post('/admin/uploadImage', 'Admin\MainController@uploadImage');

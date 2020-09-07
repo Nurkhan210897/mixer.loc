@@ -32,22 +32,22 @@
                         <div class="collapse navbar-collapse" id="navbarToggleExternalContent">
                             <ul>
                                 <li>
-                                    <a href="#">О КОМПАНИИ</a>
+                                    <a href="/about" target="_blank">О КОМПАНИИ</a>
                                 </li>
                                 <li>
-                                    <a href="#">ДОСТАВКА</a>
+                                    <a href="/delivery" target="_blank">ДОСТАВКА</a>
                                 </li>
                                 <li>
-                                    <a href="#">ОПЛАТА</a>
+                                    <a href="/payment" target="_blank">ОПЛАТА</a>
                                 </li>
                                 <li>
-                                    <a href="#">СОТРУДНИЧЕСТВО</a>
+                                    <a href="/delivery" target="_blank">СОТРУДНИЧЕСТВО</a>
                                 </li>
                                 <li>
-                                    <a href="#">СЕРВИС</a>
+                                    <a href="/services" target="_blank">СЕРВИС</a>
                                 </li>
                                 <li>
-                                    <a href="#">КОНТАКТЫ</a>
+                                    <a href="/contacts" target="_blank">КОНТАКТЫ</a>
                                 </li>
                             </ul>
                         </div>
@@ -208,25 +208,25 @@
                         <h5>ОБЩАЯ ИНФОРМАЦИЯ</h5>
                         <ul>
                             <li>
-                                <a href="#">О КОМПАНИИ</a>
+                                <a href="/about" target="_blank">О КОМПАНИИ</a>
                             </li>
                             <li>
-                                <a href="#">РЕКВИЗИТЫ</a>
+                                <a href="/requisites" target="_blank">РЕКВИЗИТЫ</a>
                             </li>
                             <li>
-                                <a href="#">ДОСТАВКА</a>
+                                <a href="/delivery" target="_blank">ДОСТАВКА</a>
                             </li>
                             <li>
-                                <a href="#">ОПЛАТА</a>
+                                <a href="/payment" target="_blank">ОПЛАТА</a>
                             </li>
                             <li>
-                                <a href="#">СОТРУДНИЧЕСТВО</a>
+                                <a href="/cooperation" target="_blank">СОТРУДНИЧЕСТВО</a>
                             </li>
                             <li>
-                                <a href="#">СЕРВИС</a>
+                                <a href="/services" target="_blank">СЕРВИС</a>
                             </li>
                             <li>
-                                <a href="#">КОНТАКТЫ</a>
+                                <a href="/contacts" target="_blank">КОНТАКТЫ</a>
                             </li>
                         </ul>
                     </div>
