@@ -275,8 +275,8 @@
         <div class="bottom-footer">
             <div class="container">
                 <div class="bottom-footer-text" style="justify-content: center;">
-                    <div class="bottom-text">
-                        <div class="logo">
+                    <div class="bottom-text" style="flex-direction: column;">
+                        <div class="logo mb-3">
                             <img src="{{asset('storage/images/logo.png')}}" alt style="width: 168px;height:36px" />
                         </div>
                         <p>© 2020 QUALITAT. ТЕХНОЛОГИИ ЛИДЕРСТВА.</p>
