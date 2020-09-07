@@ -86,6 +86,7 @@
         align-items: center;
     }
     img {
+        width: 100%;
         max-height: 168px;
         opacity: .5;
     }
@@ -96,6 +97,7 @@
         flex-direction: unset;
         align-items: center;
         padding-left: 20px;
+        padding-right: 20px;
         justify-content: end;
         span {
             margin-right: 10px;
