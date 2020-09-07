@@ -27,7 +27,7 @@
                     </thead>
                     <tbody>
                         @foreach($products as $product)
-                        <tr>
+                        <tr data-productId="{{$product['id']}}">
                             <th scope="row"><img src="{{asset('storage/'.$product['images'][0]['path'])}}" alt /></th>
                             <td class="td-1"><a href="#">{{$product['name']}}</a></td>
                             <td>{{$product['code']}}</td>
@@ -42,7 +42,7 @@
                                 </div>
                             </td>
                             <td class="text-center last-price" data-productId="{{$product['id']}}">{{$product['totalPrice']}}</td>
-                            <td class="del"><i class="fas fa-times"></i></td>
+                            <td class="del"><i class="fas fa-times" data-productId="{{$product['id']}}"></i></td>
                         </tr>
                         @endforeach
                     </tbody>
@@ -62,6 +62,7 @@
         @else
         <p style="color:white;text-align:center">Корзина пуста!</p>
         @endif
+        <p style="color:white;text-align:center;display:none" id='emptyBasket'>Корзина пуста!</p>
     </div>
 
 </div>

@@ -30,4 +30,13 @@ class BasketController extends Controller
         $data['success'] = true;
         return response()->json($data);
     }
+
+    public function delete(Request $request)
+    {
+        $this->basketModel->delete($request->id);
+        $data['totalCount'] = Session::get('basketTotalCount');
+        $data['totalPrice'] = Session::get('basketTotalPrice');
+        $data['success'] = true;
+        return response()->json($data);
+    }
 }
