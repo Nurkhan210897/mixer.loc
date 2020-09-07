@@ -74,9 +74,9 @@
                             </div>
                             <div class="nav-right">
                                 <div class="phone">
-                                    <a href="tel: +7 495 374 68 54">
+                                    <a href="tel: +7 771 599 99 98">
                                         <i class="fas fa-phone-alt"></i>
-                                        <span>+7 495</span> 374 68 54
+                                        <span>+7 771</span> 599 99 98
                                     </a>
                                 </div>
                                 <div class="icon">

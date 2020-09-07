@@ -60,7 +60,7 @@
         </div>
         <div class="col-xl-4 p-0">
           <div class="last-product-img">
-            <img src="@/assets/images/catalog-bg.jpg" alt />
+            <img src="{{asset('storage/images/test.jpeg')}}" alt />
           </div>
         </div>
       </div>

@@ -6,7 +6,7 @@
         </div>
         <div class="about-content">
             <div class="about-bg">
-                <img src="@/assets/images/gappo-warranty.jpg" alt />
+                <img src="{{asset('storage/images/test.jpeg')}}" alt />
             </div>
             <div class="about-text servisnyj-centr">
                 <div class="page-title">

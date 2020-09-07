@@ -7,7 +7,7 @@
     </div>
     <div class="about-content">
       <div class="about-bg">
-        <img src="@/assets/images/about-bg.jpg" alt />
+        <img src="{{asset('storage/images/test.jpeg')}}" alt />
       </div>
       <div class="about-text">
         <h2>
