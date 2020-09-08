@@ -8,12 +8,13 @@
     <script defer src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script defer src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.js" integrity="sha512-WNZwVebQjhSxEzwbettGuQgWxbpYdoLf7mH+25A7sfQbbxKeS5SQ9QBf97zOY4nOlwtksgDA/czSTmfj4DUEiQ==" crossorigin="anonymous"></script>
-    <script src="/js/main.js"></script>
+    <script src="/js/main.js" defer></script>
     <link rel=stylesheet href=https://pro.fontawesome.com/releases/v5.10.0/css/all.css integrity=sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p crossorigin=anonymous>
     <link rel=icon href=/favicon.ico> <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css" integrity="sha512-yHknP1/AwR+yx26cB1y0cjvQUMvEa2PFzt1c9LlS4pRQ5NOTZFWbhBig+X9G9eYW/8m0/4OXNx8pxJ6z57x0dw==" crossorigin="anonymous" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css" integrity="sha512-17EgCFERpgZKcm0j0fEq1YCJuyAWdz9KUtv1EjVuaOz8pDnh/0nZxmU6BBXwaaxqoi9PQXnRWqlcDB027hgv9A==" crossorigin="anonymous" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link href="/css/main.css" rel='stylesheet'>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
     <meta name="csrf-token" content="{{ csrf_token() }}" />
     <title>Aibek sait</title>
 </head>
@@ -31,22 +32,22 @@
                         <div class="collapse navbar-collapse" id="navbarToggleExternalContent">
                             <ul>
                                 <li>
-                                    <a href="#">О КОМПАНИИ</a>
+                                    <a href="/about" target="_blank">О КОМПАНИИ</a>
                                 </li>
                                 <li>
-                                    <a href="#">ДОСТАВКА</a>
+                                    <a href="/delivery" target="_blank">ДОСТАВКА</a>
                                 </li>
                                 <li>
-                                    <a href="#">ОПЛАТА</a>
+                                    <a href="/payment" target="_blank">ОПЛАТА</a>
                                 </li>
                                 <li>
-                                    <a href="#">СОТРУДНИЧЕСТВО</a>
+                                    <a href="/delivery" target="_blank">СОТРУДНИЧЕСТВО</a>
                                 </li>
                                 <li>
-                                    <a href="#">СЕРВИС</a>
+                                    <a href="/services" target="_blank">СЕРВИС</a>
                                 </li>
                                 <li>
-                                    <a href="#">КОНТАКТЫ</a>
+                                    <a href="/contacts" target="_blank">КОНТАКТЫ</a>
                                 </li>
                             </ul>
                         </div>
@@ -73,9 +74,9 @@
                             </div>
                             <div class="nav-right">
                                 <div class="phone">
-                                    <a href="tel: +7 495 374 68 54">
+                                    <a href="tel: +7 771 599 99 98">
                                         <i class="fas fa-phone-alt"></i>
-                                        <span>+7 495</span> 374 68 54
+                                        <span>+7 771</span> 599 99 98
                                     </a>
                                 </div>
                                 <div class="icon">
@@ -128,7 +129,7 @@
                                     <ul class="dropdown-main">
                                         @foreach($categories as $category)
                                         <li class="dropdown-link">
-                                            <a href="#">{{$category->name}}</a>
+                                            <a href="/categories/{{$category->id}}">{{$category->name}}</a>
                                             <ul class="dropdown-children">
                                                 @foreach($category->subCategories as $subCategory)
                                                 <li>
@@ -207,25 +208,25 @@
                         <h5>ОБЩАЯ ИНФОРМАЦИЯ</h5>
                         <ul>
                             <li>
-                                <a href="#">О КОМПАНИИ</a>
+                                <a href="/about" target="_blank">О КОМПАНИИ</a>
                             </li>
                             <li>
-                                <a href="#">РЕКВИЗИТЫ</a>
+                                <a href="/requisites" target="_blank">РЕКВИЗИТЫ</a>
                             </li>
                             <li>
-                                <a href="#">ДОСТАВКА</a>
+                                <a href="/delivery" target="_blank">ДОСТАВКА</a>
                             </li>
                             <li>
-                                <a href="#">ОПЛАТА</a>
+                                <a href="/payment" target="_blank">ОПЛАТА</a>
                             </li>
                             <li>
-                                <a href="#">СОТРУДНИЧЕСТВО</a>
+                                <a href="/cooperation" target="_blank">СОТРУДНИЧЕСТВО</a>
                             </li>
                             <li>
-                                <a href="#">СЕРВИС</a>
+                                <a href="/services" target="_blank">СЕРВИС</a>
                             </li>
                             <li>
-                                <a href="#">КОНТАКТЫ</a>
+                                <a href="/contacts" target="_blank">КОНТАКТЫ</a>
                             </li>
                         </ul>
                     </div>
@@ -274,8 +275,8 @@
         <div class="bottom-footer">
             <div class="container">
                 <div class="bottom-footer-text" style="justify-content: center;">
-                    <div class="bottom-text">
-                        <div class="logo">
+                    <div class="bottom-text" style="flex-direction: column;">
+                        <div class="logo mb-3">
                             <img src="{{asset('storage/images/logo.png')}}" alt style="width: 168px;height:36px" />
                         </div>
                         <p>© 2020 QUALITAT. ТЕХНОЛОГИИ ЛИДЕРСТВА.</p>

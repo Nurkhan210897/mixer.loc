@@ -147,4 +147,50 @@ $(document).ready(function () {
     );
     $('td[data-productId="' + product.id + '"]').html(product.totalPrice);
   }
+
+  //Удаления товара с корзины
+  $(".fa-times").on("click", function () {
+    var id = $(this).attr("data-productId");
+    $.ajax({
+      url: "/basket/delete",
+      type: "POST",
+      data: {
+        id: id,
+      },
+      success(res) {
+        if (res.success) {
+          if (Number(res.totalCount) != 0) {
+            $("#basketTotal").html(res.totalCount);
+            $("#basketTotalPrice").html(res.totalPrice);
+          } else {
+            $(".basket-content").hide();
+            $("#emptyBasket").show();
+          }
+          $('tr[data-productId="' + id + '"]').remove();
+        }
+      },
+    });
+  });
+
+  $("#questionBtn").on("click", function (event) {
+    // event.preventDefault();
+    var data = $("#questionForm").serializeArray();
+    $.ajax({
+      url: "/question",
+      type: "POST",
+      data: data,
+      success(res) {
+        if (res.success) {
+          Swal.fire({
+            position: "top-end",
+            title: "Ваш вопрос успешно отправлен в обработку!",
+            showConfirmButton: false,
+            timer: 1500,
+            height: 50,
+            customClass: "swal-height",
+          });
+        }
+      },
+    });
+  });
 });

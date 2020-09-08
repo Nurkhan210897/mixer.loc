@@ -15,10 +15,7 @@ class Basket
         $product['totalCount'] = $count;
         $product['totalPrice'] = $product['price'] * $count;
         Session::put("basket.$id", $product);
-        $total = $this->getTotal();
-        Session::put('basketTotalCount', $total['count']);
-        Session::put('basketTotalPrice', $total['price']);
-        Session::save();
+        $this->setTotal();
     }
 
     private function getProduct($id)
@@ -36,15 +33,25 @@ class Basket
         return $product;
     }
 
-    private function getTotal()
+    private function setTotal()
     {
         $basket = Session::get('basket');
-        $data['count'] = 0;
-        $data['price'] = 0;
+        $total['count'] = 0;
+        $total['price'] = 0;
+
         foreach ($basket as $value) {
-            $data['count'] += $value['totalCount'];
-            $data['price'] += $value['totalPrice'];
+            $total['count'] += $value['totalCount'];
+            $total['price'] += $value['totalPrice'];
         }
-        return $data;
+
+        Session::put('basketTotalCount', $total['count']);
+        Session::put('basketTotalPrice', $total['price']);
+        Session::save();
+    }
+
+    public function delete($id)
+    {
+        Session::forget("basket.$id");
+        $this->setTotal();
     }
 }

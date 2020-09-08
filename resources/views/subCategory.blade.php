@@ -39,16 +39,16 @@
                 <div class="row">
                     <div class="col-xl-3">
                         <div class="category-left">
-                            <!-- <p class="title-category">ВЫ ВЫБРАЛИ:</p> -->
                             <p class="title-category">
                                 <button class="btn btn-cart">Применить</button>
                             </p>
+                            <p class="title-category" style="border-bottom: none;">ВЫ ВЫБРАЛИ :</p>
                             <div class="check-category">
                                 <i class="fas fa-times"></i>
                                 <a href="#">{{$subCategory->name}}</a>
                             </div>
                             @foreach($pageInfo['directoryTypes'] as $directoryType)
-                            <p class="title-category">ВЫБЕРИТЕ {{$directoryType['name']}}:</p>
+                            <p class="title-category">{{strtoupper($directoryType['name'])}} :</p>
                             <ul>
                                 @foreach($directoryType['directories'] as $directory)
                                 <li>

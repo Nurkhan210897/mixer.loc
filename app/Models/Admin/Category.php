@@ -38,4 +38,21 @@ class Category extends Model
             ->orderBy('serial_number', 'ASC')
             ->get();
     }
+
+    public function getSelectedData($id)
+    {
+        $data['category'] = Category::where('id', $id)->first();
+        $data['subCategories'] = SubCategory::where('category_id', $id)->get();
+        $data['products'] = Product::with(
+            [
+                'images' => function ($query) {
+                    $query->where('avatar', 1)->first();
+                }
+            ]
+        )
+            ->select('id', 'name', 'code', 'price')
+            ->paginate(24);
+
+        return $data;
+    }
 }

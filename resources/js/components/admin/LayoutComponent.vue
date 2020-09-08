@@ -15,6 +15,12 @@
           <v-list-item to="/admin/sliders">
             <v-list-item-content>Карусель</v-list-item-content>
           </v-list-item>
+          <v-list-item to="/admin/questions">
+            <v-list-item-content>Вопросы</v-list-item-content>
+          </v-list-item>
+          <v-list-item to="/admin/orders">
+            <v-list-item-content>Заказы</v-list-item-content>
+          </v-list-item>
           <v-list-item to="/admin/directory_types/Типы справочников">
             <v-list-item-content>Типы справочников</v-list-item-content>
           </v-list-item>
