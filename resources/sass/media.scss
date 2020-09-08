@@ -278,6 +278,46 @@
             }
         }
     }
+    .basket-wrapper {
+        .basket-content {
+            display: block;
+        }
+        .basket-content-left {
+            width: 100% !important;
+            flex-direction: column;
+            text-align: center;
+            align-items: center;
+            .basket-img {
+                margin-right: 0 !important;
+                padding: 0 !important;
+                margin-bottom: 10px;
+            }
+            img {
+                width: 100% !important;
+                height: 100% !important;
+                max-width: 200px;
+                max-height: 125px;
+                margin-right: 0 !important;
+            }
+        }
+        .delete {
+            font-size: 25px;
+            position: absolute;
+            top: 0;
+            right: -20px;
+        }
+        .basket-right {
+            margin-top: 10px;
+        }
+    }
+    .total-last-sum {
+        display: block !important;
+        text-align: center;
+        .total-price {
+            justify-content: center;
+            margin-top: 10px;
+        }
+    }
 }
 
 @media only screen and (min-width: 576px) and (max-width: 768px) {
