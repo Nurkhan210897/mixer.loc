@@ -1,87 +1,6 @@
-.basket-content {
+.basket-wrapper {
     background-color: #0d0d0d;
-    i {
-        color: #00528c;
-        font-weight: 500;
-        &:hover {
-            color: #0bafe6;
-        }
-        cursor: pointer;
-    }
-    .table {
-        thead {
-            th {
-                color: #808080;
-                font-weight: initial;
-            }
-        }
-        input {
-            color: #bfbfbf;
-            background-color: #121212;
-            border-color: #333;
-            font-weight: bold;
-            padding: 0px;
-            text-align: center;
-            margin: 0 5px;
-            width: 58px;
-            border: 1px solid #333
-        }
-        .count {
-            color: #00528c;
-            display: flex;
-            align-items: center;
-            span {
-                cursor: pointer;
-                &:hover {
-                    color: #0bafe6;
-                }
-            }
-        }
-        .price {
-            font-size: 20px;
-            line-height: 26px;
-            color: #fff;
-        }
-        .last-price {
-            font-weight: 300;
-            color: #0bafe6;
-            font-size: 25px;
-            line-height: 25px;
-        }
-    }
-    .table thead th {
-        border-bottom: none !important;
-    }
-    .table-head {
-        border-bottom: 1px solid #0bafe6;
-    }
-    .table td,
-    .table th {
-        padding: 20px 0;
-        border-top: unset;
-        border-bottom: none;
-        color: #808080;
-        img {
-            max-width: 58px;
-            max-height: 58px;
-            margin-right: 10px;
-        }
-    }
-    tr {
-        border-bottom: 1px solid #808080;
-        &:last-child {
-            border-bottom: none;
-        }
-    }
-    .td-1 {
-        a {
-            color: #fff;
-            font-size: 20px;
-            line-height: 20px;
-            padding: 0px 20px 0px 0px;
-        }
-    }
-    .total-sum {
+    .total-last-sum {
         padding: 30px;
         display: flex;
         align-items: center;
@@ -104,6 +23,97 @@
             display: flex;
             align-items: center;
             color: #808080;
+        }
+    }
+    .basket-content {
+        margin: 0 30px;
+        padding: 20px 0;
+        border-bottom: 1px solid #0bafe6;
+        display: flex;
+        justify-content: space-between;
+        align-items: end;
+        position: relative;
+        .basket-content-left {
+            display: flex;
+            width: 40%;
+        }
+        .basket-img {
+            margin-right: 20px;
+            height: fit-content;
+            img {
+                max-width: 90px;
+                height: 70px;
+            }
+        }
+        .basket-deskr {
+            p.small {
+                font-size: 12px;
+                margin-bottom: 0;
+                color: #808080;
+                span {
+                    color: #fff;
+                    font-size: 15px;
+                }
+            }
+            p {
+                span {
+                    font-size: 18px;
+                }
+            }
+            p {
+                color: #fff;
+                margin-bottom: 0;
+            }
+        }
+    }
+    .basket-right {
+        min-width: 28%;
+        display: flex;
+        justify-content: space-between;
+    }
+    .count {
+        color: #00528c;
+        display: flex;
+        align-items: center;
+        input {
+            margin: 0 10px;
+            color: #bfbfbf;
+            background-color: #121212;
+            border-color: #333;
+            border: 1px solid #333;
+            font-weight: bold;
+            padding: 0px;
+            text-align: center;
+            width: 58px;
+        }
+        span {
+            cursor: pointer;
+            &:hover {
+                color: #0bafe6;
+            }
+        }
+    }
+    .total-sum {
+        display: flex;
+        align-items: center;
+        p {
+            margin-bottom: 0;
+            font-weight: 300;
+            color: #0bafe6;
+            font-size: 25px;
+            line-height: 25px;
+        }
+    }
+    .delete {
+        margin-left: 40px;
+        color: #0bafe6;
+        font-size: 38px;
+        cursor: pointer;
+        i {
+            font-weight: 100;
+        }
+        &:hover {
+            color: #00528c;
         }
     }
 }
