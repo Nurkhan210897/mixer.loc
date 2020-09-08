@@ -1111,9 +1111,13 @@ body {
   list-style-type: none;
 }
 
+.catalog-card {
+  margin-bottom: 1rem;
+}
+
 .catalog-card img {
   width: 100%;
-  max-height: 320px;
+  height: 255px;
   width: 100%;
 }
 

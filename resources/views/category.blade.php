@@ -65,16 +65,22 @@
                         <div class="col-xl-4">
                             <div class="catalog-card">
                                 <a href="/products/{{$product->id}}">
+                                    @if(isset($product->images[0]))
                                     <img src="{{asset('storage/'.$product->images[0]->path)}}" alt />
+                                    @else
+                                    <img src="#" alt />
+                                    @endif
                                 </a>
                                 <div class="catalog-card-text">
                                     <a href="/products/{{$product->id}}">{{$product->name}}</a>
                                     <span class="silver-text">{{$product->code}}</span>
+
                                     <br />
                                     <p>
                                         <span class="blue-text">{{$product->price}}</span>
                                         <span class="silver-text">тг.</span>
                                     </p>
+
                                     <div class="button-card">
                                         @if(session()->has('basket.'.$product->id))
                                         <button class="btn btn-cart inBasketBtn">
@@ -91,6 +97,7 @@
                                             <i class="fas fa-shopping-basket"></i>
                                         </button>
                                         @endif
+
                                         <button class="btn">
                                             <i class="fas fa-chart-bar"></i>
                                         </button>

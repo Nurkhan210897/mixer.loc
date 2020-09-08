@@ -46,7 +46,7 @@ class Category extends Model
         $data['products'] = Product::with(
             [
                 'images' => function ($query) {
-                    $query->where('avatar', 1)->first();
+                    $query->where('avatar', 1);
                 }
             ]
         )
