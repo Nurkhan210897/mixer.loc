@@ -134,18 +134,24 @@ $(document).ready(function () {
     var productId = $(this).attr("data-productId");
     var count =
       Number($('.count input[data-productId="' + productId + '"]').val()) - 1;
-    var data = {
-      id: productId,
-      count: count,
-    };
-    addBasket(data, true);
+    if (count === 0) {
+      $('.count input[data-productId="' + productId + '"]').val(1);
+    } else {
+      var data = {
+        id: productId,
+        count: count,
+      };
+      addBasket(data, true);
+    }
   });
 
   function updateBasketForm(product) {
     $('.count input[data-productId="' + product.id + '"]').val(
       product.totalCount
     );
-    $('td[data-productId="' + product.id + '"]').html(product.totalPrice);
+    $('p[data-productId="' + product.id + '"]').html(
+      product.totalPrice + " тг"
+    );
   }
 
   //Удаления товара с корзины
@@ -159,14 +165,13 @@ $(document).ready(function () {
       },
       success(res) {
         if (res.success) {
-          if (Number(res.totalCount) != 0) {
-            $("#basketTotal").html(res.totalCount);
-            $("#basketTotalPrice").html(res.totalPrice);
-          } else {
-            $(".basket-content").hide();
+          if (Number(res.totalCount) == 0) {
+            $(".basket-wrapper").hide();
             $("#emptyBasket").show();
           }
-          $('tr[data-productId="' + id + '"]').remove();
+          $("#basketTotal").html(res.totalCount);
+          $("#basketTotalPrice").html(res.totalPrice);
+          $('.basket-content[data-productId="' + id + '"]').remove();
         }
       },
     });

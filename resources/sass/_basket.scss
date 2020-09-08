@@ -1,119 +1,119 @@
 .basket-wrapper {
-    background-color: #0d0d0d;
-    .total-last-sum {
-        padding: 30px;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        background-color: #121212;
-        button {
-            font-size: 20px;
-            i {
-                color: #fff;
-                margin-left: 20px;
-            }
-        }
-        .blue-text {
-            font-size: 40px;
-            line-height: 38px;
-            display: block;
-            margin: 0 15px;
-        }
-        .total-price {
-            display: flex;
-            align-items: center;
-            color: #808080;
-        }
+  background-color: #0d0d0d;
+  .total-last-sum {
+    padding: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #121212;
+    button {
+      font-size: 20px;
+      i {
+        color: #fff;
+        margin-left: 20px;
+      }
     }
-    .basket-content {
-        margin: 0 30px;
-        padding: 20px 0;
-        border-bottom: 1px solid #0bafe6;
-        display: flex;
-        justify-content: space-between;
-        align-items: end;
-        position: relative;
-        .basket-content-left {
-            display: flex;
-            width: 40%;
-        }
-        .basket-img {
-            margin-right: 20px;
-            height: fit-content;
-            img {
-                max-width: 90px;
-                height: 70px;
-            }
-        }
-        .basket-deskr {
-            p.small {
-                font-size: 12px;
-                margin-bottom: 0;
-                color: #808080;
-                span {
-                    color: #fff;
-                    font-size: 15px;
-                }
-            }
-            p {
-                span {
-                    font-size: 18px;
-                }
-            }
-            p {
-                color: #fff;
-                margin-bottom: 0;
-            }
-        }
+    .blue-text {
+      font-size: 40px;
+      line-height: 38px;
+      display: block;
+      margin: 0 15px;
     }
-    .basket-right {
-        min-width: 28%;
-        display: flex;
-        justify-content: space-between;
+    .total-price {
+      display: flex;
+      align-items: center;
+      color: #808080;
     }
-    .count {
-        color: #00528c;
-        display: flex;
-        align-items: center;
-        input {
-            margin: 0 10px;
-            color: #bfbfbf;
-            background-color: #121212;
-            border-color: #333;
-            border: 1px solid #333;
-            font-weight: bold;
-            padding: 0px;
-            text-align: center;
-            width: 58px;
-        }
+  }
+  .basket-content {
+    margin: 0 30px;
+    padding: 20px 0;
+    border-bottom: 1px solid #0bafe6;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    .basket-content-left {
+      display: flex;
+      width: 40%;
+    }
+    .basket-img {
+      margin-right: 20px;
+      height: fit-content;
+      img {
+        width: 90px;
+        height: 70px;
+      }
+    }
+    .basket-deskr {
+      p.small {
+        font-size: 12px;
+        margin-bottom: 0;
+        color: #808080;
         span {
-            cursor: pointer;
-            &:hover {
-                color: #0bafe6;
-            }
+          color: #fff;
+          font-size: 15px;
         }
-    }
-    .total-sum {
-        display: flex;
-        align-items: center;
-        p {
-            margin-bottom: 0;
-            font-weight: 300;
-            color: #0bafe6;
-            font-size: 25px;
-            line-height: 25px;
+      }
+      p {
+        span {
+          font-size: 18px;
         }
+      }
+      p {
+        color: #fff;
+        margin-bottom: 0;
+      }
     }
-    .delete {
-        margin-left: 40px;
+  }
+  .basket-right {
+    min-width: 28%;
+    display: flex;
+    justify-content: space-between;
+  }
+  .count {
+    color: #00528c;
+    display: flex;
+    align-items: center;
+    input {
+      margin: 0 10px;
+      color: #bfbfbf;
+      background-color: #121212;
+      border-color: #333;
+      border: 1px solid #333;
+      font-weight: bold;
+      padding: 0px;
+      text-align: center;
+      width: 58px;
+    }
+    span {
+      cursor: pointer;
+      &:hover {
         color: #0bafe6;
-        font-size: 38px;
-        cursor: pointer;
-        i {
-            font-weight: 100;
-        }
-        &:hover {
-            color: #00528c;
-        }
+      }
     }
+  }
+  .total-sum {
+    display: flex;
+    align-items: center;
+    p {
+      margin-bottom: 0;
+      font-weight: 300;
+      color: #0bafe6;
+      font-size: 25px;
+      line-height: 25px;
+    }
+  }
+  .delete {
+    margin-left: 40px;
+    color: #0bafe6;
+    font-size: 38px;
+    cursor: pointer;
+    i {
+      font-weight: 100;
+    }
+    &:hover {
+      color: #00528c;
+    }
+  }
 }

@@ -1551,7 +1551,7 @@ body {
   border-bottom: 1px solid #0bafe6;
   display: flex;
   justify-content: space-between;
-  align-items: end;
+  align-items: center;
   position: relative;
 }
 
@@ -1568,7 +1568,7 @@ body {
 }
 
 .basket-wrapper .basket-content .basket-img img {
-  max-width: 90px;
+  width: 90px;
   height: 70px;
 }
 

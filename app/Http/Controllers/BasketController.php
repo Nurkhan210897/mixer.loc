@@ -18,6 +18,7 @@ class BasketController extends Controller
     {
         $data['products'] = Session::get('basket');
         $data['totalPrice'] = Session::get('basketTotalPrice');
+        // dd($data);
         return view('basket', $data);
     }
 
