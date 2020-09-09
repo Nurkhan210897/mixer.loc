@@ -140,28 +140,29 @@
                                 <i class="fas fa-chevron-down"></i>
                             </a>
                         </div>
-                        <form action>
+                        <form id='questionForm' action="#">
                             <div class="input-form">
                                 <label for>
                                     ПОЛНОЕ ИМЯ:
                                     <span>*</span>
                                 </label>
-                                <input type="text" />
+                                <input type="text" name='name' required />
                             </div>
                             <div class="input-form">
                                 <label for>
                                     E-MAIL:
                                     <span>*</span>
                                 </label>
-                                <input type="text" />
+                                <input type="text" name='email' required />
                             </div>
                             <div class="input-form">
                                 <label for>ТЕКСТ ВОПРОСА:</label>
-                                <textarea name id cols="30" rows="5"></textarea>
+                                <textarea name='question' id cols="30" rows="5" required></textarea>
                             </div>
                             <div class="button-card">
-                                <button type="submit" class="btn btn-submit">ОТПРАВИТЬ <i class="fas fa-chevron-right"></i></button>
-                                <button type="button" class="btn">Очистить <i class="fas fa-times"></i></button>
+                                <button type="submit" class="btn btn-submit" id='questionBtn'>ОТПРАВИТЬ
+                                    <i class="fas fa-chevron-right"></i>
+                                </button>
                             </div>
                         </form>
                     </div>

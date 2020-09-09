@@ -18,6 +18,7 @@ class BasketController extends Controller
     {
         $data['products'] = Session::get('basket');
         $data['totalPrice'] = Session::get('basketTotalPrice');
+        // dd($data);
         return view('basket', $data);
     }
 
@@ -25,6 +26,15 @@ class BasketController extends Controller
     {
         $this->basketModel->put($request->id, $request->count);
         $data['product'] = Session::get("basket.$request->id");
+        $data['totalCount'] = Session::get('basketTotalCount');
+        $data['totalPrice'] = Session::get('basketTotalPrice');
+        $data['success'] = true;
+        return response()->json($data);
+    }
+
+    public function delete(Request $request)
+    {
+        $this->basketModel->delete($request->id);
         $data['totalCount'] = Session::get('basketTotalCount');
         $data['totalPrice'] = Session::get('basketTotalPrice');
         $data['success'] = true;

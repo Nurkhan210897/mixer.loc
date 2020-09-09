@@ -11,44 +11,36 @@
             </a>
         </div>
         @if(!empty($products))
-        <div class="basket-content">
-            <div class="p-5 table-responsive table-responsive-md">
-                <table class="table ">
-                    <thead class="table-head">
-                        <tr>
-                            <th scope="col">
-                                ФОТО </th>
-                            <th scope="col">НАИМЕНОВАНИЕ</th>
-                            <th scope="col"> АРТИКУЛ</th>
-                            <th scope="col"> ЦЕНА, ТГ.</th>
-                            <th scope="col" class="text-center">КОЛ-ВО</th>
-                            <th scope="col">ЦЕНА, ТГ.</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach($products as $product)
-                        <tr>
-                            <th scope="row"><img src="{{asset('storage/'.$product['images'][0]['path'])}}" alt /></th>
-                            <td class="td-1"><a href="#">{{$product['name']}}</a></td>
-                            <td>{{$product['code']}}</td>
-                            <td class="text-center price">{{$product['price']}}</td>
-                            <td class="text-center">
-                                <div class="count">
-                                    <span><i class="fas fa-plus" data-productId="{{$product['id']}}"></i></span>
-                                    <span class="quantity">
-                                        <input type="text" value="{{$product['totalCount']}}" data-productId="{{$product['id']}}">
-                                    </span>
-                                    <span><i class="fas fa-minus" data-productId="{{$product['id']}}"></i></span>
-                                </div>
-                            </td>
-                            <td class="text-center last-price" data-productId="{{$product['id']}}">{{$product['totalPrice']}}</td>
-                            <td class="del"><i class="fas fa-times"></i></td>
-                        </tr>
-                        @endforeach
-                    </tbody>
-                </table>
+        <div class="basket-wrapper">
+            @foreach($products as $product)
+            <div class="basket-content" data-productId="{{$product['id']}}">
+                <div class="basket-content-left">
+                    <div class="basket-img">
+                        <img src="{{asset('storage/'.$product['images'][0]['path'])}}" alt="">
+                    </div>
+                    <div class="basket-deskr">
+                        <p class="small">АРТИКУЛ: <span>{{$product['code']}}</span></p>
+                        <p>{{$product['name']}}</p>
+                        <p><span>{{$product['price']}}</span> тг</p>
+                    </div>
+                </div>
+                <div class="basket-right">
+                    <div class="count">
+                        <span><i class="fas fa-minus" data-productId="{{$product['id']}}"></i></span>
+
+                        <span class="quantity">
+                            <input type="text" value="{{$product['totalCount']}}" data-productId="{{$product['id']}}">
+                        </span>
+                        <span><i class="fas fa-plus" data-productId="{{$product['id']}}"></i></span>
+                    </div>
+                    <div class="total-sum">
+                        <p data-productId="{{$product['id']}}">{{$product['totalPrice']}} тг</p>
+                        <span class="delete"><i class="fas fa-times" data-productId="{{$product['id']}}"></i></span>
+                    </div>
+                </div>
             </div>
-            <div class="total-sum">
+            @endforeach
+            <div class="total-last-sum">
                 <button class="btn btn-cart">Оформить заказ <i class="fas fa-shopping-basket"></i></button>
                 <div class="total-price">
                     <span>
@@ -62,6 +54,7 @@
         @else
         <p style="color:white;text-align:center">Корзина пуста!</p>
         @endif
+        <p style="color:white;text-align:center;display:none" id='emptyBasket'>Корзина пуста!</p>
     </div>
 
 </div>
