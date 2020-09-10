@@ -25,35 +25,28 @@
         <div class="header">
             <div class="nav-top">
                 <div class="container">
-                    <nav class="navbar-expand-lg navbar-light">
-                        <button class="navbar-toggler bg-dark" type="button" data-toggle="collapse" data-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
-                            <span class="navbar-toggler-icon"></span>
-                        </button>
-                        <div class="collapse navbar-collapse" id="navbarToggleExternalContent">
-                            <ul>
-                                <li>
-                                    <a href="/about" target="_blank">О КОМПАНИИ</a>
-                                </li>
-                                <li>
-                                    <a href="/delivery" target="_blank">ДОСТАВКА</a>
-                                </li>
-                                <li>
-                                    <a href="/payment" target="_blank">ОПЛАТА</a>
-                                </li>
-                                <li>
-                                    <a href="/delivery" target="_blank">СОТРУДНИЧЕСТВО</a>
-                                </li>
-                                <li>
-                                    <a href="/services" target="_blank">СЕРВИС</a>
-                                </li>
-                                <li>
-                                    <a href="/contacts" target="_blank">КОНТАКТЫ</a>
-                                </li>
-                            </ul>
-                        </div>
-
+                    <nav>
+                        <ul>
+                            <li>
+                                <a href="/about" target="_blank">О КОМПАНИИ</a>
+                            </li>
+                            <li>
+                                <a href="/delivery" target="_blank">ДОСТАВКА</a>
+                            </li>
+                            <li>
+                                <a href="/payment" target="_blank">ОПЛАТА</a>
+                            </li>
+                            <li>
+                                <a href="/delivery" target="_blank">СОТРУДНИЧЕСТВО</a>
+                            </li>
+                            <li>
+                                <a href="/services" target="_blank">СЕРВИС</a>
+                            </li>
+                            <li>
+                                <a href="/contacts" target="_blank">КОНТАКТЫ</a>
+                            </li>
+                        </ul>
                     </nav>
-
                 </div>
             </div>
         </div>
@@ -90,7 +83,7 @@
                                             0
                                         </a>
                                     </span>
-                                    <span>
+                                    <span class="basket-mobile">
                                         <a href="/basket">
                                             <i class="fas fa-shopping-basket"></i>
                                             @if(session()->has('basketTotalCount'))
@@ -117,7 +110,7 @@
                                     <i class="fas fa-home"></i>
                                 </a>
                             </span>
-                            <ul>
+                            <ul class="home-left-content">
                                 <li>
                                     <a href="#" class="colection-btn">Коллекции</a>
                                 </li>
@@ -168,6 +161,59 @@
                 </div>
             </div>
         </div>
+        <div class="burger">
+            <span class="burger-lines"></span>
+           </div>
+            <div class="mobile-header">
+              
+                   <div class="logo">
+                    <a href="/">
+                        <img src="{{asset('storage/images/logo.png')}}" alt style="width: 168px;height:36px" />
+                    </a>
+                </div>
+            </div>
+           <div class="mobile-menu">
+            <ul>
+                <li>
+                    <a href="/about" target="_blank">О КОМПАНИИ</a>
+                </li>
+                <li>
+                    <a href="/delivery" target="_blank">ДОСТАВКА</a>
+                </li>
+                <li>
+                    <a href="/payment" target="_blank">ОПЛАТА</a>
+                </li>
+                <li>
+                    <a href="/delivery" target="_blank">СОТРУДНИЧЕСТВО</a>
+                </li>
+                <li>
+                    <a href="/services" target="_blank">СЕРВИС</a>
+                </li>
+                <li>
+                    <a href="/contacts" target="_blank">КОНТАКТЫ</a>
+                </li>
+            </ul>
+           </div>
+    </div>
+    <div class="dropdown-main-mobile">
+        <div class="exit">
+            <i class="fas fa-times"></i>
+        </div>
+        <ul class="dropdown-main">
+            @foreach($categories as $category)
+            <li class="dropdown-link">
+                <a data-toggle="collapse" href="#" class="mobile-dropdown-btn">{{$category->name}}<i class="fas fa-chevron-down"></i></a>
+                <ul class="dropdown-children" id="collapseExample">
+                    @foreach($category->subCategories as $subCategory)
+                    <li>
+                        <a href="/sub-categories/{{$subCategory->id}}?page=1">{{$subCategory->name}}</a>
+                    </li>
+                    @endforeach
+                </ul>
+            </li>
+            @endforeach
+        </ul>
+
     </div>
     @show @yield('main') @section('footer')
     <div>
