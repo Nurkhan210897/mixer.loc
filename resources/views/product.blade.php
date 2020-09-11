@@ -103,8 +103,8 @@
                                 К сравнению
                                 <i class="fas fa-chart-bar"></i>
                             </button>
-                            <button class="btn">
-                                В закладках
+                            <button class="btn addFavoriteBtn" data-productId='{{$product->id}}'>
+                                В закладки
                                 <i class="fas fa-bookmark"></i>
                             </button>
                         </div>
@@ -140,7 +140,7 @@
                                 <i class="fas fa-chevron-down"></i>
                             </a>
                         </div>
-                        <form id='questionForm' action="#">
+                        <form id='questionForm'>
                             <div class="input-form">
                                 <label for>
                                     ПОЛНОЕ ИМЯ:
@@ -158,6 +158,9 @@
                             <div class="input-form">
                                 <label for>ТЕКСТ ВОПРОСА:</label>
                                 <textarea name='question' id cols="30" rows="5" required></textarea>
+                            </div>
+                            <div id='errors'>
+
                             </div>
                             <div class="button-card">
                                 <button type="submit" class="btn btn-submit" id='questionBtn'>ОТПРАВИТЬ

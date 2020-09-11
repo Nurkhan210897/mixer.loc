@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Http\Requests\QuestionRequest;
 use App\Models\Admin\Question;
 
 class QuestionController extends Controller
 {
-    public function create(Request $request)
+    public function create(QuestionRequest $request)
     {
         Question::create($request->all());
         return response()->json(['success' => true]);

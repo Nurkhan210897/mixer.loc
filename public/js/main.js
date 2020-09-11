@@ -196,7 +196,7 @@ $(document).ready(function () {
   });
 
   $("#questionBtn").on("click", function (event) {
-    // event.preventDefault();
+    event.preventDefault();
     var data = $("#questionForm").serializeArray();
     $.ajax({
       url: "/question",
@@ -212,6 +212,14 @@ $(document).ready(function () {
             height: 50,
             customClass: "swal-height",
           });
+        }
+      },
+      error(res) {
+        $("#questionForm #errors").html("");
+        var errors = res.responseJSON.errors;
+        for (var key in errors) {
+          console.log(errors[key]);
+          $("#questionForm #errors").append("<p>" + errors[key][0] + "</p>");
         }
       },
     });
