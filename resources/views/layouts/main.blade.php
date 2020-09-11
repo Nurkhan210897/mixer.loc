@@ -78,9 +78,13 @@
                                             0</a>
                                     </span>
                                     <span>
-                                        <a href="#">
+                                        <a href="/favorite">
                                             <i class="fas fa-bookmark"></i>
-                                            0
+                                            @if(session()->has('favorite'))
+                                            <span id='favoriteTotal'>{{count(session('favorite'))}}</span>
+                                            @else
+                                            <span id='favoriteTotal'>0</span>
+                                            @endif
                                         </a>
                                     </span>
                                     <span class="basket-mobile">
@@ -163,16 +167,16 @@
         </div>
         <div class="burger">
             <span class="burger-lines"></span>
-           </div>
-            <div class="mobile-header">
-              
-                   <div class="logo">
-                    <a href="/">
-                        <img src="{{asset('storage/images/logo.png')}}" alt style="width: 168px;height:36px" />
-                    </a>
-                </div>
+        </div>
+        <div class="mobile-header">
+
+            <div class="logo">
+                <a href="/">
+                    <img src="{{asset('storage/images/logo.png')}}" alt style="width: 168px;height:36px" />
+                </a>
             </div>
-           <div class="mobile-menu">
+        </div>
+        <div class="mobile-menu">
             <ul>
                 <li>
                     <a href="/about" target="_blank">О КОМПАНИИ</a>
@@ -193,7 +197,7 @@
                     <a href="/contacts" target="_blank">КОНТАКТЫ</a>
                 </li>
             </ul>
-           </div>
+        </div>
     </div>
     <div class="dropdown-main-mobile">
         <div class="exit">
