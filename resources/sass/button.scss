@@ -1,0 +1,20 @@
+.btn-cart {
+    background-color: $blue;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    i {
+        margin-left: 10px;
+    }
+    &:hover {
+        background-color: $dark-bg;
+        border: 1px solid $blue;
+        color: #fff;
+    }
+}
+
+#favoriteClearBtn {
+    padding: 5px 10px 7px;
+    display: flex;
+    align-items: center;
+}

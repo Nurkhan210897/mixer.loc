@@ -7,14 +7,16 @@
 </style>
 <div class="catalog padding-page">
     <div class="container">
-        <div class="title-page">
+        <div class="title-page favorite-title">
             <h2>Мои закладки</h2>
+           <div class="favorite-info-header"> 
             @if(session()->has('favorite'))
-            <h5 style="color: white;">
+            <h5 >
                 Товаров в закладках: {{count($products)}}
             </h5>
             @endif
-            <button id="favoriteClearBtn">Очистить</button>
+            <button id="favoriteClearBtn" type="button" class="btn-cart">Очистить <i class="fas fa-times"></i></button>
+           </div>
         </div>
     </div>
 </div>
@@ -66,7 +68,7 @@
         </div>
     </div>
     @else
-    <div class="favoriteBlock">
+    <div class="favoriteBlock text-center mb-5">
         <p>У вас нет закладок !</p>
     </div>
     @endif

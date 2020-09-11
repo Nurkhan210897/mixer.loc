@@ -1424,15 +1424,15 @@ body {
   color: #21a7d9;
 }
 
-.button-card .btn-cart {
+.btn-cart {
   background-color: #21a7d9;
 }
 
-.button-card .btn-cart i {
+.btn-cart i {
   margin-left: 10px;
 }
 
-.button-card .btn-cart:hover {
+.btn-cart:hover {
   background-color: #0d0d0d;
   border: 1px solid #21a7d9;
   color: #fff;
@@ -1543,6 +1543,17 @@ body {
 .category-left a:hover {
   color: #fff;
   text-decoration: none;
+}
+
+.favorite-info-header {
+  display: flex;
+  align-items: center;
+}
+
+.favorite-info-header h5 {
+  margin-right: 25px;
+  font-weight: 400;
+  color: #808080;
 }
 
 .product-page-left ul li.left-header {
@@ -2024,6 +2035,29 @@ form .input-form textarea {
 
 .bg-dark {
   background-color: #767676 !important;
+}
+
+.btn-cart {
+  background-color: #21a7d9;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+}
+
+.btn-cart i {
+  margin-left: 10px;
+}
+
+.btn-cart:hover {
+  background-color: #0d0d0d;
+  border: 1px solid #21a7d9;
+  color: #fff;
+}
+
+#favoriteClearBtn {
+  padding: 5px 10px 7px;
+  display: flex;
+  align-items: center;
 }
 
 .slider-item p {
@@ -2510,6 +2544,18 @@ form .input-form textarea {
   .total-last-sum .total-price {
     justify-content: center;
     margin-top: 10px;
+  }
+
+  .favorite-title {
+    flex-direction: column;
+  }
+
+  .favorite-info-header h5 {
+    font-size: 15px;
+  }
+
+  .favorite-info-header #favoriteClearBtn {
+    font-size: 14px;
   }
 }
 
