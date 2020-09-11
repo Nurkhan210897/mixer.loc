@@ -1,3 +1,10 @@
+@media only screen and (max-width: 340px) {
+    .colection-btn {
+        font-size: 14px !important;
+        padding: 5px 5px !important;
+    }
+}
+
 @media only screen and (max-width: 576px) {
     .icon {
         position: fixed;
@@ -7,8 +14,8 @@
         display: flex;
         flex-direction: column;
         align-items: center;
-        width: 48px;
-        padding: 15px 10px;
+        width: 50px;
+        padding: 15px 8px 5px 5px;
         top: 0;
         flex-flow: wrap-reverse;
         z-index: 90;
@@ -79,9 +86,16 @@
     .pl-5 {
         padding: 0 15px !important;
     }
+    .dropdown-main {
+        display: none !important;
+    }
     .home-category {
+        .col-xl-7 {
+            padding: 0;
+        }
         .home-left ul {
             .category {
+                overflow: hidden;
                 ul {
                     margin: 0;
                     width: 100%;
@@ -377,6 +391,14 @@
     .last-product-img {
         object-fit: contain;
     }
+    .header .nav-top {
+        ul {
+            justify-content: space-between !important;
+            li {
+                margin: 0 !important;
+            }
+        }
+    }
     .main-bg {
         .slider-content {
             padding: 20px !important;
@@ -449,6 +471,14 @@
         a {
             font-size: 12px !important;
         }
+    }
+    .logo-title {
+        p {
+            font-size: 14px !important;
+        }
+    }
+    .nav-content {
+        margin-top: 10px;
     }
 }
 
