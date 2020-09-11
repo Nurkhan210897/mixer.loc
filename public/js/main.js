@@ -24,7 +24,7 @@ $(document).ready(function () {
   });
 
   if ($(window).width() <= 576) {
-    $(".colection-btn").click(function () {
+    $(".catalog-show").click(function () {
       $(".dropdown-main-mobile").addClass("dropdown-main-mobile-active");
     });
   }
