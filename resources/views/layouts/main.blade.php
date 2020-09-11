@@ -115,7 +115,7 @@
                                     <a href="#" class="colection-btn">Коллекции</a>
                                 </li>
                                 <li class="category">
-                                    <a href="#" class="colection-btn">
+                                    <a href="#" class="colection-btn catalog-show">
                                         Каталог
                                         <i class="fas fa-chevron-down"></i>
                                     </a>
@@ -197,9 +197,9 @@
     </div>
     <div class="dropdown-main-mobile">
         <div class="exit">
-            <i class="fas fa-times"></i>
+           <span></span>
         </div>
-        <ul class="dropdown-main">
+        <ul class="dropdown-main-mobile-category">
             @foreach($categories as $category)
             <li class="dropdown-link">
                 <a data-toggle="collapse" href="#" class="mobile-dropdown-btn">{{$category->name}}<i class="fas fa-chevron-down"></i></a>

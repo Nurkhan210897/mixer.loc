@@ -24,8 +24,8 @@ $(document).ready(function() {
         $('.dropdown-children').slideToggle()
     });
 
-    if ($(window).width() <= 576) {
-        $('.colection-btn').click(function() {
+    if ($(window).width() <= 600) {
+        $('.catalog-show').click(function() {
             $('.dropdown-main-mobile').addClass('dropdown-main-mobile-active');
         });
     };

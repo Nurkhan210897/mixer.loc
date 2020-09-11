@@ -98,13 +98,13 @@ body {
             li {
                 position: relative;
                 list-style-type: none;
+                margin: 0 10px;
                 .colection-btn {
                     padding: 10px 20px;
                     text-transform: uppercase;
                     color: #808080;
                     color: #fff;
                     text-decoration: none;
-                    margin-left: 10px;
                     display: flex;
                     align-items: center;
                     i {
@@ -124,7 +124,7 @@ body {
                         width: 1px;
                         height: 20px;
                         background-color: #313131;
-                        left: 0;
+                        left: -10px;
                     }
                 }
                 &:first-child {
@@ -477,11 +477,15 @@ body {
     justify-content: center;
     text-align: center;
     padding-top: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     .dropdown-main {
         padding: 0;
     }
     li {
         list-style-type: none;
+        margin-bottom: 15px;
         a {
             color: #fff;
         }
@@ -491,6 +495,7 @@ body {
         display: none;
     }
     .mobile-dropdown-btn {
+        text-decoration: none;
         i {
             margin-left: 10px;
             color: #21a7d9;
@@ -500,9 +505,32 @@ body {
         position: absolute;
         top: 10px;
         left: 10px;
-        i {
-            font-size: 28px;
-            color: #21a7d9;
+        top: 5%;
+        span {
+            width: 30px;
+            height: 2px;
+            position: relative;
+            display: block;
+            border-radius: 5px;
+            transition: all 0.5s ease;
+            &::before {
+                content: '';
+                position: absolute;
+                background-color: #21a7d9;
+                width: 100%;
+                height: 2px;
+                display: block;
+                transform: rotate(45deg);
+            }
+            &::after {
+                content: '';
+                position: absolute;
+                background-color: #21a7d9;
+                width: 100%;
+                height: 2px;
+                display: block;
+                transform: rotate(-45deg);
+            }
         }
     }
 }
