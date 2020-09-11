@@ -104,7 +104,7 @@
                         <button class="btn">
                             <i class="fas fa-chart-bar"></i>
                         </button>
-                        <button class="btn">
+                        <button class="btn addFavoriteBtn" data-productId='{{$product->id}}'>
                             <i class="fas fa-bookmark"></i>
                         </button>
                     </div>

@@ -128,4 +128,15 @@ class Product extends Model
             ->take(10)
             ->get();
     }
+
+    public function getToSession($id)
+    {
+        $product = Product::where('id', $id)
+            ->with(['images' => function ($query) {
+                $query->where('avatar', 1)->first();
+            }])
+            ->select('id', 'name', 'price', 'code')
+            ->first()->toArray();
+        return $product;
+    }
 }

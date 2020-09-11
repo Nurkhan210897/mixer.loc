@@ -10,15 +10,14 @@ class BasketController extends Controller
 {
     private $basketModel;
 
-    public function __construct()
+    public function __construct(Basket $basket)
     {
-        $this->basketModel = new Basket();
+        $this->basketModel = $basket;
     }
     public function index(Request $request)
     {
         $data['products'] = Session::get('basket');
         $data['totalPrice'] = Session::get('basketTotalPrice');
-        // dd($data);
         return view('basket', $data);
     }
 

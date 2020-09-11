@@ -11,18 +11,16 @@ class SubCategoryController extends Controller
 
     private $subCategoryModel;
 
-    public function __construct()
+    public function __construct(SubCategory $subCategory)
     {
-        $this->subCategoryModel = new SubCategory();
+        $this->subCategoryModel = $subCategory;
     }
 
     public function show($id, SubCategoryRequest $request)
     {
-        $data['subCategory'] =  SubCategory::where('id', $id)->first();
+        $data['subCategory'] = $this->subCategoryModel->where('id', $id)->first();
         $data['products'] = $this->subCategoryModel->getProducts($id, $request->all());
         $data['pageInfo'] = $this->subCategoryModel->getPageInfo($id);
-
-        // return response()->json($data['products']);
         return view('subCategory', $data);
     }
 }

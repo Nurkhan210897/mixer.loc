@@ -14,6 +14,10 @@ Route::get('/basket', 'BasketController@index');
 Route::post('/basket/put', 'BasketController@put');
 Route::post('/basket/delete', 'BasketController@delete');
 
+Route::get('/favorite', 'FavoriteController@index');
+Route::post('/favorite/put', 'FavoriteController@put');
+Route::post('/favorite/clear', 'FavoriteController@clear');
+
 Route::post('/question', 'QuestionController@create');
 
 //Инфо шапка/футер

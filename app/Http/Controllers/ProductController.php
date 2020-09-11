@@ -11,17 +11,16 @@ class ProductController extends Controller
     private $productModel;
     private $subCategoryModel;
 
-    public function __construct()
+    public function __construct(Product $products, SubCategory $subCategory)
     {
-        $this->productModel = new Product();
-        $this->subCategoryModel = new SubCategory();
+        $this->productModel = $products;
+        $this->subCategoryModel = $subCategory;
     }
     public function index($id)
     {
         $product = $this->productModel->getSelectedProduct($id);
         $data['product'] = $product;
         $data['subCategoryProducts'] = $this->subCategoryModel->getProducts($product->sub_category_id);
-        // return response()->json($data);
         return view('product', $data);
     }
 

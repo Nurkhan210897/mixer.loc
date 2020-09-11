@@ -103,8 +103,8 @@
                                 К сравнению
                                 <i class="fas fa-chart-bar"></i>
                             </button>
-                            <button class="btn">
-                                В закладках
+                            <button class="btn addFavoriteBtn" data-productId='{{$product->id}}'>
+                                В закладки
                                 <i class="fas fa-bookmark"></i>
                             </button>
                         </div>
@@ -140,7 +140,7 @@
                                 <i class="fas fa-chevron-down"></i>
                             </a>
                         </div>
-                        <form id='questionForm' action="#">
+                        <form id='questionForm'>
                             <div class="input-form">
                                 <label for>
                                     ПОЛНОЕ ИМЯ:
@@ -158,6 +158,9 @@
                             <div class="input-form">
                                 <label for>ТЕКСТ ВОПРОСА:</label>
                                 <textarea name='question' id cols="30" rows="5" required></textarea>
+                            </div>
+                            <div id='errors'>
+
                             </div>
                             <div class="button-card">
                                 <button type="submit" class="btn btn-submit" id='questionBtn'>ОТПРАВИТЬ
@@ -184,7 +187,7 @@
             <div class="col-xl-3 col-md-6 col-lg-4">
                 <div class="catalog-card">
                     <a href="/products/{{$subProduct->id}}">
-                        <img src="{{asset('storage/'.$product->image)}}" alt />
+                        <img src="{{asset('storage/'.$subProduct->image)}}" alt />
                     </a>
                     <div class="catalog-card-text">
                         <a href="/products/{{$subProduct->id}}">{{$subProduct->name}}</a>
@@ -194,14 +197,25 @@
                             <span class="silver-text">тг.</span>
                         </p>
                         <div class="button-card">
-                            <button class="btn btn-cart">
+                            @if(session()->has('basket.'.$subProduct->id))
+                            <button class="btn btn-cart inBasketBtn">
+                                В корзине
+                                <i class="fas fa-shopping-basket"></i>
+                            </button>
+                            @else
+                            <button class="btn btn-cart addBasketBtn" data-productId='{{$subProduct->id}}'>
                                 Купить
                                 <i class="fas fa-shopping-basket"></i>
                             </button>
+                            <button class="btn btn-cart inBasketBtn" data-productId='{{$subProduct->id}}' style="display: none;">
+                                В корзине
+                                <i class="fas fa-shopping-basket"></i>
+                            </button>
+                            @endif
                             <button class="btn">
                                 <i class="fas fa-chart-bar"></i>
                             </button>
-                            <button class="btn">
+                            <button class="btn addFavoriteBtn" data-productId='{{$subProduct->id}}'>
                                 <i class="fas fa-bookmark"></i>
                             </button>
                         </div>
